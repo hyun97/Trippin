@@ -1,0 +1,16 @@
+.card-social {
+	margin-top: 16px;
+}
+
+.card-social .favorite {
+	margin-right: 8px;
+}
+
+.card-social .favorite-count {
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.card-content .author {
+	font-weight: bold;
+}
