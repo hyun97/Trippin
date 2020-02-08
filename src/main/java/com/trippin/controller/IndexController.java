@@ -11,4 +11,14 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/card-detail")
+    public String cardDetail() {
+        return "partial/card-detail";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "partial/login";
+    }
+
 }

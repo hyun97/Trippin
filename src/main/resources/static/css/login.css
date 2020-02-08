@@ -1,0 +1,51 @@
+.form-structor {
+	background-color: #222;
+	border-radius: 15px;
+	height: 550px;
+	width: 350px;
+}
+
+.form-structor::after {
+	content: '';
+	opacity: .8;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	background-size: 500px;
+	background-image: url("https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=bf884ad570b50659c5fa2dc2cfb20ecf&auto=format&fit=crop&w=1000&q=100");
+}
+
+.form-structor .signup {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	width: 65%;
+	z-index: 5;
+	-webkit-transition: all .3s ease;
+}
+
+.form-structor .signup .form-title {
+	color: #fff;
+	font-size: 1.7em;
+	text-align: center;
+	margin-bottom: 70px;
+}
+
+.form-structor .signup .submit-btn {
+	background-color: rgba(0, 0, 0, 0.4);
+	color: rgba(255, 255, 255, 0.7);
+	border: 0;
+	border-radius: 15px;
+	display: block;
+	margin: 15px auto;
+	padding: 15px 45px;
+	width: 100%;
+	font-size: 13px;
+	font-weight: bold;
+	cursor: pointer;
+}
