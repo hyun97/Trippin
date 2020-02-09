@@ -21,4 +21,9 @@ public class IndexController {
         return "partial/login";
     }
 
+    @GetMapping("/profile")
+    public String mypage() {
+        return "partial/profile";
+    }
+
 }
