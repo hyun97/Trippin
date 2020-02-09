@@ -16,14 +16,14 @@ public class IndexController {
         return "partial/card-detail";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "partial/login";
+    @GetMapping("/profile")
+    public String profile() {
+        return "partial/profile";
     }
 
-    @GetMapping("/profile")
-    public String mypage() {
-        return "partial/profile";
+    @GetMapping("/post/upload")
+    public String postUpload() {
+        return "partial/post-upload";
     }
 
 }

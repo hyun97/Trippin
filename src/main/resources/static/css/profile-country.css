@@ -1,4 +1,4 @@
-figure.snip1477 {
+.snip1477 {
 	font-family: 'Raleway', Arial, sans-serif;
 	position: relative;
 	overflow: hidden;
@@ -11,34 +11,34 @@ figure.snip1477 {
 	font-size: 16px;
 	background-color: #000000;
 	border-radius: 10px;
-
+	cursor: pointer;
 }
 
-figure.snip1477 *,
-figure.snip1477 *:before,
-figure.snip1477 *:after {
+.snip1477 *,
+.snip1477 *:before,
+.snip1477 *:after {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	-webkit-transition: all 0.55s ease;
 	transition: all 0.55s ease;
 }
 
-figure.snip1477 img {
+.snip1477 img {
 	max-width: 100%;
 	backface-visibility: hidden;
 	vertical-align: top;
 	opacity: 0.9;
 }
 
-figure.snip1477 .title {
+.snip1477 .title {
 	position: absolute;
 	top: 58%;
 	left: 25px;
 	padding: 5px 10px 10px;
 }
 
-figure.snip1477 .title:before,
-figure.snip1477 .title:after {
+.snip1477 .title:before,
+.snip1477 .title:after {
 	height: 2px;
 	width: 400px;
 	position: absolute;
@@ -46,22 +46,22 @@ figure.snip1477 .title:after {
 	background-color: #ffffff;
 }
 
-figure.snip1477 .title:before {
+.snip1477 .title:before {
 	top: 0;
 	left: 10px;
 	-webkit-transform: translateX(100%);
 	transform: translateX(100%);
 }
 
-figure.snip1477 .title:after {
+.snip1477 .title:after {
 	bottom: 0;
 	right: 10px;
 	-webkit-transform: translateX(-100%);
 	transform: translateX(-100%);
 }
 
-figure.snip1477 .title div:before,
-figure.snip1477 .title div:after {
+.snip1477 .title div:before,
+.snip1477 .title div:after {
 	width: 2px;
 	height: 300px;
 	position: absolute;
@@ -69,27 +69,27 @@ figure.snip1477 .title div:after {
 	background-color: #ffffff;
 }
 
-figure.snip1477 .title div:before {
+.snip1477 .title div:before {
 	top: 10px;
 	right: 0;
 	-webkit-transform: translateY(100%);
 	transform: translateY(100%);
 }
 
-figure.snip1477 .title div:after {
+.snip1477 .title div:after {
 	bottom: 10px;
 	left: 0;
 	-webkit-transform: translateY(-100%);
 	transform: translateY(-100%);
 }
 
-figure.snip1477 .h2,
-figure.snip1477 .h4 {
+.snip1477 .country,
+.snip1477 .country-post {
 	margin: 0;
 	text-transform: uppercase;
 }
 
-figure.snip1477 .h2 {
+.snip1477 .country {
 	font-weight: 400;
 	display: block;
 	font-size: 1.5em;
@@ -97,15 +97,16 @@ figure.snip1477 .h2 {
 	margin-inline-end: 0;
 }
 
-figure.snip1477 .h4 {
+.snip1477 .country-post {
 	display: block;
 	font-weight: 700;
 	background-color: #ffffff;
 	padding: 5px 10px;
 	color: #000000;
+	cursor: pointer;
 }
 
-figure.snip1477 figcaption {
+.snip1477 .description {
 	position: absolute;
 	bottom: 42%;
 	left: 25px;
@@ -117,11 +118,11 @@ figure.snip1477 figcaption {
 	letter-spacing: 1.5px;
 }
 
-figure.snip1477 figcaption p {
+.snip1477 .description p {
 	margin: 0;
 }
 
-figure.snip1477 a {
+.snip1477 a {
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -129,36 +130,36 @@ figure.snip1477 a {
 	right: 0;
 }
 
-figure.snip1477:hover img,
-figure.snip1477.hover img {
+.snip1477:hover img,
+.snip1477.hover img {
 	zoom: 1;
 	filter: alpha(opacity=35);
 	-webkit-opacity: 0.35;
 	opacity: 0.35;
 }
 
-figure.snip1477:hover .title:before,
-figure.snip1477.hover .title:before,
-figure.snip1477:hover .title:after,
-figure.snip1477.hover .title:after,
-figure.snip1477:hover .title div:before,
-figure.snip1477.hover .title div:before,
-figure.snip1477:hover .title div:after,
-figure.snip1477.hover .title div:after {
+.snip1477:hover .title:before,
+.snip1477.hover .title:before,
+.snip1477:hover .title:after,
+.snip1477.hover .title:after,
+.snip1477:hover .title div:before,
+.snip1477.hover .title div:before,
+.snip1477:hover .title div:after,
+.snip1477.hover .title div:after {
 	-webkit-transform: translate(0, 0);
 	transform: translate(0, 0);
 }
 
-figure.snip1477:hover .title:before,
-figure.snip1477.hover .title:before,
-figure.snip1477:hover .title:after,
-figure.snip1477.hover .title:after {
+.snip1477:hover .title:before,
+.snip1477.hover .title:before,
+.snip1477:hover .title:after,
+.snip1477.hover .title:after {
 	-webkit-transition-delay: 0.15s;
 	transition-delay: 0.15s;
 }
 
-figure.snip1477:hover figcaption,
-figure.snip1477.hover figcaption {
+.snip1477:hover .description,
+.snip1477.hover .description {
 	opacity: 1;
 	-webkit-transition-delay: 0.2s;
 	transition-delay: 0.2s;
