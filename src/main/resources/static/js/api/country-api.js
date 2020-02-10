@@ -1,7 +1,6 @@
-let submitButton = document.querySelectorAll(".file-upload .country-button");
-let createCountryContent = document.querySelector(".snip1477 .country-post");
-let editCountryBtn = document.querySelector(".snip1477 .edit-wrapper .edit");
-let deleteCountryBtn = document.querySelector(".snip1477 .edit-wrapper .delete");
+let submitButton = document.querySelector(".file-upload .country-button");
+let updateCountryBtn = document.querySelectorAll(".snip1477 .edit-wrapper .edit");
+let deleteCountryBtn = document.querySelectorAll(".snip1477 .edit-wrapper .delete");
 
 // Create
 function createCountry(event) {
@@ -35,13 +34,26 @@ function createCountry(event) {
 function deleteCountry(event) {
     event.preventDefault();
 
-    let countryId = document.querySelector(".snip1477 .countryId");
-
     $.ajax({
         type: "DELETE",
-        url: `/api/country/${countryId.innerHTML}`,
+        url: `/api/country/${event.currentTarget.id}`,
     }).done(function () {
         alert("삭제 되었습니다.");
+        location.href = "/";
+    }).fail(function (error) {
+        alert(JSON.stringify(error));
+    });
+}
+
+// Update
+function updateCountry(event) {
+    event.preventDefault();
+
+    $.ajax({
+        type: "PUT",
+        url: `/api/country/${event.currentTarget.id}`,
+    }).done(function () {
+        alert("수정 되었습니다.");
         location.href = "/";
     }).fail(function (error) {
         alert(JSON.stringify(error));
@@ -58,9 +70,12 @@ function listeningEvent() {
             e.addEventListener("click", deleteCountry);
         })
     }
+    if (updateCountryBtn) {
+        [].forEach.call(updateCountryBtn, function (e) {
+            e.addEventListener("click", updateCountry);
+        })
+    }
 }
-
-console.log(deleteCountryBtn);
 
 function init() {
     listeningEvent();

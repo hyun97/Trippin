@@ -1,7 +1,6 @@
 {{#country}}
     <div class="profile-conuntry-wrapper col s12 m6 l6 xl4">
         <div class="snip1477">
-            <div class="countryId" hidden>{{id}}</div>
             <img src="/img/{{image}}" alt="/img/{{name}}"/>
             <div class="title">
                 <div>
@@ -10,8 +9,8 @@
                 </div>
             </div>
             <div class="edit-wrapper">
-                <span class="edit"><i class="material-icons">create</i></span>
-                <span class="delete"><i class="material-icons">close</i></span>
+                <span class="edit" id="{{id}}"><i class="material-icons">create</i></span>
+                <span class="delete" id="{{id}}"><i class="material-icons">close</i></span>
             </div>
             <div class="description">
                 <p>{{content}}</p>
