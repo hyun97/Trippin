@@ -2,3 +2,4 @@
 .idea
 src/main/resources/static/img
 application-oauth.properties
+application.properties
