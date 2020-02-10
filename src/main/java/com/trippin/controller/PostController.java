@@ -1,6 +1,5 @@
 package com.trippin.controller;
 
-import com.trippin.controller.dto.CountryDto;
 import com.trippin.controller.dto.PostDto;
 import com.trippin.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,7 @@ public class PostController {
 
     // read
     @GetMapping
-    public List<CountryDto> getPost() {
+    public List<PostDto> getPost() {
         return postService.getPost();
     }
 

@@ -1,5 +1,6 @@
 package com.trippin.domain;
 
+import com.trippin.controller.dto.PostDto;
 import com.trippin.domain.util.Auditing;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,5 +36,12 @@ public class Post extends Auditing {
 
     @ManyToOne
     private Country country;
+
+    public void update(PostDto postDto) {
+        this.image = postDto.getImage();
+        this.region = postDto.getRegion();
+        this.content = postDto.getContent();
+        this.favorite = postDto.getFavorite();
+    }
 
 }

@@ -1,6 +1,5 @@
 package com.trippin.service;
 
-import com.trippin.controller.dto.CountryDto;
 import com.trippin.controller.dto.PostDto;
 import com.trippin.domain.CountryRepository;
 import com.trippin.domain.Post;
@@ -9,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -31,13 +31,18 @@ public class PostService {
     }
 
     // read
-    public List<CountryDto> getPost() {
-        return null;
+    public List<PostDto> getPost() {
+        List<Post> post = postRepository.findAll();
+
+        return post.stream().map(PostDto::new).collect(Collectors.toList());
     }
 
     // update
     public void updatePost(Long id, PostDto postDto) {
-
+        // TODO: ADD EXCEPTION
+        Post post = postRepository.findById(id).orElse(null);
+        post.update(postDto);
+        postRepository.save(post);
     }
 
 }

@@ -3,14 +3,11 @@
 <div class="content-profile-page">
     <div class="profile-user-page card">
         <div class="img-user-profile">
-            <img class="avatar" src="http://gravatar.com/avatar/288ce55a011c709f4e17aef7e3c86c64?s=200" alt="jofpin"/>
+            <img class="avatar" src="/img/{{user.image}}" alt="jofpin"/>
         </div>
         <div class="user-profile-data">
-            <h1>Jose Pino</h1>
-            <div class="description-profile">Front-end | Security Researcher | CSS Warrior |
-                <a href="https://twitter.com/bullgit" title="bullgit"><strong>@bullgit</strong></a>
-                | I love to create small things for the internet!
-            </div>
+            <h1>{{user.name}}</h1>
+            <div class="description-profile">{{user.comment}}</div>
             <a href="#">
                 <button>팔로우</button>
             </a>
@@ -28,12 +25,7 @@
 </div>
 
 <div class="row container">
-    {{>partial/profile-country}}
-    {{>partial/profile-country}}
-    {{>partial/profile-country}}
-    {{>partial/profile-country}}
-    {{>partial/profile-country}}
-    {{>partial/profile-country}}
+    {{>partial/user-country}}
 </div>
 
 

@@ -27,9 +27,13 @@ public class User extends Auditing {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String image;
+
     private String email;
 
     private String name;
+
+    private String comment;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Country> country;
