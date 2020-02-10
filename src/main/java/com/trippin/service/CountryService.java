@@ -46,4 +46,10 @@ public class CountryService {
         countryRepository.save(country);
     }
 
+    // delete
+    public void deleteCountry(Long id) {
+        Country country = countryRepository.findById(id).orElse(null);
+        countryRepository.delete(country);
+    }
+
 }

@@ -3,6 +3,7 @@ package com.trippin.controller;
 import com.trippin.controller.dto.CountryDto;
 import com.trippin.service.CountryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +40,9 @@ public class CountryController {
     }
 
     // delete
-    // TODO: 나라와 나라->작성글 까지 모두 삭제
-    // Join 된 작성글까지 모두 지우는 방법
+    @DeleteMapping("/{id}")
+    public void deleteCountry(@PathVariable Long id) {
+        countryService.deleteCountry(id);
+    }
 
 }

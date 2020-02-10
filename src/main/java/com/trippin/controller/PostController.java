@@ -40,6 +40,5 @@ public class PostController {
 
     // delete
     // TODO: 작성글과 작성글->댓글 까지 모두 삭제
-    // Join 된 댓글까지 모두 지우는 방법
 
 }
