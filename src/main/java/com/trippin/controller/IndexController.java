@@ -1,5 +1,6 @@
 package com.trippin.controller;
 
+import com.trippin.config.auth.LoginUser;
 import com.trippin.config.auth.SessionUser;
 import com.trippin.domain.CountryRepository;
 import com.trippin.domain.UserRepository;
@@ -21,9 +22,7 @@ public class IndexController {
 
     // 메인
     @GetMapping("/")
-    public String index(Model model) {
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-
+    public String index(Model model, @LoginUser SessionUser user) {
         if (user != null) {
             model.addAttribute("userName", user.getName());
         }
@@ -39,9 +38,11 @@ public class IndexController {
 
     // 유저 프로필
     @GetMapping("/user/{id}")
-    public String user(@PathVariable Long id, Model model) {
-        // TODO: ADD EXCEPTION
-        model.addAttribute("user", userRepository.findById(id).orElse(null));
+    public String user(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
+        if (user != null) {
+            model.addAttribute("user", user);
+        }
+
         model.addAttribute("country", countryRepository.findAllByUserIdOrderByCreatedAtDesc(id));
         return "partial/user";
     }
