@@ -36,10 +36,18 @@ public class IndexController {
         return "partial/user";
     }
 
-    // 게시글 등록
-    @GetMapping("/post/upload")
-    public String postUpload() {
-        return "partial/post-upload";
+    // 나라 등록
+    @GetMapping("/country/create")
+    public String createCountry() {
+        return "partial/create-country";
+    }
+
+    // 나라 수정
+    @GetMapping("/country/update/{id}")
+    public String updateCountry(@PathVariable Long id, Model model) {
+        // TODO: ADD EXCEPTION
+        model.addAttribute("country", countryRepository.findById(id).orElse(null));
+        return "partial/update-country";
     }
 
 }

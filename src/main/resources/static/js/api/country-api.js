@@ -1,5 +1,6 @@
-let submitButton = document.querySelector(".file-upload .country-button");
+let createCountryBtn = document.querySelector(".file-upload .country-button");
 let updateCountryBtn = document.querySelectorAll(".snip1477 .edit-wrapper .edit");
+let submitUpdateBtn = document.querySelector(".file-upload .update-country-button");
 let deleteCountryBtn = document.querySelectorAll(".snip1477 .edit-wrapper .delete");
 
 // Create
@@ -46,14 +47,36 @@ function deleteCountry(event) {
 }
 
 // Update
+function goToUpdateForm(event) {
+    location.href = `/country/update/${event.currentTarget.id}`;
+}
+
 function updateCountry(event) {
     event.preventDefault();
 
+    let countryContent = document.querySelector("#update-country-description");
+    let countryName = document.querySelector("#update-country-name");
+    let ImageName = document.querySelector(".file-upload .file-upload-input");
+
+    let updatedImage = document.querySelector(".file-upload-image").alt;
+
+    if (ImageName.files[0] != null) {
+        updatedImage = ImageName.files[0].name;
+    }
+
+    let data = {
+        image: updatedImage,
+        name: countryName.value,
+        content: countryContent.value
+    };
+
     $.ajax({
         type: "PUT",
-        url: `/api/country/${event.currentTarget.id}`,
+        url: `/api/country/${countryName.className}`,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data)
     }).done(function () {
-        alert("수정 되었습니다.");
+        alert("수정완료");
         location.href = "/";
     }).fail(function (error) {
         alert(JSON.stringify(error));
@@ -62,8 +85,8 @@ function updateCountry(event) {
 
 // Event Listening
 function listeningEvent() {
-    if (submitButton) {
-        submitButton.addEventListener("click", createCountry);
+    if (createCountryBtn) {
+        createCountryBtn.addEventListener("click", createCountry);
     }
     if (deleteCountryBtn) {
         [].forEach.call(deleteCountryBtn, function (e) {
@@ -72,8 +95,11 @@ function listeningEvent() {
     }
     if (updateCountryBtn) {
         [].forEach.call(updateCountryBtn, function (e) {
-            e.addEventListener("click", updateCountry);
+            e.addEventListener("click", goToUpdateForm);
         })
+    }
+    if (submitUpdateBtn) {
+        submitUpdateBtn.addEventListener("click", updateCountry)
     }
 }
 
