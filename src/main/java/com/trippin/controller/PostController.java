@@ -1,7 +1,8 @@
 package com.trippin.controller;
 
 import com.trippin.controller.dto.CountryDto;
-import com.trippin.service.CountryService;
+import com.trippin.controller.dto.PostDto;
+import com.trippin.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,31 +16,31 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/country")
-public class CountryController {
+@RequestMapping("/api/post")
+public class PostController {
 
-    private final CountryService countryService;
+    private final PostService postService;
 
     // create
     @PostMapping
-    public void createCountry(@RequestBody CountryDto countryDto) {
-        countryService.createCountry(countryDto);
+    public void createPost(@RequestBody PostDto postDto) {
+        postService.createPost(postDto);
     }
 
     // read
     @GetMapping
-    public List<CountryDto> getCountry() {
-        return countryService.getCountry();
+    public List<CountryDto> getPost() {
+        return postService.getPost();
     }
 
     // update
     @PutMapping("/{id}")
-    public void updateCountry(@PathVariable Long id, @RequestBody CountryDto countryDto) {
-        countryService.updateCountry(id, countryDto);
+    public void updatePost(@PathVariable Long id, @RequestBody PostDto postDto) {
+        postService.updatePost(id, postDto);
     }
 
     // delete
-    // TODO: 나라와 나라->작성글 까지 모두 삭제
-    // Join 된 작성글까지 모두 지우는 방법
+    // TODO: 작성글과 작성글->댓글 까지 모두 삭제
+    // Join 된 댓글까지 모두 지우는 방법
 
 }

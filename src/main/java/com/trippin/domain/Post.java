@@ -31,7 +31,7 @@ public class Post extends Auditing {
 
     private String content;
 
-    private Integer like;
+    private Integer favorite;
 
     @ManyToOne
     private Country country;

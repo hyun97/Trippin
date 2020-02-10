@@ -38,4 +38,12 @@ public class CountryService {
         return country.stream().map(CountryDto::new).collect(Collectors.toList());
     }
 
+    // update
+    public void updateCountry(Long id, CountryDto countryDto) {
+        // TODO: ADD EXCEPTION
+        Country country = countryRepository.findById(id).orElse(null);
+        country.update(countryDto);
+        countryRepository.save(country);
+    }
+
 }
