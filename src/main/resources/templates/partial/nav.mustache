@@ -15,12 +15,19 @@
             <!-- Links -->
             <ul class="right hide-on-med-and-down">
                 <li><a class="btn">팔로잉</a></li>
-                <li><a href="#contact" class="btn modal-trigger">로그인</a></li>
+                {{#userName}}
+                    <li><a href="/logout" class="btn modal-trigger">로그아웃</a></li>
+                {{/userName}}
+                {{^userName}}
+                    <li><a href="#contact" class="btn modal-trigger">로그인</a></li>
+                {{/userName}}
                 <!-- Modal -->
                 <div id="contact" class="form-structor modal">
                     <div class="signup modal-content">
                         <h2 class="form-title" id="signup">Sign up</h2>
-                        <button class="submit-btn" onclick="location.href='/user/12'">GOOGLE</button>
+                        <button class="submit-btn" onclick="location.href='/oauth2/authorization/google'">
+                            GOOGLE
+                        </button>
                         <button class="submit-btn">NAVER</button>
                     </div>
                 </div>

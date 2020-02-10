@@ -1,5 +1,6 @@
 package com.trippin.controller;
 
+import com.trippin.config.auth.SessionUser;
 import com.trippin.domain.CountryRepository;
 import com.trippin.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,16 +9,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
 
     private final CountryRepository countryRepository;
     private final UserRepository userRepository;
+    private final HttpSession httpSession;
 
     // 메인
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+        }
+
         return "index";
     }
 
@@ -49,5 +59,6 @@ public class IndexController {
         model.addAttribute("country", countryRepository.findById(id).orElse(null));
         return "partial/update-country";
     }
+
 
 }
