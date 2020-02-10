@@ -1,0 +1,32 @@
+{{>layout/header}}
+
+<div class="content-profile-page">
+    <div class="profile-user-page card">
+        <div class="img-user-profile">
+            <img class="avatar" src="/img/{{user.image}}" alt="jofpin"/>
+        </div>
+        <div class="user-profile-data">
+            <h1>{{user.name}}</h1>
+            <div class="description-profile">{{user.comment}}</div>
+            <a href="#">
+                <button>팔로우</button>
+            </a>
+            <a href="/country/create">
+                <button>나라등록</button>
+            </a>
+
+        </div>
+        <ul class="data-user">
+            <li><a href="#"><strong>3390</strong><span>게시물</span></a></li>
+            <li><a href="#"><strong>718</strong><span>팔로워</span></a></li>
+            <li><a href="#"><strong>239</strong><span>팔로잉</span></a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="row container">
+    {{>partial/user-country}}
+</div>
+
+
+{{>layout/footer}}

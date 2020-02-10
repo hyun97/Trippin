@@ -1,0 +1,32 @@
+{{>layout/header}}
+
+<div class="file-upload">
+    <div class="row">
+        <form class="col s12">
+            <img class="file-upload-image" src="/img/{{country.image}}" alt="{{country.image}}"/>
+            <input class="file-upload-input" hidden type='file' onchange="readURL(this);" accept="image/*"/>
+            <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger('click')">
+                Update Image
+            </button>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="update-country-name" class="{{country.id}}" type="text" value="{{country.name}}"
+                           required>
+                    <label for="country">나라를 입력하세요. (필수)</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="update-country-description" type="text" value="{{country.content}}">
+                    <label for="country-description">나라의 한줄평을 입력하세요.</label>
+                </div>
+            </div>
+            <button class="btn waves-effect waves-light update-country-button" type="submit">수정
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+    </div>
+</div>
+
+{{>layout/footer}}
+
