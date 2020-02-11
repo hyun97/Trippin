@@ -36,7 +36,7 @@ function createCountry(event) {
 // Delete
 function deleteCountry(event) {
     event.preventDefault();
-    
+
     $.ajax({
         type: "DELETE",
         url: `/api/country/${event.currentTarget.id}`,
