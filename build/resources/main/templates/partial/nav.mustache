@@ -14,13 +14,22 @@
 
             <!-- Links -->
             <ul class="right hide-on-med-and-down">
-                <li><a class="btn">팔로잉</a></li>
-                {{#userName}}
-                    <li><a href="/logout" class="btn modal-trigger">로그아웃</a></li>
-                {{/userName}}
-                {{^userName}}
+                {{#user}}
+                    <li><a class="btn">팔로잉</a></li>
+                    <li>
+                        <a href="/user/{{user.id}}" class="modal-trigger">
+                            <i class="material-icons">person</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/logout" class="modal-trigger">
+                            <i class="material-icons">power_settings_new</i>
+                        </a>
+                    </li>
+                {{/user}}
+                {{^user}}
                     <li><a href="#contact" class="btn modal-trigger">로그인</a></li>
-                {{/userName}}
+                {{/user}}
                 <!-- Modal -->
                 <div id="contact" class="form-structor modal">
                     <div class="signup modal-content">

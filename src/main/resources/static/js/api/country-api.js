@@ -3,6 +3,8 @@ let updateCountryBtn = document.querySelectorAll(".snip1477 .edit-wrapper .edit"
 let submitUpdateBtn = document.querySelector(".file-upload .update-country-button");
 let deleteCountryBtn = document.querySelectorAll(".snip1477 .edit-wrapper .delete");
 
+let userId = document.querySelector(".user-id").innerHTML;
+
 // Create
 function createCountry(event) {
     event.preventDefault();
@@ -15,7 +17,7 @@ function createCountry(event) {
         image: ImageName.files[0].name,
         name: countryName.value,
         content: countryDescription.value,
-        userId: 12
+        userId: userId
     };
 
     $.ajax({
@@ -25,7 +27,7 @@ function createCountry(event) {
         data: JSON.stringify(data)
     }).done(function () {
         alert("나라가 등록되었습니다.");
-        window.location.href = "/";
+        window.location.href = `/user/${userId}`;
     }).fail(function (error) {
         alert(JSON.stringify(error));
     });
@@ -40,7 +42,7 @@ function deleteCountry(event) {
         url: `/api/country/${event.currentTarget.id}`,
     }).done(function () {
         alert("삭제 되었습니다.");
-        location.href = "/";
+        location.href = `/user/${userId}`;
     }).fail(function (error) {
         alert(JSON.stringify(error));
     });
@@ -60,6 +62,7 @@ function updateCountry(event) {
 
     let updatedImage = document.querySelector(".file-upload-image").alt;
 
+    // 파일이 업로드 되었을 시 수정
     if (ImageName.files[0] != null) {
         updatedImage = ImageName.files[0].name;
     }
@@ -77,7 +80,7 @@ function updateCountry(event) {
         data: JSON.stringify(data)
     }).done(function () {
         alert("수정완료");
-        location.href = "/";
+        location.href = `/user/${userId}`;
     }).fail(function (error) {
         alert(JSON.stringify(error));
     });

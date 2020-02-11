@@ -24,7 +24,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
         if (user != null) {
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("user", user);
         }
 
         return "index";
@@ -44,19 +44,28 @@ public class IndexController {
         }
 
         model.addAttribute("country", countryRepository.findAllByUserIdOrderByCreatedAtDesc(id));
+
         return "partial/user";
     }
 
     // 나라 등록
     @GetMapping("/country/create")
-    public String createCountry() {
+    public String createCountry(Model model, @LoginUser SessionUser user) {
+        if (user != null) {
+            model.addAttribute("user", user);
+        }
+
         return "partial/create-country";
     }
 
     // 나라 수정
     @GetMapping("/country/update/{id}")
-    public String updateCountry(@PathVariable Long id, Model model) {
+    public String updateCountry(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
         // TODO: ADD EXCEPTION
+        if (user != null) {
+            model.addAttribute("user", user);
+        }
+
         model.addAttribute("country", countryRepository.findById(id).orElse(null));
         return "partial/update-country";
     }
