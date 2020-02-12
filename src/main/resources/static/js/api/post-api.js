@@ -1,5 +1,6 @@
 let createPostBtn = document.querySelector(".create-post .post-button");
 let submitPostBtn = document.querySelector(".update-post-button");
+let deletePostBtn = document.querySelectorAll(".card-wrapper .edit-wrapper .delete");
 
 // Create
 function createPost(event) {
@@ -69,6 +70,21 @@ function updatePost(event) {
     });
 }
 
+// Delete
+function deletePost(event) {
+    event.preventDefault();
+
+    $.ajax({
+        type: "DELETE",
+        url: `/api/post/${event.currentTarget.id}`,
+    }).done(function () {
+        alert("삭제 되었습니다.");
+        location.href = `/`;
+    }).fail(function (error) {
+        alert(JSON.stringify(error));
+    });
+}
+
 // Event Listening
 function listeningEvent() {
     if (createPostBtn) {
@@ -76,6 +92,11 @@ function listeningEvent() {
     }
     if (submitPostBtn) {
         submitPostBtn.addEventListener("click", updatePost);
+    }
+    if (deletePostBtn) {
+        [].forEach.call(deletePostBtn, function (e) {
+            e.addEventListener("click", deletePost);
+        })
     }
 }
 

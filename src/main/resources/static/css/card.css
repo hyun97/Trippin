@@ -36,3 +36,7 @@
 	color: white;
 	cursor: pointer;
 }
+
+.card .edit-wrapper .delete {
+	margin-left: 6px;
+}

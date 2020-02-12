@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostDto {
 
+    private Long id;
+
     private String image;
 
     private String region;
@@ -19,6 +21,7 @@ public class PostDto {
     private Long countryId;
 
     public PostDto(Post post) {
+        this.id = post.getId();
         this.image = post.getImage();
         this.region = post.getRegion();
         this.content = post.getContent();

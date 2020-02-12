@@ -3,6 +3,7 @@ package com.trippin.controller;
 import com.trippin.controller.dto.PostDto;
 import com.trippin.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,5 +41,9 @@ public class PostController {
 
     // delete
     // TODO: 작성글과 작성글->댓글 까지 모두 삭제
+    @DeleteMapping("/{id}")
+    public void deletePost(@PathVariable Long id) {
+        postService.deletePost(id);
+    }
 
 }

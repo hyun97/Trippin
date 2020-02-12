@@ -17,7 +17,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final CountryRepository countryRepository;
 
-    // create
+    // Create
     public void createPost(PostDto postDto) {
         Post post = Post.builder()
                 .image(postDto.getImage())
@@ -30,19 +30,24 @@ public class PostService {
         postRepository.save(post);
     }
 
-    // read
+    // Read
     public List<PostDto> getPost() {
         List<Post> post = postRepository.findAll();
 
         return post.stream().map(PostDto::new).collect(Collectors.toList());
     }
 
-    // update
+    // Update
     public void updatePost(Long id, PostDto postDto) {
         // TODO: ADD EXCEPTION
         Post post = postRepository.findById(id).orElse(null);
         post.update(postDto);
         postRepository.save(post);
+    }
+
+    // Delete
+    public void deletePost(Long id) {
+        postRepository.deleteById(id);
     }
 
 }
