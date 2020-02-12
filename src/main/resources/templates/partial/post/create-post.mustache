@@ -1,11 +1,6 @@
 {{>layout/header}}
 
-<!-- User Id -->
-{{#loginUser}}
-    <span class="user-id" style="display: none">{{loginUser.id}}</span>
-{{/loginUser}}
-
-<div class="file-upload">
+<div class="file-upload create-post">
     <div class="row">
         <form class="col s12">
             <div class="image-upload-wrap">
@@ -28,17 +23,24 @@
             </button>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="country" type="text" required>
-                    <label for="country">나라를 입력하세요. (필수)</label>
+                    <input id="country" class="{{country.id}}" type="text" value="{{country.name}}" required>
+                    <label for="country">나라</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="country-description" type="text">
-                    <label for="country-description">나라의 한줄평을 입력하세요.</label>
+                    <input id="region" type="text" required>
+                    <label for="region">지역을 입력하세요.</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light country-button" type="submit">만들기
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="content" type="text">
+                    <label for="content">내용을 입력하세요.</label>
+                </div>
+            </div>
+            <button class="btn waves-effect waves-light post-button" type="submit">
+                등록
                 <i class="material-icons right">send</i>
             </button>
         </form>
@@ -46,4 +48,3 @@
 </div>
 
 {{>layout/footer}}
-

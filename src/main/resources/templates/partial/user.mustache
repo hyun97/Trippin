@@ -11,13 +11,18 @@
         <div class="user-profile-data">
             <h1>{{user.name}}</h1>
             <div class="description-profile">todo: comment</div>
-            <a href="#">
-                <button>팔로우</button>
-            </a>
-            <a href="/country/create">
-                <button>나라등록</button>
-            </a>
-
+            {{#isLogin}}
+                {{^validUser}}
+                    <a href="#">
+                        <button>팔로우</button>
+                    </a>
+                {{/validUser}}
+                {{#validUser}}
+                    <a href="/country/create">
+                        <button>나라등록</button>
+                    </a>
+                {{/validUser}}
+            {{/isLogin}}
         </div>
         <ul class="data-user">
             <li><a href="#"><strong>3390</strong><span>게시물</span></a></li>

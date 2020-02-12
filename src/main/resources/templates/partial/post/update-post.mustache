@@ -1,32 +1,29 @@
 {{>layout/header}}
 
-<!-- User Id -->
-{{#loginUser}}
-    <span class="user-id" style="display: none">{{loginUser.id}}</span>
-{{/loginUser}}
+<span class="post-favorite" style="display: none">{{post.favorite}}</span>
 
 <div class="file-upload">
     <div class="row">
         <form class="col s12">
-            <img class="file-upload-image" src="/img/{{country.image}}" alt="{{country.image}}"/>
+            <img class="file-upload-image" src="/img/{{post.image}}" alt="{{post.image}}"/>
             <input class="file-upload-input" hidden type='file' onchange="readURL(this);" accept="image/*"/>
             <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger('click')">
                 Update Image
             </button>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="update-country-name" class="{{country.id}}" type="text" value="{{country.name}}"
+                    <input id="update-region" class="{{post.id}}" type="text" value="{{post.region}}"
                            required>
-                    <label for="country">나라를 입력하세요. (필수)</label>
+                    <label for="update-region">지역을 입력하세요.</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="update-country-description" type="text" value="{{country.content}}">
-                    <label for="country-description">나라의 한줄평을 입력하세요.</label>
+                    <input id="update-content" type="text" value="{{post.content}}">
+                    <label for="update-content">내용을 입력하세요.</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light update-country-button" type="submit">수정
+            <button class="btn waves-effect waves-light update-post-button" type="submit">수정
                 <i class="material-icons right">send</i>
             </button>
         </form>

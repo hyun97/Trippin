@@ -14,3 +14,25 @@
 .card-content .author {
 	font-weight: bold;
 }
+
+.card .edit-wrapper {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 15px 15px 0 0;
+	opacity: 0;
+	cursor: default;
+}
+
+.card * {
+	transition: all 0.15s;
+}
+
+.card:hover .edit-wrapper {
+	opacity: 1;
+}
+
+.card:hover .edit-wrapper .material-icons {
+	color: white;
+	cursor: pointer;
+}

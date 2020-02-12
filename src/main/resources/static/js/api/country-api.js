@@ -1,9 +1,8 @@
 let createCountryBtn = document.querySelector(".file-upload .country-button");
-let updateCountryBtn = document.querySelectorAll(".snip1477 .edit-wrapper .edit");
 let submitUpdateBtn = document.querySelector(".file-upload .update-country-button");
 let deleteCountryBtn = document.querySelectorAll(".snip1477 .edit-wrapper .delete");
 
-let userId = document.querySelector(".user-id").innerHTML;
+let userId = document.querySelector(".user-id");
 
 // Create
 function createCountry(event) {
@@ -17,7 +16,7 @@ function createCountry(event) {
         image: ImageName.files[0].name,
         name: countryName.value,
         content: countryDescription.value,
-        userId: userId
+        userId: userId.innerHTML
     };
 
     $.ajax({
@@ -27,7 +26,7 @@ function createCountry(event) {
         data: JSON.stringify(data)
     }).done(function () {
         alert("나라가 등록되었습니다.");
-        window.location.href = `/user/${userId}`;
+        window.location.href = `/user/${userId.innerHTML}`;
     }).fail(function (error) {
         alert(JSON.stringify(error));
     });
@@ -42,17 +41,13 @@ function deleteCountry(event) {
         url: `/api/country/${event.currentTarget.id}`,
     }).done(function () {
         alert("삭제 되었습니다.");
-        location.href = `/user/${userId}`;
+        location.href = `/user/${userId.innerHTML}`;
     }).fail(function (error) {
         alert(JSON.stringify(error));
     });
 }
 
 // Update
-function goToUpdateForm(event) {
-    location.href = `/country/update/${event.currentTarget.id}`;
-}
-
 function updateCountry(event) {
     event.preventDefault();
 
@@ -80,7 +75,7 @@ function updateCountry(event) {
         data: JSON.stringify(data)
     }).done(function () {
         alert("수정완료");
-        location.href = `/user/${userId}`;
+        location.href = `/user/${userId.innerHTML}`;
     }).fail(function (error) {
         alert(JSON.stringify(error));
     });
@@ -94,11 +89,6 @@ function listeningEvent() {
     if (deleteCountryBtn) {
         [].forEach.call(deleteCountryBtn, function (e) {
             e.addEventListener("click", deleteCountry);
-        })
-    }
-    if (updateCountryBtn) {
-        [].forEach.call(updateCountryBtn, function (e) {
-            e.addEventListener("click", goToUpdateForm);
         })
     }
     if (submitUpdateBtn) {

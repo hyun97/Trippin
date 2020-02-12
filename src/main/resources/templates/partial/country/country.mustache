@@ -1,17 +1,25 @@
 {{#country}}
     <div class="profile-conuntry-wrapper col s12 m6 l6 xl4">
         <div class="snip1477">
-            <img src="/img/{{image}}" alt="/img/{{name}}"/>
+            <img id="{{id}}" src="/img/{{image}}" alt="/img/{{name}}"/>
             <div class="title">
                 <div>
                     <p class="country">{{name}}</p>
-                    <p class="country-post">작성</p>
+                    {{#isLogin}}
+                        {{#validUser}}
+                            <p class="country-post" id="{{id}}">작성</p>
+                        {{/validUser}}
+                    {{/isLogin}}
                 </div>
             </div>
-            <div class="edit-wrapper">
-                <span class="edit" id="{{id}}"><i class="material-icons">create</i></span>
-                <span class="delete" id="{{id}}"><i class="material-icons">close</i></span>
-            </div>
+            {{#isLogin}}
+                {{#validUser}}
+                    <div class="edit-wrapper">
+                        <span class="edit" id="{{id}}"><i class="material-icons">create</i></span>
+                        <span class="delete" id="{{id}}"><i class="material-icons">close</i></span>
+                    </div>
+                {{/validUser}}
+            {{/isLogin}}
             <div class="description">
                 <p>{{content}}</p>
             </div>

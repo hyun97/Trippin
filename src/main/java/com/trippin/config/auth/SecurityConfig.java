@@ -19,8 +19,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/css/**", "/img/**", "/js/**", "/h2-console/**", "/profile").permitAll()
-                .antMatchers("/api/**").hasRole(Role.USER.name())
+                // TODO: 접근권한 수정
+                .antMatchers(
+                        "/",
+                        "/css/**",
+                        "/img/**",
+                        "/js/**",
+                        "/h2-console/**",
+                        "/user/**",
+                        "/country/**"
+                ).permitAll()
+                .antMatchers(
+                        "/api/**"
+                ).hasRole(Role.USER.name())
                 .anyRequest().authenticated()
                 .and()
                 .logout()

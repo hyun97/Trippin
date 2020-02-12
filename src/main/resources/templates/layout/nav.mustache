@@ -14,10 +14,10 @@
 
             <!-- Links -->
             <ul class="right hide-on-med-and-down">
-                {{#user}}
+                {{#isLogin}}
                     <li><a class="btn">팔로잉</a></li>
                     <li>
-                        <a href="/user/{{user.id}}" class="modal-trigger">
+                        <a href="/user/{{loginUser.id}}" class="modal-trigger">
                             <i class="material-icons">person</i>
                         </a>
                     </li>
@@ -26,10 +26,10 @@
                             <i class="material-icons">power_settings_new</i>
                         </a>
                     </li>
-                {{/user}}
-                {{^user}}
+                {{/isLogin}}
+                {{^isLogin}}
                     <li><a href="#contact" class="btn modal-trigger">로그인</a></li>
-                {{/user}}
+                {{/isLogin}}
                 <!-- Modal -->
                 <div id="contact" class="form-structor modal">
                     <div class="signup modal-content">
@@ -50,27 +50,26 @@
 </div>
 
 <!-- Side nav (On Mobile) -->
-<!--<ul class="sidenav" id="mobile-links">-->
-<!--    <li><a class="btn" href="">로그인</a></li>-->
-<!--    <li><a class="btn" href="">팔로잉</a></li>-->
-<!--    <li><a href="../index?id=1">Home</a></li>-->
-<!--</ul>-->
-
-<!-- Side nav (On Mobile) -->
 <ul id="mobile-links" class="sidenav">
-    <li>
-        <div class="user-view">
-            <div class="background">
-                <img src="/static/img/france.jpg">
+    {{#user}}
+        <li>
+            <div class="user-view">
+                <div class="background">
+                    <img src="{{user.picture}}">
+                </div>
+                <a href=""><img class="circle" src="{{user.picture}}"></a>
+                <a href=""><span class="white-text name">{{user.name}}</span></a>
+                <a href=""><span class="white-text email">{{user.email}}</span></a>
             </div>
-            <a href=""><img class="circle" src="/static/img/philippines.jpg"></a>
-            <a href=""><span class="white-text name">John Doe</span></a>
-            <a href=""><span class="white-text email">jdandturk@gmail.com</span></a>
-        </div>
-    </li>
-    <li><a href=""><i class="material-icons">home</i>홈</a></li>
-    <li><a href=""><i class="material-icons">forward</i>로그인</a></li>
-    <li><a href=""><i class="material-icons">favorite</i>팔로잉</a></li>
+        </li>
+        <li><a href=""><i class="material-icons">home</i>홈</a></li>
+        <li><a href=""><i class="material-icons">person</i>마이페이지</a></li>
+        <li><a href=""><i class="material-icons">favorite</i>팔로잉</a></li>
+    {{/user}}
+    {{^user}}
+        <li><a href=""><i class="material-icons">forward</i>로그인</a></li>
+        <li><a href=""><i class="material-icons">home</i>홈</a></li>
+    {{/user}}
     <li>
         <div class="divider"></div>
     </li>

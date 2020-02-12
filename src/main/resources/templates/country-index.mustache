@@ -1,16 +1,25 @@
 {{>layout/header}}
 
 <div class="container">
+    <h1>{{country.name}}</h1>
     <div class="row card-wrapper">
         {{#post}}
             <div class="col s12 m6 l6 xl4">
                 <div class="card">
                     <div class="card-image">
                         <img src="/img/{{image}}">
-                        <span class="card-title">{{country.name}} · {{region}}</span>
+                        <span class="card-title">{{region}}</span>
                         <a class="btn-floating halfway-fab waves-effect waves-light red"><i
                                 class="material-icons">add</i></a>
                     </div>
+                    {{#isLogin}}
+                        {{#validUser}}
+                            <div class="edit-wrapper">
+                                <span class="edit" id="{{id}}"><i class="material-icons">create</i></span>
+                                <span class="delete" id="{{id}}"><i class="material-icons">close</i></span>
+                            </div>
+                        {{/validUser}}
+                    {{/isLogin}}
                     <div class="card-content">
                         <a href="/user/{{country.user.id}}" class="author">{{country.user.name}}</a>
                         <p>{{content}}</p>
