@@ -10,7 +10,7 @@
         <form class="col s12">
             <img class="file-upload-image" src="/img/{{country.image}}" alt="{{country.image}}"/>
             <input class="file-upload-input" hidden type='file' onchange="readURL(this);" accept="image/*"/>
-            <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger('click')">
+            <button class="file-upload-btn indigo" type="button" onclick="$('.file-upload-input').trigger('click')">
                 Update Image
             </button>
             <div class="row">
@@ -26,7 +26,7 @@
                     <label for="country-description">나라의 한줄평을 입력하세요.</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light update-country-button" type="submit">수정
+            <button class="btn waves-effect waves-light update-country-button material-btn" type="submit">수정
                 <i class="material-icons right">send</i>
             </button>
         </form>

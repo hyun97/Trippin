@@ -4,9 +4,9 @@ $(".hover").mouseleave(
     }
 );
 
-let goToCreatePost = document.querySelectorAll(".snip1477 .country-post");
-let updateCountryBtn = document.querySelectorAll(".snip1477 .edit-wrapper .edit");
-let country = document.querySelectorAll(".snip1477 img");
+let goToCreatePost = document.querySelectorAll(".country-wrapper .country-post");
+let updateCountryBtn = document.querySelectorAll(".country-wrapper .edit-wrapper .edit");
+let country = document.querySelectorAll(".country-wrapper img");
 let updatePostBtn = document.querySelectorAll(".card-wrapper .edit-wrapper .edit");
 
 function goToUpdateCountryForm(event) {

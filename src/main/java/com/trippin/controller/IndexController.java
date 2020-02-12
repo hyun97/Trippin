@@ -64,6 +64,7 @@ public class IndexController {
     public String createCountry(Model model, @LoginUser SessionUser user) {
         if (user != null) {
             model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
         }
 
         return "partial/country/create-country";
@@ -75,6 +76,7 @@ public class IndexController {
         // TODO: ADD EXCEPTION
         if (user != null) {
             model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
         }
 
         model.addAttribute("country", countryRepository.findById(id).orElse(null));
@@ -87,6 +89,7 @@ public class IndexController {
     public String createPost(@PathVariable Long countryId, Model model, @LoginUser SessionUser user) {
         if (user != null) {
             model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
         }
 
         Country country = countryRepository.findById(countryId).orElse(null);
@@ -123,6 +126,7 @@ public class IndexController {
         // TODO: ADD EXCEPTION
         if (user != null) {
             model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
         }
 
         model.addAttribute("post", postRepository.findById(postId).orElse(null));

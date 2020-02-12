@@ -14,12 +14,16 @@
             {{#isLogin}}
                 {{^validUser}}
                     <a href="#">
-                        <button>팔로우</button>
+                        <button class="btn waves-effect waves-light country-button material-btn" type="submit">
+                            팔로우
+                        </button>
                     </a>
                 {{/validUser}}
                 {{#validUser}}
                     <a href="/country/create">
-                        <button>나라등록</button>
+                        <button class="btn waves-effect waves-light country-button material-btn" type="submit">
+                            나라등록
+                        </button>
                     </a>
                 {{/validUser}}
             {{/isLogin}}
