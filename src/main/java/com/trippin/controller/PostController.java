@@ -46,5 +46,4 @@ public class PostController {
         postService.deletePost(id);
     }
 
-    // 게시글 + 을 클릭하면 게시글 번호로 게시글을 찾은 후 게시글을 유저에 저장
 }

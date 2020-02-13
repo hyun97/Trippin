@@ -32,6 +32,8 @@ public class IndexController {
             model.addAttribute("isLogin", true);
         }
 
+        // 현재 로그인된 유저가 post 를 가지고 있지 않다면 진행
+
         List<Post> post = postRepository.findAllByOrderByCreatedAtDesc();
 
         model.addAttribute("post", post);
