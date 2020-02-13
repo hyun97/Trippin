@@ -31,25 +31,6 @@
 	box-shadow: 0 0 .1em rgba(0, 0, 0, 0.35);
 }
 
-.profile-user-page button {
-	font-size: 13px;
-	font-weight: bold;
-	cursor: pointer;
-	width: 7em;
-	background: #3498db;
-	border: 1px solid #2487c9;
-	color: #fff;
-	outline: none;
-	border-radius: .6em;
-	padding: .80em;
-}
-
-.profile-user-page button:hover {
-	background: #51a7e0;
-	transition: background .2s ease-in-out;
-	border: 1px solid #2487c9;
-}
-
 .profile-user-page .user-profile-data, .profile-user-page .description-profile {
 	text-align: center;
 	padding: 0 1.5em;

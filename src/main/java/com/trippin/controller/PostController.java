@@ -21,29 +21,30 @@ public class PostController {
 
     private final PostService postService;
 
-    // create
+    // Create
     @PostMapping
     public void createPost(@RequestBody PostDto postDto) {
         postService.createPost(postDto);
     }
 
-    // read
+    // Read
     @GetMapping
     public List<PostDto> getPost() {
         return postService.getPost();
     }
 
-    // update
+    // Update
     @PutMapping("/{id}")
     public void updatePost(@PathVariable Long id, @RequestBody PostDto postDto) {
         postService.updatePost(id, postDto);
     }
 
-    // delete
+    // Delete
     // TODO: 작성글과 작성글->댓글 까지 모두 삭제
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable Long id) {
         postService.deletePost(id);
     }
 
+    // 게시글 + 을 클릭하면 게시글 번호로 게시글을 찾은 후 게시글을 유저에 저장
 }

@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"country"})
+@ToString(exclude = {"country", "post", "bookmark"})
 @Entity
 public class User extends Auditing {
 
@@ -35,11 +35,19 @@ public class User extends Auditing {
 
     private String name;
 
+    private String comment;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Country> country;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Post> post;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Bookmark> bookmark;
 
     @Builder
     public User(String name, String email, String picture, Role role) {

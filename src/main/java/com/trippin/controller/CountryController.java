@@ -21,25 +21,25 @@ public class CountryController {
 
     private final CountryService countryService;
 
-    // create
+    // Create
     @PostMapping
     public void createCountry(@RequestBody CountryDto countryDto) {
         countryService.createCountry(countryDto);
     }
 
-    // read
+    // Read
     @GetMapping
     public List<CountryDto> getCountry() {
         return countryService.getCountry();
     }
 
-    // update
+    // Update
     @PutMapping("/{id}")
     public void updateCountry(@PathVariable Long id, @RequestBody CountryDto countryDto) {
         countryService.updateCountry(id, countryDto);
     }
 
-    // delete
+    // Delete
     @DeleteMapping("/{id}")
     public void deleteCountry(@PathVariable Long id) {
         countryService.deleteCountry(id);

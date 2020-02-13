@@ -9,16 +9,19 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"country"})
+@ToString(exclude = {"country", "user"})
 @Entity
 public class Post extends Auditing {
 
@@ -36,6 +39,12 @@ public class Post extends Auditing {
 
     @ManyToOne
     private Country country;
+
+    @ManyToOne
+    private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    private List<Bookmark> bookmark;
 
     public void update(PostDto postDto) {
         this.image = postDto.getImage();

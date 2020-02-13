@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/h2-console/**",
                         "/user/**",
                         "/country/**",
+                        "/bookmark/**",
                         "/api/**"
                 ).permitAll()
 //                .antMatchers(
