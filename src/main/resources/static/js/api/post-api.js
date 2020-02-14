@@ -25,10 +25,19 @@ function createPost(event) {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data)
     }).done(function () {
-        alert("글이 등록되었습니다.");
-        location.href = "/";
+        swal({
+            title: "등록 완료 😀",
+            icon: "success",
+        }).then(() => {
+            location.href = `/`;
+        });
     }).fail(function (error) {
-        alert(JSON.stringify(error));
+        swal({
+            title: "등록 실패 😥",
+            icon: "error",
+        }).then(() => {
+            location.href = `/`;
+        });
     });
 }
 
@@ -62,11 +71,20 @@ function updatePost(event) {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data)
     }).done(function () {
-        alert("글이 수정되었습니다.");
-        // TODO: 해당 post detail 로 이동
-        location.href = "/";
+        swal({
+            title: "수정 완료 😀",
+            icon: "success",
+        }).then(() => {
+            // TODO: 해당 게시글 디테일로
+            location.href = `/`;
+        });
     }).fail(function (error) {
-        alert(JSON.stringify(error));
+        swal({
+            title: "수정 실패 😥",
+            icon: "error",
+        }).then(() => {
+            location.href = `/`;
+        });
     });
 }
 
@@ -78,10 +96,19 @@ function deletePost(event) {
         type: "DELETE",
         url: `/api/post/${event.currentTarget.id}`,
     }).done(function () {
-        alert("삭제 되었습니다.");
-        location.href = `/`;
+        swal({
+            title: "삭제 완료 😀",
+            icon: "success",
+        }).then(() => {
+            location.href = `/`;
+        });
     }).fail(function (error) {
-        alert(JSON.stringify(error));
+        swal({
+            title: "삭제 실패 😥",
+            icon: "success",
+        }).then(() => {
+            location.href = `/`;
+        });
     });
 }
 

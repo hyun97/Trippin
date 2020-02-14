@@ -1,4 +1,4 @@
-let bookmarkBtn = document.querySelectorAll(".card-image a");
+let bookmarkBtn = document.querySelectorAll(".card .bookmark");
 
 function createBookmark(event) {
     let userId = document.querySelector(".card-wrapper .user-id").innerHTML;
@@ -13,10 +13,9 @@ function createBookmark(event) {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data)
     }).done(function () {
-        alert("게시글이 저장되었습니다.");
-        window.location = "/";
+        swal("게시글 저장 성공 😀", "", "success");
     }).fail(function (error) {
-        alert(JSON.stringify(error));
+        swal("게시글 저장 실패 😥", "", "error");
     });
 }
 

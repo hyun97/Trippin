@@ -2,6 +2,10 @@
 	margin-top: 35px;
 }
 
+.card-wrapper .card-image {
+	overflow: hidden;
+}
+
 .card-social {
 	margin-top: 16px;
 }
@@ -52,6 +56,12 @@
 
 .card .card-title {
 	text-shadow: 0 -1px 0 #fff,
-	0 2px 0 #2e2e2e,
-	0 22px 30px rgba(0, 0, 0, 0.9);
+	0 1px 0 #2e2e2e;
+	cursor: default;
+}
+
+.btn-floating.halfway-fab {
+	position: absolute;
+	right: 24px;
+	bottom: 177px;
 }

@@ -25,10 +25,19 @@ function createCountry(event) {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data)
     }).done(function () {
-        alert("나라가 등록되었습니다.");
-        window.location.href = `/user/${userId.innerHTML}`;
+        swal({
+            title: "나라 등록 성공 😀 ",
+            icon: "success",
+        }).then(() => {
+            window.location.href = `/user/${userId.innerHTML}`;
+        });
     }).fail(function (error) {
-        alert(JSON.stringify(error));
+        swal({
+            title: "나라 등록 실패 😥",
+            icon: "error",
+        }).then(() => {
+            window.location.href = `/user/${userId.innerHTML}`;
+        });
     });
 }
 
@@ -40,10 +49,19 @@ function deleteCountry(event) {
         type: "DELETE",
         url: `/api/country/${event.currentTarget.id}`,
     }).done(function () {
-        alert("삭제 되었습니다.");
-        location.href = `/user/${userId.innerHTML}`;
+        swal({
+            title: "삭제 완료 😀",
+            icon: "success",
+        }).then(() => {
+            location.href = `/user/${userId.innerHTML}`;
+        });
     }).fail(function (error) {
-        alert(JSON.stringify(error));
+        swal({
+            title: "삭제 실패 😥",
+            icon: "error",
+        }).then(() => {
+            location.href = `/user/${userId.innerHTML}`;
+        });
     });
 }
 
@@ -74,10 +92,19 @@ function updateCountry(event) {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data)
     }).done(function () {
-        alert("수정완료");
-        location.href = `/user/${userId.innerHTML}`;
+        swal({
+            title: "수정 완료 😀",
+            icon: "success",
+        }).then(() => {
+            location.href = `/user/${userId.innerHTML}`;
+        });
     }).fail(function (error) {
-        alert(JSON.stringify(error));
+        swal({
+            title: "수정 실패 😥",
+            icon: "error",
+        }).then(() => {
+            location.href = `/user/${userId.innerHTML}`;
+        });
     });
 }
 

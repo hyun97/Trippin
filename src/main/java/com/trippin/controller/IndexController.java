@@ -28,11 +28,9 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
         if (user != null) {
-            model.addAttribute("loginUser", user);
+            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
             model.addAttribute("isLogin", true);
         }
-
-        // 현재 로그인된 유저가 post 를 가지고 있지 않다면 진행
 
         List<Post> post = postRepository.findAllByOrderByCreatedAtDesc();
 
@@ -58,8 +56,28 @@ public class IndexController {
         model.addAttribute("country", countryRepository.findAllByUserIdOrderByCreatedAtDesc(id));
         model.addAttribute("user", masterUser);
 
-        return "partial/user";
+        return "partial/user/user";
     }
+
+    // 유저 수정
+    @GetMapping("/user/update/{userId}")
+    public String updateUser(@PathVariable Long userId, Model model, @LoginUser SessionUser user) {
+        User masterUser = userRepository.findById(userId).orElse(null);
+
+        if (user != null) {
+            model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
+        }
+
+        if (user != null && masterUser.getId().equals(user.getId())) {
+            model.addAttribute("validUser", true);
+        }
+
+        model.addAttribute("user", masterUser);
+
+        return "/partial/user/update-user";
+    }
+
 
     // 나라 등록
     @GetMapping("/country/create")

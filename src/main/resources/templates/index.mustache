@@ -2,9 +2,6 @@
 
 <div class="container">
     <div class="row card-wrapper">
-        {{#isLogin}}
-            <span class="user-id" style="display: none">{{loginUser.id}}</span>
-        {{/isLogin}}
 
         {{#post}}
             <div class="col s12 m6 l6 xl4">
@@ -12,10 +9,13 @@
                     <div class="card-image">
                         <img src="/img/{{image}}">
                         <span class="card-title">{{country.name}} · {{region}}</span>
-                        <a id="{{id}}" class=".bookmark btn-floating halfway-fab waves-effect waves-light red">
+                    </div>
+                    {{#isLogin}}
+                        <span class="user-id" style="display: none">{{loginUser.id}}</span>
+                        <a id="{{id}}" class="bookmark btn-floating halfway-fab waves-effect waves-light red">
                             <i class="material-icons">add</i>
                         </a>
-                    </div>
+                    {{/isLogin}}
                     <div class="card-content">
                         <a href="/user/{{country.user.id}}" class="author black-text">{{country.user.name}}</a>
                         <p>{{content}}</p>

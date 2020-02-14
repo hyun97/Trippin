@@ -1,0 +1,39 @@
+{{>layout/header}}
+
+<div class="file-upload">
+    <div class="row">
+        <form class="col s12">
+            <!-- TODO: 경로 수정 -->
+            <img class="file-upload-image" src="{{user.picture}}" alt="{{user.picture}}"/>
+            <input class="file-upload-input" hidden type='file' onchange="readURL(this);" accept="image/*"/>
+            <button class="file-upload-btn indigo" type="button" onclick="$('.file-upload-input').trigger('click')">
+                Update Image
+            </button>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="update-name" class="{{user.id}}" type="text" value="{{user.name}}"
+                           required>
+                    <label for="update-name">이름을 입력하세요.</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{#user.comment}}
+                        <input id="update-comment" type="text" value="{{user.comment}}">
+                        <label for="update-comment">상태메시지를 입력하세요.</label>
+                    {{/user.comment}}
+                    {{^user.comment}}
+                        <input id="update-comment" type="text">
+                        <label for="update-comment">상태메시지를 입력하세요.</label>
+                    {{/user.comment}}
+                </div>
+            </div>
+            <button class="btn waves-effect waves-light update-post-button material-btn" type="submit">수정
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+    </div>
+</div>
+
+{{>layout/footer}}
+
