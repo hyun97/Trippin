@@ -1,0 +1,15 @@
+.user-update-btn-wrapper {
+	display: flex;
+	justify-content: space-between;
+}
+
+.delete-user-button {
+	background: #f44336;
+	border-bottom: 1px solid #b71c1c;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.delete-user-button:hover {
+	background: #e53935;
+}

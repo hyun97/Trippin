@@ -1,5 +1,6 @@
 package com.trippin.domain;
 
+import com.trippin.controller.dto.UserDto;
 import com.trippin.domain.util.Auditing;
 import com.trippin.domain.util.Role;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -40,13 +42,13 @@ public class User extends Auditing {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Country> country;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Post> post;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Bookmark> bookmark;
 
     @Builder
@@ -57,11 +59,10 @@ public class User extends Auditing {
         this.role = role;
     }
 
-    public User update(String name, String picture) {
-        this.name = name;
-        this.picture = picture;
-
-        return this;
+    public void update(UserDto userDto) {
+        this.picture = userDto.getPicture();
+        this.name = userDto.getName();
+        this.comment = userDto.getComment();
     }
 
     public String getRoleKey() {

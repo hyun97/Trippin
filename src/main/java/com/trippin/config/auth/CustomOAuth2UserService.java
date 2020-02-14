@@ -2,6 +2,7 @@ package com.trippin.config.auth;
 
 import com.trippin.domain.User;
 import com.trippin.domain.UserRepository;
+import com.trippin.domain.util.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -18,6 +19,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+
     private final UserRepository userRepository;
     private final HttpSession httpSession;
 
@@ -42,12 +44,21 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 attributes.getNameAttributeKey());
     }
 
-
     private User saveOrUpdate(OAuthAttributes attributes) {
-        User user = userRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
-                .orElse(attributes.toEntity());
+        User user = userRepository.findByEmail(attributes.getEmail()).orElse(null);
 
-        return userRepository.save(user);
+        if (user == null) {
+            User newUser = User.builder()
+                    .name(attributes.getName())
+                    .email(attributes.getEmail())
+                    .picture(attributes.getPicture())
+                    .role(Role.USER)
+                    .build();
+
+            return userRepository.save(newUser);
+        } else {
+            return user;
+        }
     }
+
 }

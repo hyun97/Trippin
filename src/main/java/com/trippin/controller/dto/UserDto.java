@@ -1,18 +1,22 @@
 package com.trippin.controller.dto;
 
-import lombok.Builder;
+import com.trippin.domain.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
+@NoArgsConstructor
 public class UserDto {
 
-    private String image;
-
-    private String email;
+    private String picture;
 
     private String name;
 
     private String comment;
 
+    public UserDto(User user) {
+        this.picture = user.getPicture();
+        this.name = user.getName();
+        this.comment = user.getComment();
+    }
 }

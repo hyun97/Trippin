@@ -10,7 +10,9 @@
         </div>
         <div class="user-profile-data">
             <h1>{{user.name}}</h1>
-            <div class="description-profile">todo: comment</div>
+            {{#user.comment}}
+                <div class="description-profile">{{user.comment}}</div>
+            {{/user.comment}}
             {{#isLogin}}
                 {{^validUser}}
                     <a href="#">
