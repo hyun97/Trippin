@@ -4,6 +4,7 @@ import com.trippin.controller.dto.PostDto;
 import com.trippin.domain.CountryRepository;
 import com.trippin.domain.Post;
 import com.trippin.domain.PostRepository;
+import com.trippin.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CountryRepository countryRepository;
+    private final UserRepository userRepository;
 
     // Create
     public void createPost(PostDto postDto) {
@@ -27,6 +29,7 @@ public class PostService {
                 .content(postDto.getContent())
                 .favorite(postDto.getFavorite())
                 .country(countryRepository.getOne(postDto.getCountryId()))
+                .user(userRepository.getOne(postDto.getUserId()))
                 .build();
 
         postRepository.save(post);

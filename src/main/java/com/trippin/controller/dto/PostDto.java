@@ -20,6 +20,8 @@ public class PostDto {
 
     private Long countryId;
 
+    private Long userId;
+
     public PostDto(Post post) {
         this.id = post.getId();
         this.image = post.getImage();
@@ -27,6 +29,7 @@ public class PostDto {
         this.content = post.getContent();
         this.favorite = post.getFavorite();
         this.countryId = post.getCountry().getId();
+        this.userId = post.getUser().getId();
     }
 
 }

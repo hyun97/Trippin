@@ -55,6 +55,7 @@ public class IndexController {
 
         model.addAttribute("country", countryRepository.findAllByUserIdOrderByCreatedAtDesc(id));
         model.addAttribute("user", masterUser);
+        model.addAttribute("countPost", masterUser.getPost().size());
 
         return "partial/user/user";
     }

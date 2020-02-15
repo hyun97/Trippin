@@ -7,6 +7,7 @@ function createPost(event) {
     event.preventDefault();
 
     let countryId = document.querySelector(".create-post #country").className;
+    let userId = document.querySelector(".create-post #region").className;
     let region = document.querySelector(".create-post #region");
     let content = document.querySelector(".create-post #content");
     let imageName = document.querySelector(".file-upload .file-upload-input");
@@ -16,7 +17,8 @@ function createPost(event) {
         region: region.value,
         content: content.value,
         favorite: 0,
-        countryId: countryId
+        countryId: countryId,
+        userId: userId
     };
 
     $.ajax({
