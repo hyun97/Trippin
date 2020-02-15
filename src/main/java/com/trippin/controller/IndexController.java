@@ -120,7 +120,28 @@ public class IndexController {
         return "partial/post/create-post";
     }
 
-    // 게시글 출력
+    // 유저 게시글 출력
+    @GetMapping("/user/post/{userId}")
+    public String readUserPost(@PathVariable Long userId, Model model, @LoginUser SessionUser loginUser) {
+        if (loginUser != null) {
+            model.addAttribute("loginUser", loginUser);
+            model.addAttribute("isLogin", true);
+        }
+
+        List<Post> post = postRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user != null && user.getId().equals(loginUser.getId())) {
+            model.addAttribute("validUser", true);
+        }
+
+        model.addAttribute("post", post);
+        model.addAttribute("user", user);
+
+        return "/user-index";
+    }
+
+    // 나라 게시글 출력
     @GetMapping("/country/{countryId}")
     public String readCountryPost(@PathVariable Long countryId, Model model, @LoginUser SessionUser user) {
         if (user != null) {

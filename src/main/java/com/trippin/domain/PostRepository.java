@@ -8,6 +8,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByCountryIdOrderByCreatedAtDesc(Long countryId);
 
+    List<Post> findAllByUserIdOrderByCreatedAtDesc(Long userId);
+
     List<Post> findAllByOrderByCreatedAtDesc();
 
 }

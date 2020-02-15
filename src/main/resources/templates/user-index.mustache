@@ -1,14 +1,14 @@
 {{>layout/header}}
 
 <div class="container">
-    <h1 class="index-title">{{country.name}}</h1>
+    <h1 class="index-title">{{user.name}}</h1>
     <div class="row card-wrapper">
         {{#post}}
             <div class="col s12 m6 l6 xl4">
                 <div class="card">
                     <div class="card-image">
                         <img src="/img/{{image}}">
-                        <span class="card-title">{{region}}</span>
+                        <span class="card-title">{{country.name}} · {{region}}</span>
                     </div>
                     {{#isLogin}}
                         <span class="user-id" style="display: none">{{loginUser.id}}</span>

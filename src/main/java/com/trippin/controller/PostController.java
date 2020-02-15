@@ -40,7 +40,6 @@ public class PostController {
     }
 
     // Delete
-    // TODO: 작성글과 작성글->댓글 까지 모두 삭제
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable Long id) {
         postService.deletePost(id);
