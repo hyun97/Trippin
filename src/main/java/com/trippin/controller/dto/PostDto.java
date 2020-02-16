@@ -16,8 +16,6 @@ public class PostDto {
 
     private String content;
 
-    private Integer favorite;
-
     private Long countryId;
 
     private Long userId;
@@ -27,7 +25,6 @@ public class PostDto {
         this.image = post.getImage();
         this.region = post.getRegion();
         this.content = post.getContent();
-        this.favorite = post.getFavorite();
         this.countryId = post.getCountry().getId();
         this.userId = post.getUser().getId();
     }

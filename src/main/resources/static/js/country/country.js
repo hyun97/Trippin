@@ -10,7 +10,7 @@ let country = document.querySelectorAll(".country-wrapper img");
 let updatePostBtn = document.querySelectorAll(".card-wrapper .edit-wrapper .edit");
 
 function goToUpdateCountryForm(event) {
-    location.href = `/country/update/${event.currentTarget.id}`;
+    location.href = `/country/${event.currentTarget.id}/update`;
 }
 
 function goToPostForm(event) {
@@ -22,7 +22,7 @@ function goToPostList(event) {
 }
 
 function goToUpdatePostForm(event) {
-    location.href = `/post/update/${event.currentTarget.id}`;
+    location.href = `/post/${event.currentTarget.id}/update`;
 }
 
 function eventListening() {

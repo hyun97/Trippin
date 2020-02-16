@@ -23,7 +23,7 @@
                 {{/validUser}}
                 {{#validUser}}
                     <div class="edit-profile-button">
-                        <a href="/user/update/{{user.id}}">
+                        <a href="/user/{{user.id}}/update">
                             프로필 수정
                         </a>
                     </div>
@@ -36,7 +36,8 @@
             {{/isLogin}}
         </div>
         <ul class="data-user">
-            <li><a href="/user/post/{{user.id}}"><strong>{{countPost}}</strong><span>게시물</span></a></li>
+            <li><a href="/user/{{user.id}}/post"><strong>{{countPost}}</strong><span>게시물</span></a></li>
+            <li><a href="/user/{{user.id}}/bookmark"><strong>{{countBookmark}}</strong><span>저장</span></a></li>
             <li><a href="#"><strong>000</strong><span>팔로워</span></a></li>
             <li><a href="#"><strong>000</strong><span>팔로잉</span></a></li>
         </ul>

@@ -2,6 +2,8 @@ package com.trippin.controller;
 
 import com.trippin.config.auth.LoginUser;
 import com.trippin.config.auth.SessionUser;
+import com.trippin.domain.Bookmark;
+import com.trippin.domain.BookmarkRepository;
 import com.trippin.domain.Country;
 import com.trippin.domain.CountryRepository;
 import com.trippin.domain.Post;
@@ -23,18 +25,32 @@ public class IndexController {
     private final CountryRepository countryRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     // 메인
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
+        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+
         if (user != null) {
             model.addAttribute("loginUser", userRepository.getOne(user.getId()));
+
             model.addAttribute("isLogin", true);
+
+            postList.forEach(post -> {
+                List<Bookmark> bookmark =
+                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), post.getId());
+                List<Bookmark> favorite =
+                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(user.getId(), post.getId());
+                if (!bookmark.isEmpty()) post.setValidBookmark(true);
+                if (!favorite.isEmpty()) post.setValidFavorite(true);
+            });
         }
 
-        List<Post> post = postRepository.findAllByOrderByCreatedAtDesc();
+        postList.forEach(
+                (post) -> post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId())));
 
-        model.addAttribute("post", post);
+        model.addAttribute("post", postList);
 
         return "index";
     }
@@ -56,12 +72,14 @@ public class IndexController {
         model.addAttribute("country", countryRepository.findAllByUserIdOrderByCreatedAtDesc(id));
         model.addAttribute("user", masterUser);
         model.addAttribute("countPost", masterUser.getPost().size());
+        model.addAttribute("countBookmark",
+                bookmarkRepository.countBookmarkByUserIdAndSaveIsNotNull(masterUser.getId()));
 
         return "partial/user/user";
     }
 
     // 유저 수정
-    @GetMapping("/user/update/{userId}")
+    @GetMapping("/user/{userId}/update")
     public String updateUser(@PathVariable Long userId, Model model, @LoginUser SessionUser user) {
         User masterUser = userRepository.findById(userId).orElse(null);
 
@@ -92,7 +110,7 @@ public class IndexController {
     }
 
     // 나라 수정
-    @GetMapping("/country/update/{id}")
+    @GetMapping("/country/{id}/update")
     public String updateCountry(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
         // TODO: ADD EXCEPTION
         if (user != null) {
@@ -121,49 +139,101 @@ public class IndexController {
     }
 
     // 유저 게시글 출력
-    @GetMapping("/user/post/{userId}")
+    @GetMapping("/user/{userId}/post")
     public String readUserPost(@PathVariable Long userId, Model model, @LoginUser SessionUser loginUser) {
+        List<Post> postList = postRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
+
         if (loginUser != null) {
             model.addAttribute("loginUser", loginUser);
+
             model.addAttribute("isLogin", true);
+
+            postList.forEach(post -> {
+                List<Bookmark> bookmark =
+                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(loginUser.getId(), post.getId());
+                List<Bookmark> favorite =
+                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(loginUser.getId(), post.getId());
+                if (!bookmark.isEmpty()) post.setValidBookmark(true);
+                if (!favorite.isEmpty()) post.setValidFavorite(true);
+            });
         }
 
-        List<Post> post = postRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
         User user = userRepository.findById(userId).orElse(null);
 
-        if (user != null && user.getId().equals(loginUser.getId())) {
+        postList.forEach(
+                (post) -> post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId())));
+
+        if (loginUser != null && user.getId().equals(loginUser.getId())) {
             model.addAttribute("validUser", true);
         }
-
-        model.addAttribute("post", post);
+        model.addAttribute("post", postList);
         model.addAttribute("user", user);
 
         return "/user-index";
     }
 
+    // 유저 북마크 게시글 출력
+    @GetMapping("/user/{userId}/bookmark")
+    public String readUserBookmark(@PathVariable Long userId, Model model, @LoginUser SessionUser loginUser) {
+        List<Bookmark> bookmarkList = bookmarkRepository.findPostByUserIdAndSaveIsNotNull(userId);
+
+        if (loginUser != null) {
+            model.addAttribute("loginUser", loginUser);
+            model.addAttribute("isLogin", true);
+
+            bookmarkList.forEach(bookmark -> {
+                List<Bookmark> favorite =
+                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(loginUser.getId(),
+                                bookmark.getPost().getId());
+                if (!favorite.isEmpty()) bookmark.getPost().setValidFavorite(true);
+            });
+        }
+
+        bookmarkList.forEach((p) ->
+                p.getPost().setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(p.getPost().getId())));
+
+        model.addAttribute("bookmark", bookmarkList);
+
+        return "/bookmark-index";
+    }
+
     // 나라 게시글 출력
     @GetMapping("/country/{countryId}")
     public String readCountryPost(@PathVariable Long countryId, Model model, @LoginUser SessionUser user) {
+        List<Post> postList = postRepository.findAllByCountryIdOrderByCreatedAtDesc(countryId);
+
         if (user != null) {
             model.addAttribute("loginUser", user);
+
             model.addAttribute("isLogin", true);
+
+            postList.forEach(post -> {
+                List<Bookmark> bookmark =
+                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), post.getId());
+                List<Bookmark> favorite =
+                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(user.getId(), post.getId());
+                if (!bookmark.isEmpty()) post.setValidBookmark(true);
+                if (!favorite.isEmpty()) post.setValidFavorite(true);
+            });
         }
 
-        List<Post> post = postRepository.findAllByCountryIdOrderByCreatedAtDesc(countryId);
         Country country = countryRepository.findById(countryId).orElse(null);
+
+        postList.forEach(
+                (post) -> post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId())));
 
         if (user != null && country.getUser().getId().equals(user.getId())) {
             model.addAttribute("validUser", true);
         }
 
-        model.addAttribute("post", post);
+        model.addAttribute("post", postList);
         model.addAttribute("country", country);
 
         return "/country-index";
     }
 
     // 게시글 수정
-    @GetMapping("/post/update/{postId}")
+    @GetMapping("/post/{postId}/update")
     public String updatePost(@PathVariable Long postId, Model model, @LoginUser SessionUser user) {
         // TODO: ADD EXCEPTION
         if (user != null) {

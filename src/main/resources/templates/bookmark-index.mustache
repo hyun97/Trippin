@@ -1,0 +1,41 @@
+{{>layout/header}}
+
+<div class="container">
+    <h1 class="index-title">저장한 게시물</h1>
+    <div class="row card-wrapper">
+        {{#bookmark}}
+            <div class="col s12 m6 l6 xl4">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="/img/{{post.image}}">
+                        <span class="card-title">{{post.country.name}} · {{post.region}}</span>
+                    </div>
+                    {{#isLogin}}
+                        <span class="user-id" style="display: none">{{loginUser.id}}</span>
+                        <a id="{{post.id}}" class="bookmark btn-floating halfway-fab waves-effect waves-light red">
+                            <i class="material-icons">bookmark</i>
+                        </a>
+                    {{/isLogin}}
+                    <div class="card-content">
+                        <a href="/user/{{post.user.id}}" class="author black-text">{{post.user.name}}</a>
+                        <p>{{post.content}}</p>
+                        <div class="card-social">
+                            {{^post.validFavorite}}
+                                <i id="{{post.id}}" class="small material-icons favorite">favorite_border</i>
+                            {{/post.validFavorite}}
+                            {{#post.validFavorite}}
+                                <i id="{{post.id}}" class="small material-icons favorite-remove red-text">favorite</i>
+                            {{/post.validFavorite}}
+                            <i class="small material-icons follow">person_add</i>
+                            <div class="favorite-count">좋아요 <span>{{post.favorite}}</span>개</div>
+                            <a href="/card-detail" class="comment-count">댓글 999개</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/bookmark}}
+    </div>
+</div>
+
+{{>layout/footer}}
+

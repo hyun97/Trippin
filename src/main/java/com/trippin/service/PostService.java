@@ -27,7 +27,6 @@ public class PostService {
                 .image(postDto.getImage())
                 .region(postDto.getRegion())
                 .content(postDto.getContent())
-                .favorite(postDto.getFavorite())
                 .country(countryRepository.getOne(postDto.getCountryId()))
                 .user(userRepository.getOne(postDto.getUserId()))
                 .build();

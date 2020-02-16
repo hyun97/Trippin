@@ -6,6 +6,14 @@ import java.util.List;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
-    List<Bookmark> findAllByUserId(Long userId);
+    List<Bookmark> findPostByUserIdAndPostIdAndSaveIsNotNull(Long userId, Long postId);
+
+    List<Bookmark> findPostByUserIdAndPostIdAndSaveIsNull(Long userId, Long postId);
+
+    List<Bookmark> findPostByUserIdAndSaveIsNotNull(Long userId);
+
+    Integer countBookmarkByUserIdAndSaveIsNotNull(Long userId);
+
+    Integer countBookmarkByPostIdAndSaveIsNull(Long postId);
 
 }

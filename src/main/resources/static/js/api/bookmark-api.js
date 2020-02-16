@@ -1,10 +1,15 @@
 let bookmarkBtn = document.querySelectorAll(".card .bookmark");
+let favoriteBtn = document.querySelectorAll(".card .favorite");
 
+// 북마크 추가
 function createBookmark(event) {
     let userId = document.querySelector(".card-wrapper .user-id").innerHTML;
 
+    event.target.innerHTML = "bookmark";
+
     let data = {
-        userId: userId
+        save: 1,
+        userId: userId,
     };
 
     $.ajax({
@@ -13,16 +18,116 @@ function createBookmark(event) {
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data)
     }).done(function () {
-        swal("게시글 저장 성공 😀", "", "success");
+        //
     }).fail(function (error) {
         swal("게시글 저장 실패 😥", "", "error");
     });
 }
 
+// 북마크 삭제
+function deleteBookmark(event) {
+    let userId = document.querySelector(".card-wrapper .user-id").innerHTML;
+
+    event.target.innerHTML = "bookmark_border";
+
+    let data = {
+        save: 1,
+        userId: userId,
+    };
+
+    $.ajax({
+        type: "DELETE",
+        url: `/api/bookmark/${event.currentTarget.id}`,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data)
+    }).done(function () {
+        //
+    }).fail(function (error) {
+        swal("북마크 취소 실패 😥", "", "error");
+    });
+}
+
+// 좋아요 추가
+function createFavorite(event) {
+    increaseFavorite(event);
+
+    let userId = document.querySelector(".card-wrapper .user-id").innerHTML;
+
+    let data = {
+        userId: userId
+    };
+
+    $.ajax({
+        type: "POST",
+        url: `/api/favorite/${event.currentTarget.id}`,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data)
+    }).done(function () {
+        //
+    }).fail(function (error) {
+        swal("좋아요 실패 😥", "", "error");
+    });
+}
+
+// 좋아요 삭제
+function deleteFavorite(event) {
+    decreaseFavorite(event);
+
+    let userId = document.querySelector(".card-wrapper .user-id").innerHTML;
+
+    let data = {
+        userId: userId
+    };
+
+    $.ajax({
+        type: "DELETE",
+        url: `/api/favorite/${event.currentTarget.id}`,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data)
+    }).done(function () {
+        //
+    }).fail(function (error) {
+        swal("좋아요 취소 실패 😥", "", "error");
+    });
+}
+
+function increaseFavorite(event) {
+    event.target.nextElementSibling.nextElementSibling.childNodes[1].textContent++;
+    event.target.innerHTML = "favorite";
+    event.target.classList.add("red-text");
+}
+
+function decreaseFavorite(event) {
+    event.target.nextElementSibling.nextElementSibling.childNodes[1].textContent--;
+    event.target.innerHTML = "favorite_border";
+    event.target.classList.remove("red-text");
+}
+
+function handleBookmarkClick(event) {
+    if (event.target.innerHTML === "bookmark_border") {
+        createBookmark(event);
+    } else {
+        deleteBookmark(event);
+    }
+}
+
+function handleFavoriteClick(event) {
+    if (event.target.innerHTML === "favorite_border") {
+        createFavorite(event);
+    } else {
+        deleteFavorite(event);
+    }
+}
+
 function listeningEvent() {
     if (bookmarkBtn) {
         [].forEach.call(bookmarkBtn, function (e) {
-            e.addEventListener("click", createBookmark);
+            e.addEventListener("click", handleBookmarkClick);
+        })
+    }
+    if (favoriteBtn) {
+        [].forEach.call(favoriteBtn, function (e) {
+            e.addEventListener("click", handleFavoriteClick);
         })
     }
 }

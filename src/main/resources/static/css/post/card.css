@@ -10,8 +10,13 @@
 	margin-top: 16px;
 }
 
-.card-social .favorite {
+.card-social .favorite, .favorite-remove {
 	margin-right: 8px;
+	cursor: pointer;
+}
+
+.card-social .follow {
+	cursor: pointer;
 }
 
 .card-social .favorite-count {
@@ -32,7 +37,7 @@
 	cursor: default;
 }
 
-.card * {
+.card {
 	transition: all 0.15s;
 }
 

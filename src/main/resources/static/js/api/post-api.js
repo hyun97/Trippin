@@ -16,7 +16,6 @@ function createPost(event) {
         image: imageName.files[0].name,
         region: region.value,
         content: content.value,
-        favorite: 0,
         countryId: countryId,
         userId: userId
     };

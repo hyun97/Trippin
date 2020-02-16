@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.CascadeType;
@@ -16,9 +17,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import java.util.List;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -36,7 +39,14 @@ public class Post extends Auditing {
 
     private String content;
 
+    @Transient
     private Integer favorite;
+
+    @Transient
+    private boolean validBookmark;
+
+    @Transient
+    private boolean validFavorite;
 
     @ManyToOne
     private Country country;
@@ -51,7 +61,6 @@ public class Post extends Auditing {
         this.image = postDto.getImage();
         this.region = postDto.getRegion();
         this.content = postDto.getContent();
-        this.favorite = postDto.getFavorite();
     }
 
 }

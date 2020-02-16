@@ -10,8 +10,11 @@ public class BookmarkDto {
 
     private Long userId;
 
+    private Integer save;
+
     public BookmarkDto(Bookmark bookmark) {
         this.userId = bookmark.getUser().getId();
+        this.save = bookmark.getSave();
     }
 
 }
