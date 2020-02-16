@@ -51,6 +51,12 @@ public class User extends Auditing {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Bookmark> bookmark;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Follower> follower;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Following> following;
+
     @Builder
     public User(String name, String email, String picture, Role role) {
         this.name = name;
