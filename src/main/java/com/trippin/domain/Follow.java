@@ -19,15 +19,18 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {""})
+@ToString(exclude = {"following"})
 @Entity
-public class Following extends Auditing {
+public class Follow extends Auditing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private User user;
+    private User following;
+
+    @ManyToOne
+    private User follower;
 
 }

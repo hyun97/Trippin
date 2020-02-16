@@ -23,7 +23,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"country", "post", "bookmark"})
+@ToString(exclude = {"country", "post", "bookmark", "follower", "following"})
 @Entity
 public class User extends Auditing {
 
@@ -51,11 +51,11 @@ public class User extends Auditing {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Bookmark> bookmark;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Follower> follower;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "following", cascade = CascadeType.REMOVE)
+    private List<Follow> following;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Following> following;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "follower", cascade = CascadeType.REMOVE)
+    private List<Follow> follower;
 
     @Builder
     public User(String name, String email, String picture, Role role) {
