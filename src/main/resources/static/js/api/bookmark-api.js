@@ -92,13 +92,27 @@ function deleteFavorite(event) {
 }
 
 function increaseFavorite(event) {
-    event.target.nextElementSibling.nextElementSibling.childNodes[1].textContent++;
+    let countFavorite = document.querySelectorAll(".favorite-count span");
+
+    countFavorite.forEach(function (e) {
+        if (event.target.id == e.id) {
+            e.innerHTML++;
+        }
+    });
+
     event.target.innerHTML = "favorite";
     event.target.classList.add("red-text");
 }
 
 function decreaseFavorite(event) {
-    event.target.nextElementSibling.nextElementSibling.childNodes[1].textContent--;
+    let countFavorite = document.querySelectorAll(".favorite-count span");
+
+    countFavorite.forEach(function (e) {
+        if (event.target.id == e.id) {
+            e.innerHTML--;
+        }
+    });
+
     event.target.innerHTML = "favorite_border";
     event.target.classList.remove("red-text");
 }

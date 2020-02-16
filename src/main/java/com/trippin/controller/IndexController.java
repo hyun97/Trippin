@@ -2,14 +2,7 @@ package com.trippin.controller;
 
 import com.trippin.config.auth.LoginUser;
 import com.trippin.config.auth.SessionUser;
-import com.trippin.domain.Bookmark;
-import com.trippin.domain.BookmarkRepository;
-import com.trippin.domain.Country;
-import com.trippin.domain.CountryRepository;
-import com.trippin.domain.Post;
-import com.trippin.domain.PostRepository;
-import com.trippin.domain.User;
-import com.trippin.domain.UserRepository;
+import com.trippin.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +19,7 @@ public class IndexController {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final BookmarkRepository bookmarkRepository;
+    private final FollowRepository followRepository;
 
     // 메인
     @GetMapping("/")
@@ -42,8 +36,13 @@ public class IndexController {
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), post.getId());
                 List<Bookmark> favorite =
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(user.getId(), post.getId());
+                List<Follow> follow =
+                        followRepository.findByFollowerIdAndFollowingId(user.getId(), post.getUser().getId());
+
                 if (!bookmark.isEmpty()) post.setValidBookmark(true);
                 if (!favorite.isEmpty()) post.setValidFavorite(true);
+                if (!follow.isEmpty()) post.setValidFollow(true);
+                if (post.getUser().getId().equals(user.getId())) post.setValidUser(true);
             });
         }
 
@@ -67,6 +66,10 @@ public class IndexController {
 
         if (user != null && masterUser.getId().equals(user.getId())) {
             model.addAttribute("validUser", true);
+        }
+
+        if (masterUser.getCountry().size() == 1) {
+            model.addAttribute("isCountrySize", true);
         }
 
         model.addAttribute("country", countryRepository.findAllByUserIdOrderByCreatedAtDesc(id));
@@ -153,8 +156,12 @@ public class IndexController {
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(loginUser.getId(), post.getId());
                 List<Bookmark> favorite =
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(loginUser.getId(), post.getId());
+                List<Follow> follow =
+                        followRepository.findByFollowerIdAndFollowingId(loginUser.getId(), post.getUser().getId());
                 if (!bookmark.isEmpty()) post.setValidBookmark(true);
                 if (!favorite.isEmpty()) post.setValidFavorite(true);
+                if (!follow.isEmpty()) post.setValidFollow(true);
+                if (post.getUser().getId().equals(loginUser.getId())) post.setValidUser(true);
             });
         }
 
@@ -185,7 +192,13 @@ public class IndexController {
                 List<Bookmark> favorite =
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(loginUser.getId(),
                                 bookmark.getPost().getId());
+                List<Follow> follow =
+                        followRepository.findByFollowerIdAndFollowingId(loginUser.getId(),
+                                bookmark.getPost().getUser().getId());
                 if (!favorite.isEmpty()) bookmark.getPost().setValidFavorite(true);
+                if (!follow.isEmpty()) bookmark.getPost().setValidFollow(true);
+                if (bookmark.getPost().getUser().getId().equals(loginUser.getId()))
+                    bookmark.getPost().setValidUser(true);
             });
         }
 
@@ -212,8 +225,12 @@ public class IndexController {
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), post.getId());
                 List<Bookmark> favorite =
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(user.getId(), post.getId());
+                List<Follow> follow =
+                        followRepository.findByFollowerIdAndFollowingId(user.getId(), post.getUser().getId());
                 if (!bookmark.isEmpty()) post.setValidBookmark(true);
                 if (!favorite.isEmpty()) post.setValidFavorite(true);
+                if (!follow.isEmpty()) post.setValidFollow(true);
+                if (post.getUser().getId().equals(user.getId())) post.setValidUser(true);
             });
         }
 

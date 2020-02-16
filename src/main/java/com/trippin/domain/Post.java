@@ -48,6 +48,12 @@ public class Post extends Auditing {
     @Transient
     private boolean validFavorite;
 
+    @Transient
+    private boolean validFollow;
+
+    @Transient
+    private boolean validUser;
+
     @ManyToOne
     private Country country;
 

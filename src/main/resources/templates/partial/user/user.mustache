@@ -1,8 +1,7 @@
 {{>layout/header}}
 
 <!-- User Id -->
-<span class="user-id" style="display: none">{{user.id}}</span>
-
+<span class="user-id hide">{{user.id}}</span>
 <div class="content-profile-page">
     <div class="profile-user-page card">
         <div class="img-user-profile">
@@ -28,9 +27,18 @@
                         </a>
                     </div>
                     <a href="/country/create">
-                        <button class="btn waves-effect waves-light country-button material-btn" type="submit">
-                            나라등록
-                        </button>
+                        {{#isCountrySize}}
+                            <button class="btn pulse waves-effect waves-light country-button material-btn"
+                                    type="submit">
+                                나라등록
+                            </button>
+                        {{/isCountrySize}}
+                        {{^isCountrySize}}
+                            <button class="btn waves-effect waves-light country-button material-btn"
+                                    type="submit">
+                                나라등록
+                            </button>
+                        {{/isCountrySize}}
                     </a>
                 {{/validUser}}
             {{/isLogin}}

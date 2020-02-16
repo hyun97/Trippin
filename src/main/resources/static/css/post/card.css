@@ -10,13 +10,12 @@
 	margin-top: 16px;
 }
 
-.card-social .favorite, .favorite-remove {
-	margin-right: 8px;
+.card-social i {
 	cursor: pointer;
 }
 
-.card-social .follow {
-	cursor: pointer;
+.card-social .favorite, .favorite-remove, .unfavorite {
+	margin-right: 8px;
 }
 
 .card-social .favorite-count {

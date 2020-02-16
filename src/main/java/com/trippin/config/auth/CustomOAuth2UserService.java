@@ -1,5 +1,7 @@
 package com.trippin.config.auth;
 
+import com.trippin.domain.Country;
+import com.trippin.domain.CountryRepository;
 import com.trippin.domain.User;
 import com.trippin.domain.UserRepository;
 import com.trippin.domain.util.Role;
@@ -21,6 +23,7 @@ import java.util.Collections;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final UserRepository userRepository;
+    private final CountryRepository countryRepository;
     private final HttpSession httpSession;
 
     @Override
@@ -55,7 +58,18 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                     .role(Role.USER)
                     .build();
 
-            return userRepository.save(newUser);
+            userRepository.save(newUser);
+
+            Country country = Country.builder()
+                    .image("Korea.jpg")
+                    .name("KOREA")
+                    .content("")
+                    .user(userRepository.findByEmail(attributes.getEmail()).orElse(null))
+                    .build();
+
+            countryRepository.save(country);
+
+            return newUser;
         } else {
             return user;
         }

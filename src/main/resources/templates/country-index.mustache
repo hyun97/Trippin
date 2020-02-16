@@ -13,12 +13,14 @@
                     {{#isLogin}}
                         <span class="user-id" style="display: none">{{loginUser.id}}</span>
                         {{^validBookmark}}
-                            <a id="{{id}}" class="bookmark btn-floating halfway-fab waves-effect waves-light red">
+                            <a id="{{id}}"
+                               class="hoverable bookmark btn-floating halfway-fab waves-effect waves-light red">
                                 <i class="material-icons">bookmark_border</i>
                             </a>
                         {{/validBookmark}}
                         {{#validBookmark}}
-                            <a id="{{id}}" class="bookmark btn-floating halfway-fab waves-effect waves-light red">
+                            <a id="{{id}}"
+                               class="hoverable bookmark btn-floating halfway-fab waves-effect waves-light red">
                                 <i class="material-icons">bookmark</i>
                             </a>
                         {{/validBookmark}}
@@ -37,10 +39,17 @@
                                 <i id="{{id}}" class="small material-icons favorite">favorite_border</i>
                             {{/validFavorite}}
                             {{#validFavorite}}
-                                <i id="{{id}}" class="small material-icons favorite-remove red-text">favorite</i>
+                                <i id="{{id}}" class="small material-icons favorite red-text">favorite</i>
                             {{/validFavorite}}
-                            <i class="small material-icons follow">person_add</i>
-                            <div class="favorite-count">좋아요 <span>{{favorite}}</span>개</div>
+                            {{^validUser}}
+                                {{^validFollow}}
+                                    <i id="{{user.id}}" class="small material-icons follow">person_add</i>
+                                {{/validFollow}}
+                                {{#validFollow}}
+                                    <i id="{{user.id}}" class="small material-icons follow blue-text text-darken-3">record_voice_over</i>
+                                {{/validFollow}}
+                            {{/validUser}}
+                            <div class="favorite-count">좋아요 <span id="{{id}}">{{favorite}}</span>개</div>
                             <a href="/card-detail" class="comment-count">댓글 999개</a>
                         </div>
                     </div>
