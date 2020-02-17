@@ -263,7 +263,7 @@ public class IndexController {
             model.addAttribute("validUser", true);
         }
 
-        List<Follow> followList = followRepository.findByFollowerId(masterUser.getId());
+        List<Follow> followList = followRepository.findByFollowingId(masterUser.getId());
         List<User> followerList = new ArrayList<>();
 
         followList.forEach(follow ->
