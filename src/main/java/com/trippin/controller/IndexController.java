@@ -238,6 +238,14 @@ public class IndexController {
             model.addAttribute("validUser", true);
         }
 
+        List<Follow> followList = followRepository.findByFollowerId(masterUser.getId());
+        List<User> followingList = new ArrayList<>();
+
+        followList.forEach(follow ->
+                followingList.add(userRepository.findById(follow.getFollowing().getId()).orElse(null)));
+
+        model.addAttribute("followingUser", followingList);
+
         return "partial/user/following";
     }
 
@@ -254,6 +262,14 @@ public class IndexController {
         if (user != null && masterUser.getId().equals(user.getId())) {
             model.addAttribute("validUser", true);
         }
+
+        List<Follow> followList = followRepository.findByFollowerId(masterUser.getId());
+        List<User> followerList = new ArrayList<>();
+
+        followList.forEach(follow ->
+                followerList.add(userRepository.findById(follow.getFollower().getId()).orElse(null)));
+
+        model.addAttribute("followerUser", followerList);
 
         return "partial/user/follower";
     }
