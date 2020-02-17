@@ -75,10 +75,9 @@
 }
 
 .file-upload-image {
-	max-height: 600px;
-	max-width: 600px;
-	margin: auto;
-	padding: 20px;
+	width: 100%;
+	height: auto;
+	margin-bottom: 13px;
 }
 
 .remove-image {

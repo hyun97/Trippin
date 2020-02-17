@@ -15,7 +15,7 @@
             <!-- Links -->
             <ul class="right hide-on-med-and-down">
                 {{#isLogin}}
-                    <li><a class="btn material-btn">팔로잉</a></li>
+                    <li><a href="/user/{{loginUser.id}}/follow" class="btn material-btn">팔로잉</a></li>
                     <li>
                         <a href="/user/{{loginUser.id}}" class="modal-trigger">
                             <i class="material-icons">person</i>

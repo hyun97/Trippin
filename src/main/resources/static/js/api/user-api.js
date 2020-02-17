@@ -10,7 +10,7 @@ function updateUser(event) {
     let comment = document.querySelector("#update-comment").value;
     let imageName = document.querySelector(".file-upload .file-upload-input");
 
-    let updatedImage = document.querySelector(".file-upload-image").alt;
+    let updatedImage = document.querySelector(".user-image img").alt;
 
     // 파일이 업로드 되었을 시 수정
     if (imageName.files[0] != null) {

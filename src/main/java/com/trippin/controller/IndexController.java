@@ -54,91 +54,14 @@ public class IndexController {
         return "index";
     }
 
-    // 유저 프로필
-    @GetMapping("/user/{id}")
-    public String user(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
-        User masterUser = userRepository.findById(id).orElse(null);
+    // 팔로잉 게시글 출력
+    @GetMapping("/user/{userId}/follow")
+    public String readFollowingPost(@PathVariable Long userId, Model model, @LoginUser SessionUser loginUser) {
+        List<Post> postList = postRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
 
-        if (user != null) {
-            model.addAttribute("loginUser", user);
-            model.addAttribute("isLogin", true);
-        }
+        model.addAttribute("post", postList);
 
-        if (user != null && masterUser.getId().equals(user.getId())) {
-            model.addAttribute("validUser", true);
-        }
-
-        if (masterUser.getCountry().size() == 1) {
-            model.addAttribute("isCountrySize", true);
-        }
-
-        model.addAttribute("country", countryRepository.findAllByUserIdOrderByCreatedAtDesc(id));
-        model.addAttribute("user", masterUser);
-        model.addAttribute("countPost", masterUser.getPost().size());
-        model.addAttribute("countBookmark",
-                bookmarkRepository.countBookmarkByUserIdAndSaveIsNotNull(masterUser.getId()));
-
-        return "partial/user/user";
-    }
-
-    // 유저 수정
-    @GetMapping("/user/{userId}/update")
-    public String updateUser(@PathVariable Long userId, Model model, @LoginUser SessionUser user) {
-        User masterUser = userRepository.findById(userId).orElse(null);
-
-        if (user != null) {
-            model.addAttribute("loginUser", user);
-            model.addAttribute("isLogin", true);
-        }
-
-        if (user != null && masterUser.getId().equals(user.getId())) {
-            model.addAttribute("validUser", true);
-        }
-
-        model.addAttribute("user", masterUser);
-
-        return "/partial/user/update-user";
-    }
-
-
-    // 나라 등록
-    @GetMapping("/country/create")
-    public String createCountry(Model model, @LoginUser SessionUser user) {
-        if (user != null) {
-            model.addAttribute("loginUser", user);
-            model.addAttribute("isLogin", true);
-        }
-
-        return "partial/country/create-country";
-    }
-
-    // 나라 수정
-    @GetMapping("/country/{id}/update")
-    public String updateCountry(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
-        // TODO: ADD EXCEPTION
-        if (user != null) {
-            model.addAttribute("loginUser", user);
-            model.addAttribute("isLogin", true);
-        }
-
-        model.addAttribute("country", countryRepository.findById(id).orElse(null));
-
-        return "partial/country/update-country";
-    }
-
-    // 게시글 등록
-    @GetMapping("/post/create/{countryId}")
-    public String createPost(@PathVariable Long countryId, Model model, @LoginUser SessionUser user) {
-        if (user != null) {
-            model.addAttribute("loginUser", user);
-            model.addAttribute("isLogin", true);
-        }
-
-        Country country = countryRepository.findById(countryId).orElse(null);
-
-        model.addAttribute("country", country);
-
-        return "partial/post/create-post";
+        return "follow-index";
     }
 
     // 유저 게시글 출력
@@ -247,6 +170,93 @@ public class IndexController {
         model.addAttribute("country", country);
 
         return "/country-index";
+    }
+
+    // 유저 프로필
+    @GetMapping("/user/{id}")
+    public String user(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
+        User masterUser = userRepository.findById(id).orElse(null);
+
+        if (user != null) {
+            model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
+        }
+
+        if (user != null && masterUser.getId().equals(user.getId())) {
+            model.addAttribute("validUser", true);
+        }
+
+        if (masterUser.getCountry().size() == 1) {
+            model.addAttribute("isCountrySize", true);
+        }
+
+        model.addAttribute("country", countryRepository.findAllByUserIdOrderByCreatedAtDesc(id));
+        model.addAttribute("user", masterUser);
+        model.addAttribute("countPost", masterUser.getPost().size());
+        model.addAttribute("countBookmark",
+                bookmarkRepository.countBookmarkByUserIdAndSaveIsNotNull(masterUser.getId()));
+
+        return "partial/user/user";
+    }
+
+    // 유저 수정
+    @GetMapping("/user/{userId}/update")
+    public String updateUser(@PathVariable Long userId, Model model, @LoginUser SessionUser user) {
+        User masterUser = userRepository.findById(userId).orElse(null);
+
+        if (user != null) {
+            model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
+        }
+
+        if (user != null && masterUser.getId().equals(user.getId())) {
+            model.addAttribute("validUser", true);
+        }
+
+        model.addAttribute("user", masterUser);
+
+        return "/partial/user/update-user";
+    }
+
+
+    // 나라 등록
+    @GetMapping("/country/create")
+    public String createCountry(Model model, @LoginUser SessionUser user) {
+        if (user != null) {
+            model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
+        }
+
+        return "partial/country/create-country";
+    }
+
+    // 나라 수정
+    @GetMapping("/country/{id}/update")
+    public String updateCountry(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
+        // TODO: ADD EXCEPTION
+        if (user != null) {
+            model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
+        }
+
+        model.addAttribute("country", countryRepository.findById(id).orElse(null));
+
+        return "partial/country/update-country";
+    }
+
+    // 게시글 등록
+    @GetMapping("/post/create/{countryId}")
+    public String createPost(@PathVariable Long countryId, Model model, @LoginUser SessionUser user) {
+        if (user != null) {
+            model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
+        }
+
+        Country country = countryRepository.findById(countryId).orElse(null);
+
+        model.addAttribute("country", country);
+
+        return "partial/post/create-post";
     }
 
     // 게시글 수정

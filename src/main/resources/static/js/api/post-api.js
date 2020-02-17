@@ -50,7 +50,6 @@ function updatePost(event) {
     let region = document.querySelector("#update-region");
     let content = document.querySelector("#update-content");
     let imageName = document.querySelector(".file-upload .file-upload-input");
-    let favorite = document.querySelector(".post-favorite").innerHTML;
 
     let updatedImage = document.querySelector(".file-upload-image").alt;
 
@@ -62,8 +61,7 @@ function updatePost(event) {
     let data = {
         image: updatedImage,
         region: region.value,
-        content: content.value,
-        favorite: favorite
+        content: content.value
     };
 
     $.ajax({
