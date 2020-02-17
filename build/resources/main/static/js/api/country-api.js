@@ -8,37 +8,49 @@ let userId = document.querySelector(".user-id");
 function createCountry(event) {
     event.preventDefault();
 
-    let ImageName = document.querySelector(".file-upload .file-upload-input");
+    let imageName = document.querySelector(".file-upload .file-upload-input");
     let countryName = document.querySelector(".file-upload #country");
     let countryDescription = document.querySelector(".file-upload #country-description");
 
-    let data = {
-        image: ImageName.files[0].name,
-        name: countryName.value,
-        content: countryDescription.value,
-        userId: userId.innerHTML
-    };
-
-    $.ajax({
-        type: "POST",
-        url: "/api/country",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data)
-    }).done(function () {
+    if (imageName.files[0] === undefined) {
         swal({
-            title: "나라 등록 성공 😀 ",
-            icon: "success",
-        }).then(() => {
-            window.location.href = `/user/${userId.innerHTML}`;
-        });
-    }).fail(function (error) {
-        swal({
-            title: "나라 등록 실패 😥",
+            title: "사진을 업로드 해주세요 😥",
             icon: "error",
-        }).then(() => {
-            window.location.href = `/user/${userId.innerHTML}`;
+        })
+    } else if (countryName.value === "") {
+        swal({
+            title: "나라를 입력 해주세요 😥",
+            icon: "error",
+        })
+    } else {
+        let data = {
+            image: imageName.files[0].name,
+            name: countryName.value,
+            content: countryDescription.value,
+            userId: userId.innerHTML
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/api/country",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data)
+        }).done(function () {
+            swal({
+                title: "나라 등록 성공 😀 ",
+                icon: "success",
+            }).then(() => {
+                window.location.href = `/user/${userId.innerHTML}`;
+            });
+        }).fail(function (error) {
+            swal({
+                title: "나라 등록 실패 😥",
+                icon: "error",
+            }).then(() => {
+                window.location.href = `/user/${userId.innerHTML}`;
+            });
         });
-    });
+    }
 }
 
 // Delete
@@ -99,12 +111,11 @@ function updateCountry(event) {
             location.href = `/user/${userId.innerHTML}`;
         });
     }).fail(function (error) {
-        swal({
-            title: "수정 실패 😥",
-            icon: "error",
-        }).then(() => {
-            location.href = `/user/${userId.innerHTML}`;
-        });
+        // swal({
+        //     title: "수정 실패 😥",
+        //     icon: "error",
+        // });
+        console.log(JSON.stringify(error))
     });
 }
 

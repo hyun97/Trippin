@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -52,16 +53,6 @@ public class IndexController {
         model.addAttribute("post", postList);
 
         return "index";
-    }
-
-    // 팔로잉 게시글 출력
-    @GetMapping("/user/{userId}/follow")
-    public String readFollowingPost(@PathVariable Long userId, Model model, @LoginUser SessionUser loginUser) {
-        List<Post> postList = postRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
-
-        model.addAttribute("post", postList);
-
-        return "follow-index";
     }
 
     // 유저 게시글 출력
@@ -157,10 +148,10 @@ public class IndexController {
             });
         }
 
-        Country country = countryRepository.findById(countryId).orElse(null);
-
         postList.forEach(
                 (post) -> post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId())));
+
+        Country country = countryRepository.findById(countryId).orElse(null);
 
         if (user != null && country.getUser().getId().equals(user.getId())) {
             model.addAttribute("validUser", true);
@@ -170,6 +161,40 @@ public class IndexController {
         model.addAttribute("country", country);
 
         return "/country-index";
+    }
+
+    // 팔로잉 게시글 출력
+    @GetMapping("/user/{userId}/follow")
+    public String readFollowingPost(@PathVariable Long userId, Model model, @LoginUser SessionUser loginUser) {
+        List<Follow> followList = followRepository.findByFollowerId(userId);
+        List<Post> postList = new ArrayList<>();
+        followList.forEach(follow -> postList.addAll(follow.getFollowing().getPost()));
+
+        if (loginUser != null) {
+            model.addAttribute("loginUser", loginUser);
+
+            model.addAttribute("isLogin", true);
+
+            postList.forEach(post -> {
+                List<Bookmark> bookmark =
+                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(loginUser.getId(), post.getId());
+                List<Bookmark> favorite =
+                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(loginUser.getId(), post.getId());
+                List<Follow> follow =
+                        followRepository.findByFollowerIdAndFollowingId(loginUser.getId(), post.getUser().getId());
+                if (!bookmark.isEmpty()) post.setValidBookmark(true);
+                if (!favorite.isEmpty()) post.setValidFavorite(true);
+                if (!follow.isEmpty()) post.setValidFollow(true);
+                if (post.getUser().getId().equals(loginUser.getId())) post.setValidUser(true);
+            });
+        }
+
+        postList.forEach(
+                (post) -> post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId())));
+
+        model.addAttribute("post", postList);
+
+        return "follow-index";
     }
 
     // 유저 프로필
@@ -197,6 +222,40 @@ public class IndexController {
                 bookmarkRepository.countBookmarkByUserIdAndSaveIsNotNull(masterUser.getId()));
 
         return "partial/user/user";
+    }
+
+    // 팔로잉
+    @GetMapping("/user/{id}/following")
+    public String following(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
+        User masterUser = userRepository.findById(id).orElse(null);
+
+        if (user != null) {
+            model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
+        }
+
+        if (user != null && masterUser.getId().equals(user.getId())) {
+            model.addAttribute("validUser", true);
+        }
+
+        return "partial/user/following";
+    }
+
+    // 팔로워
+    @GetMapping("/user/{id}/follower")
+    public String follower(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
+        User masterUser = userRepository.findById(id).orElse(null);
+
+        if (user != null) {
+            model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
+        }
+
+        if (user != null && masterUser.getId().equals(user.getId())) {
+            model.addAttribute("validUser", true);
+        }
+
+        return "partial/user/follower";
     }
 
     // 유저 수정
@@ -274,8 +333,8 @@ public class IndexController {
     }
 
     // 게시글 상세
-    @GetMapping("/card-detail")
-    public String cardDetail() {
+    @GetMapping("/post/{postId}")
+    public String cardDetail(@PathVariable Long postId, Model model, @LoginUser SessionUser user) {
         return "partial/post/post-detail";
     }
 

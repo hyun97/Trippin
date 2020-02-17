@@ -7,17 +7,15 @@
             <div class="user-image">
                 <img src="{{user.picture}}" alt="{{user.picture}}"/>
             </div>
-            <input class="file-upload-input" hidden type='file' onchange="readURL(this);" accept="image/*"/>
+            <input class="file-upload-input" hidden type='file' required onchange="readURL(this);" accept="image/*"/>
             <div class="user-file-upload-btn">
-                <button class="indigo" type="button"
-                        onclick="$('.file-upload-input').trigger('click')">
+                <button class="indigo" type="button" onclick="$('.file-upload-input').trigger('click')">
                     Update Image
                 </button>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="update-name" class="{{user.id}}" type="text" value="{{user.name}}"
-                           required>
+                    <input id="update-name" class="{{user.id}}" type="text" value="{{user.name}}">
                     <label for="update-name">이름을 입력하세요.</label>
                 </div>
             </div>

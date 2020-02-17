@@ -12,37 +12,44 @@ function updateUser(event) {
 
     let updatedImage = document.querySelector(".user-image img").alt;
 
-    // 파일이 업로드 되었을 시 수정
-    if (imageName.files[0] != null) {
-        updatedImage = imageName.files[0].name;
-    }
-
-    let data = {
-        name: name,
-        comment: comment,
-        picture: updatedImage
-    };
-
-    $.ajax({
-        type: "PUT",
-        url: `/api/user/${userId}`,
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(data)
-    }).done(function () {
+    if (name === "") {
         swal({
-            title: "수정 완료 😀",
-            icon: "success",
-        }).then(() => {
-            location.href = `/user/${userId}`;
-        });
-    }).fail(function (error) {
-        swal({
-            title: "수정 실패 😥",
+            title: "이름을 입력하세요 😥",
             icon: "error",
-        }).then(() => {
-            location.href = `/user/${userId}`;
+        })
+    } else {
+        // 파일이 업로드 되었을 시 수정
+        if (imageName.files[0] != null) {
+            updatedImage = imageName.files[0].name;
+        }
+
+        let data = {
+            name: name,
+            comment: comment,
+            picture: updatedImage
+        };
+
+        $.ajax({
+            type: "PUT",
+            url: `/api/user/${userId}`,
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data)
+        }).done(function () {
+            swal({
+                title: "수정 완료 😀",
+                icon: "success",
+            }).then(() => {
+                location.href = `/user/${userId}`;
+            });
+        }).fail(function (error) {
+            swal({
+                title: "수정 실패 😥",
+                icon: "error",
+            }).then(() => {
+                location.href = `/user/${userId}`;
+            });
         });
-    });
+    }
 }
 
 // Delete
