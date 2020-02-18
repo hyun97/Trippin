@@ -1,14 +1,18 @@
-let followBtn = document.querySelectorAll(".card-wrapper .follow");
+let followBtn = document.querySelectorAll(".follow");
 
 function createFollow(event) {
     followBtn.forEach(function (followBtn) {
         if (followBtn.id === event.target.id) {
-            followBtn.innerHTML = "record_voice_over";
-            followBtn.classList.add("blue-text", "text-darken-3");
+            if (followBtn.innerHTML === "팔로우") {
+                followBtn.innerHTML = "언팔로우"
+            } else {
+                followBtn.innerHTML = "record_voice_over";
+                followBtn.classList.add("blue-text", "text-darken-3");
+            }
         }
     });
 
-    let loginUser = document.querySelector(".card-wrapper .user-id").innerHTML;
+    let loginUser = document.querySelector(".user-id").innerHTML;
 
     let model = {
         userId: loginUser
@@ -30,12 +34,16 @@ function createFollow(event) {
 function deleteFollow(event) {
     followBtn.forEach(function (followBtn) {
         if (followBtn.id === event.target.id) {
-            followBtn.innerHTML = "person_add";
-            followBtn.classList.remove("blue-text", "text-darken-3");
+            if (followBtn.innerHTML === "언팔로우") {
+                followBtn.innerHTML = "팔로우"
+            } else {
+                followBtn.innerHTML = "person_add";
+                followBtn.classList.remove("blue-text", "text-darken-3");
+            }
         }
     });
 
-    let loginUser = document.querySelector(".card-wrapper .user-id").innerHTML;
+    let loginUser = document.querySelector(".user-id").innerHTML;
 
     let model = {
         userId: loginUser
@@ -55,7 +63,7 @@ function deleteFollow(event) {
 }
 
 function handleFollowBtnClick(event) {
-    if (event.target.innerHTML === "person_add") {
+    if (event.target.innerHTML === "person_add" || event.target.innerHTML === "팔로우") {
         createFollow(event);
     } else {
         deleteFollow(event);

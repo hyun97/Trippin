@@ -34,8 +34,7 @@
                             </button>
                         {{/isCountrySize}}
                         {{^isCountrySize}}
-                            <button class="btn waves-effect waves-light country-button material-btn"
-                                    type="submit">
+                            <button class="btn waves-effect waves-light country-button material-btn" type="submit">
                                 나라등록
                             </button>
                         {{/isCountrySize}}
@@ -46,8 +45,8 @@
         <ul class="data-user">
             <li><a href="/user/{{user.id}}/post"><strong>{{countPost}}</strong><span>게시물</span></a></li>
             <li><a href="/user/{{user.id}}/bookmark"><strong>{{countBookmark}}</strong><span>저장</span></a></li>
-            <li><a href="/user/{{user.id}}/follower"><strong>000</strong><span>팔로워</span></a></li>
-            <li><a href="/user/{{user.id}}/following"><strong>000</strong><span>팔로잉</span></a></li>
+            <li><a href="/user/{{user.id}}/follower"><strong>{{countFollower}}</strong><span>팔로워</span></a></li>
+            <li><a href="/user/{{user.id}}/following"><strong>{{countFollowing}}</strong><span>팔로잉</span></a></li>
         </ul>
     </div>
 </div>

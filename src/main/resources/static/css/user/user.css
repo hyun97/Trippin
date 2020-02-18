@@ -98,7 +98,6 @@
 }
 
 .profile-user-page .data-user li a:hover {
-	background: rgba(0, 0, 0, 0.05);
 	border-bottom: 1px solid #3498db;
 	color: #3498db;
 	transition: 0.4s;

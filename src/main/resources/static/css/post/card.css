@@ -7,7 +7,7 @@
 }
 
 .card-social {
-	margin-top: 16px;
+	margin-top: 8px;
 }
 
 .card-social i {
@@ -62,10 +62,20 @@
 	text-shadow: 0 -1px 0 #fff,
 	0 1px 0 #2e2e2e;
 	cursor: default;
+	word-wrap: break-word;
 }
 
-.btn-floating.halfway-fab {
+.card .btn-floating.halfway-fab {
 	position: absolute;
 	right: 24px;
-	bottom: 177px;
+	bottom: 175px;
+}
+
+.card .card-content p {
+	margin-top: 6px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap: normal;
+	width: 100%;
+	overflow: hidden;
 }

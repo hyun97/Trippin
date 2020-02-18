@@ -25,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"country", "user"})
+@ToString(exclude = {"country", "user", "comment"})
 @Entity
 public class Post extends Auditing {
 
@@ -62,6 +62,9 @@ public class Post extends Auditing {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Bookmark> bookmark;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<Comment> comment;
 
     public void update(PostDto postDto) {
         this.image = postDto.getImage();

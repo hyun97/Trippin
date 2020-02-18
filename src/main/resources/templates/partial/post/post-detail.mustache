@@ -1,67 +1,126 @@
 {{>layout/header}}
 
-<div class="detail-wrapper">
-    <main role="main" class="main">
-        <article class="crd-60 social">
-            <figure>
-                <a class="ribbon-buy popular anchor" href="#" title="Popular">
-                    Hot
-                </a>
-                <img class="pic" src="https://source.unsplash.com/ZFQh_gS5TJc/800x600" alt="La Sagrada Familia">
-            </figure>
-            <div class="flex-content">
-                <header class="header">
-                    <p class="user-60 para">
-                        <a class="button anchor" href="#" title="Follow">
-                            Follow
-                        </a>
-                        <img class="pic avatar-32" src="http://jlantunez.com/imgs/avatar.jpg" alt="Avatar">
-                        <strong>
-                            <a title="Full Name anchor" href="#">
-                                username
+{{#loginUser}}
+    <span class="user-id hide">{{id}}</span>
+{{/loginUser}}
+
+{{#post}}
+    <div class="detail-wrapper">
+        <main role="main" class="main">
+            <article class="crd-60 social">
+                <figure>
+                    {{#isLogin}}
+                        {{^validBookmark}}
+                            <a id="{{id}}"
+                               class="bookmark hoverable btn-floating halfway-fab waves-effect waves-light red">
+                                <i class="material-icons">bookmark_border</i>
                             </a>
-                        </strong>
-                        <span>8 mins ago &middot; Barcelona</span>
-                    </p>
-                </header>
-                <div class="content-wrapper">
-                    Figure 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la Sagrada Família is
-                    variously
-                    sme.
-                    Figure 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la Sagrada Família is
-                    Figure 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la Sagrada Família is
-                    variously
-                    sme.
-                    Figure 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la Sagrada Família is
-                    Figure 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la Sagrada Família is
-                    60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la Sagrada Família is
-                    re 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la Sagrada Família is
-                    60%. Content 40%. Excere 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la
-                    Sagrada Família is
-                    60%. Content 40%. Excere 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la
-                    Sagrada Família is
-                    60%. Content 40%. Excere 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la
-                    Sagrada Família is
-                    60%. Content 40%. Exceada Família is
-                    60%. Content 40%. Excere 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la
-                    Sagrada Família is
-                    60%. Content 40%. Exceada Família is
-                    60%. Content 40%. Excere 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la
-                    Sagrada Família is
-                    60%. Content 40%. Exce
+                        {{/validBookmark}}
+                        {{#validBookmark}}
+                            <a id="{{id}}"
+                               class="bookmark hoverable btn-floating halfway-fab waves-effect waves-light red">
+                                <i class="material-icons">bookmark</i>
+                            </a>
+                        {{/validBookmark}}
+                    {{/isLogin}}
+                    {{^isLogin}}
+                        <a class="hoverable btn-floating halfway-fab waves-effect waves-light red">
+                            <i class="material-icons">bookmark_border</i>
+                        </a>
+                    {{/isLogin}}
+                    <img class="pic post" src="/img/{{post.image}}" alt="{{post.country.name}}">
+                </figure>
+                <div class="flex-content z-depth-1">
+                    <header class="header">
+                        <p class="user-60 para">
+                            {{#isLogin}}
+                                {{^validUser}}
+                                    {{^validFollow}}
+                                        <a id="{{user.id}}" class="btn follow button anchor" href="#">팔로우</a>
+                                    {{/validFollow}}
+                                    {{#validFollow}}
+                                        <a id="{{user.id}}" class="btn follow button anchor" href="#">언팔로우</a>
+                                    {{/validFollow}}
+                                {{/validUser}}
+                            {{/isLogin}}
+                            {{^isLogin}}
+                                <a class="btn button anchor">팔로우</a>
+                            {{/isLogin}}
+                            <img class="pic avatar-32" src="http://jlantunez.com/imgs/avatar.jpg" alt="Avatar">
+                            <strong>
+                                <a title="Full Name anchor" href="#">{{post.user.name}}</a>
+                            </strong>
+                            <span>{{createdAt.date}} &middot; {{post.country.name}} &middot; {{post.region}}</span>
+                        </p>
+                    </header>
+                    <div class="content-wrapper">
+                        <p class="content">{{post.content}}</p>
+                        <div>
+                            <img class="pic avatar-32" src="http://jlantunez.com/imgs/avatar.jpg" alt="Avatar">
+                            <strong><a title="Full Name anchor" href="#">username</a></strong>
+                            &nbsp &middot; &nbsp
+                            <span>8 mins ago</span>
+                            <p>
+                                asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf
+                            </p>
+                        </div>
+                        <div>
+                            <img class="pic avatar-32" src="http://jlantunez.com/imgs/avatar.jpg" alt="Avatar">
+                            <strong><a title="Full Name anchor" href="#">username</a></strong>
+                            &nbsp &middot; &nbsp
+                            <span>8 mins ago</span>
+                            <p>댓글 내용댓글 내용댓글 내용댓글 내용댓댓글 내용댓글 내용댓글 내용댓글 내용댓댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글
+                                내용</p>
+                        </div>
+                        <div>
+                            <img class="pic avatar-32" src="http://jlantunez.com/imgs/avatar.jpg" alt="Avatar">
+                            <strong><a title="Full Name anchor" href="#">username</a></strong>
+                            &nbsp &middot; &nbsp
+                            <span>8 mins ago</span>
+                            <p>댓글 내용댓글 내용댓글 내용댓글 내용댓댓글 내용댓글 내용댓글 내용댓글 내용댓댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글
+                                내용</p>
+                        </div>
+                    </div>
+                    <footer class="footer">
+                        <p class="para icon-wrapper">
+                            {{#isLogin}}
+                                {{^validFavorite}}
+                                    <i id="{{id}}" class="favorite material-icons">favorite_border</i>
+                                    <span class="favorite-count">
+                                        <span id="{{id}}" class="count">{{countFavorite}}</span>개
+                                    </span>
+                                {{/validFavorite}}
+                                {{#validFavorite}}
+                                    <i id="{{id}}" class="favorite material-icons red-text">favorite</i>
+                                    <span class="favorite-count">
+                                         <span id="{{id}}" class="count">{{countFavorite}}</span>개
+                                    </span>
+                                {{/validFavorite}}
+                            {{/isLogin}}
+                            {{^isLogin}}
+                                <i class="material-icons disable-favorite">favorite_border</i>
+                                <span class="count">{{countFavorite}}</span>개
+                            {{/isLogin}}
+                            <i class="material-icons comment-icon">chat_bubble_outline</i>
+                            <span class="comment-count">000</span>개
+                        </p>
+                        <form>
+                            <p class="para">
+                                {{#isLogin}}
+                                    <input type="text" placeholder="댓글 달기...">
+                                    <i class="material-icons right comment-btn indigo-text"><span>send</span></i>
+                                {{/isLogin}}
+                                {{^isLogin}}
+                                    <input type="text" placeholder="댓글 달기..." disabled>
+                                    <i class="material-icons right comment-btn indigo-text"><span>send</span></i>
+                                {{/isLogin}}
+                            </p>
+                        </form>
+                    </footer>
                 </div>
-                <footer class="footer">
-                    <p class="para icon-wrapper">
-                        <i class="material-icons">favorite_border</i><span class="count">123</span>개
-                        <i class="material-icons comment-icon">chat_bubble_outline</i><span class="count">123</span>개
-                    </p>
-                    <p class="para">
-                        <input type="text" placeholder="댓글 달기...">
-                    </p>
-                </footer>
-            </div>
-        </article>
-    </main>
-</div>
+            </article>
+        </main>
+    </div>
+{{/post}}
 
 {{>layout/footer}}

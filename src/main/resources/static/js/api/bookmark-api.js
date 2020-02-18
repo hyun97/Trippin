@@ -1,9 +1,9 @@
-let bookmarkBtn = document.querySelectorAll(".card .bookmark");
-let favoriteBtn = document.querySelectorAll(".card .favorite");
+let bookmarkBtn = document.querySelectorAll(".bookmark");
+let favoriteBtn = document.querySelectorAll(".favorite");
 
 // 북마크 추가
 function createBookmark(event) {
-    let userId = document.querySelector(".card-wrapper .user-id").innerHTML;
+    let userId = document.querySelector(".user-id").innerHTML;
 
     event.target.innerHTML = "bookmark";
 
@@ -26,7 +26,7 @@ function createBookmark(event) {
 
 // 북마크 삭제
 function deleteBookmark(event) {
-    let userId = document.querySelector(".card-wrapper .user-id").innerHTML;
+    let userId = document.querySelector(".user-id").innerHTML;
 
     event.target.innerHTML = "bookmark_border";
 
@@ -51,7 +51,7 @@ function deleteBookmark(event) {
 function createFavorite(event) {
     increaseFavorite(event);
 
-    let userId = document.querySelector(".card-wrapper .user-id").innerHTML;
+    let userId = document.querySelector(".user-id").innerHTML;
 
     let data = {
         userId: userId
@@ -73,7 +73,7 @@ function createFavorite(event) {
 function deleteFavorite(event) {
     decreaseFavorite(event);
 
-    let userId = document.querySelector(".card-wrapper .user-id").innerHTML;
+    let userId = document.querySelector(".user-id").innerHTML;
 
     let data = {
         userId: userId

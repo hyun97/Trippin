@@ -3,26 +3,28 @@
 <div class="row container follow-wrapper">
     <h2>팔로워</h2>
     {{#followerUser}}
-        <div class="follow-card col s12 m6 l4 xl2">
-            <div class="our-team">
-                <div class="picture">
+        <a href="/user/{{id}}">
+            <div class="follow-card col s12 m6 l4 xl2">
+                <div class="our-team">
+                    <div class="picture">
+                        {{#validFollower}}
+                            <img class="img-fluid active-follow" src="{{picture}}">
+                        {{/validFollower}}
+                        {{^validFollower}}
+                            <img class="img-fluid" src="{{picture}}">
+                        {{/validFollower}}
+                    </div>
+                    <h5 class="name">{{name}}</h5>
                     {{#validFollower}}
-                        <img class="img-fluid active-follow" src="{{picture}}">
-                    {{/validFollower}}
-                    {{^validFollower}}
-                        <img class="img-fluid" src="{{picture}}">
+                        <ul class="social">
+                            <li>
+                                <span class="white-text">맞팔중 😆</span>
+                            </li>
+                        </ul>
                     {{/validFollower}}
                 </div>
-                <h5 class="name">{{name}}</h5>
-                {{#validFollower}}
-                    <ul class="social">
-                        <li>
-                            <span class="white-text">맞팔중 😆</span>
-                        </li>
-                    </ul>
-                {{/validFollower}}
             </div>
-        </div>
+        </a>
     {{/followerUser}}
 </div>
 

@@ -22,6 +22,42 @@ public class IndexController {
     private final BookmarkRepository bookmarkRepository;
     private final FollowRepository followRepository;
 
+    // 게시글 상세
+    @GetMapping("/post/{postId}")
+    public String cardDetail(@PathVariable Long postId, Model model, @LoginUser SessionUser user) {
+        Post post = postRepository.findById(postId).orElse(null);
+        User masterUser = userRepository.findById(post.getUser().getId()).orElse(null);
+
+        if (user != null && masterUser.getId().equals(user.getId())) {
+            model.addAttribute("validUser", true);
+        }
+
+        if (user != null) {
+            model.addAttribute("loginUser", user);
+            model.addAttribute("isLogin", true);
+
+            List<Bookmark> favorite =
+                    bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(user.getId(), postId);
+            List<Bookmark> bookmark =
+                    bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), postId);
+            List<Follow> follow =
+                    followRepository.findByFollowerIdAndFollowingId(user.getId(), post.getUser().getId());
+            if (!favorite.isEmpty()) post.setValidFavorite(true);
+            if (!bookmark.isEmpty()) post.setValidBookmark(true);
+            if (!follow.isEmpty()) post.setValidFollow(true);
+            if (post.getUser().getId().equals(user.getId())) post.setValidUser(true);
+        }
+
+        System.out.println(post.getCreatedAt());
+
+        //
+
+        model.addAttribute("post", post);
+        model.addAttribute("countFavorite", bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(postId));
+
+        return "partial/post/post-detail";
+    }
+
     // 메인
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user) {
@@ -220,6 +256,8 @@ public class IndexController {
         model.addAttribute("countPost", masterUser.getPost().size());
         model.addAttribute("countBookmark",
                 bookmarkRepository.countBookmarkByUserIdAndSaveIsNotNull(masterUser.getId()));
+        model.addAttribute("countFollower", followRepository.countFollowerIdByFollowingId(id));
+        model.addAttribute("countFollowing", followRepository.countFollowingIdByFollowerId(id));
 
         return "partial/user/user";
     }
@@ -371,12 +409,6 @@ public class IndexController {
         model.addAttribute("post", postRepository.findById(postId).orElse(null));
 
         return "partial/post/update-post";
-    }
-
-    // 게시글 상세
-    @GetMapping("/post/{postId}")
-    public String cardDetail(@PathVariable Long postId, Model model, @LoginUser SessionUser user) {
-        return "partial/post/post-detail";
     }
 
 }

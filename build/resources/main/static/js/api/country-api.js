@@ -9,7 +9,7 @@ function createCountry(event) {
     event.preventDefault();
 
     let imageName = document.querySelector(".file-upload .file-upload-input");
-    let countryName = document.querySelector(".file-upload #country");
+    let countryName = document.querySelector(".file-upload #input_text");
     let countryDescription = document.querySelector(".file-upload #country-description");
 
     if (imageName.files[0] === undefined) {
@@ -82,7 +82,7 @@ function updateCountry(event) {
     event.preventDefault();
 
     let countryContent = document.querySelector("#update-country-description");
-    let countryName = document.querySelector("#update-country-name");
+    let countryName = document.querySelector("#input_text");
     let ImageName = document.querySelector(".file-upload .file-upload-input");
 
     let updatedImage = document.querySelector(".file-upload-image").alt;
