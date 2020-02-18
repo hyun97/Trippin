@@ -28,6 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/user/**",
                         "/country/**",
                         "/bookmark/**",
+                        "/post/**",
+                        "/comment/**",
                         "/api/**"
                 ).permitAll()
 //                .antMatchers(

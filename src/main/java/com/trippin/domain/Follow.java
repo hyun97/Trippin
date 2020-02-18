@@ -19,7 +19,7 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"following"})
+@ToString(exclude = {"following", "follower"})
 @Entity
 public class Follow extends Auditing {
 

@@ -46,40 +46,24 @@
                             {{^isLogin}}
                                 <a class="btn button anchor">팔로우</a>
                             {{/isLogin}}
-                            <img class="pic avatar-32" src="http://jlantunez.com/imgs/avatar.jpg" alt="Avatar">
+                            <img class="pic avatar-32" src="{{post.user.picture}}" alt="Avatar">
                             <strong>
-                                <a title="Full Name anchor" href="#">{{post.user.name}}</a>
+                                <a title="Full Name anchor" href="/user/{{post.user.id}}">{{post.user.name}}</a>
                             </strong>
                             <span>{{createdAt.date}} &middot; {{post.country.name}} &middot; {{post.region}}</span>
                         </p>
                     </header>
                     <div class="content-wrapper">
                         <p class="content">{{post.content}}</p>
-                        <div>
-                            <img class="pic avatar-32" src="http://jlantunez.com/imgs/avatar.jpg" alt="Avatar">
-                            <strong><a title="Full Name anchor" href="#">username</a></strong>
-                            &nbsp &middot; &nbsp
-                            <span>8 mins ago</span>
-                            <p>
-                                asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf
-                            </p>
-                        </div>
-                        <div>
-                            <img class="pic avatar-32" src="http://jlantunez.com/imgs/avatar.jpg" alt="Avatar">
-                            <strong><a title="Full Name anchor" href="#">username</a></strong>
-                            &nbsp &middot; &nbsp
-                            <span>8 mins ago</span>
-                            <p>댓글 내용댓글 내용댓글 내용댓글 내용댓댓글 내용댓글 내용댓글 내용댓글 내용댓댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글
-                                내용</p>
-                        </div>
-                        <div>
-                            <img class="pic avatar-32" src="http://jlantunez.com/imgs/avatar.jpg" alt="Avatar">
-                            <strong><a title="Full Name anchor" href="#">username</a></strong>
-                            &nbsp &middot; &nbsp
-                            <span>8 mins ago</span>
-                            <p>댓글 내용댓글 내용댓글 내용댓글 내용댓댓글 내용댓글 내용댓글 내용댓글 내용댓댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글 내용댓글
-                                내용</p>
-                        </div>
+                        {{#comments}}
+                            <div>
+                                <img class="pic avatar-32" src="{{author.picture}}" alt="Avatar">
+                                <strong><a href="/user/{{author.id}}">{{author.name}}</a></strong>
+                                &nbsp &middot; &nbsp
+                                <span>{{createdAt.date}}</span>
+                                <p>{{content}}</p>
+                            </div>
+                        {{/comments}}
                     </div>
                     <footer class="footer">
                         <p class="para icon-wrapper">
@@ -104,18 +88,18 @@
                             <i class="material-icons comment-icon">chat_bubble_outline</i>
                             <span class="comment-count">000</span>개
                         </p>
-                        <form>
-                            <p class="para">
-                                {{#isLogin}}
-                                    <input type="text" placeholder="댓글 달기...">
-                                    <i class="material-icons right comment-btn indigo-text"><span>send</span></i>
-                                {{/isLogin}}
-                                {{^isLogin}}
-                                    <input type="text" placeholder="댓글 달기..." disabled>
-                                    <i class="material-icons right comment-btn indigo-text"><span>send</span></i>
-                                {{/isLogin}}
-                            </p>
-                        </form>
+                        <p class="para">
+                            {{#isLogin}}
+                                <input class="comment-content" type="text" placeholder="댓글 달기...">
+                                <i class="material-icons right comment-btn indigo-text">
+                                    <span id="{{id}}">send</span></i>
+                            {{/isLogin}}
+                            {{^isLogin}}
+                                <input class="comment-content" type="text" placeholder="댓글 달기..." disabled>
+                                <i class="material-icons right comment-btn indigo-text">
+                                    <span id="{{id}}">send</span></i>
+                            {{/isLogin}}
+                        </p>
                     </footer>
                 </div>
             </article>

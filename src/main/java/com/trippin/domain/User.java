@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"country", "post", "bookmark", "follower", "following"})
+@ToString(exclude = {"country", "post", "bookmark", "follower", "following", "comments"})
 @Entity
 public class User extends Auditing {
 
@@ -50,6 +50,9 @@ public class User extends Auditing {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Bookmark> bookmark;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author", cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "following", cascade = CascadeType.REMOVE)
     private List<Follow> following;

@@ -21,6 +21,7 @@ public class IndexController {
     private final UserRepository userRepository;
     private final BookmarkRepository bookmarkRepository;
     private final FollowRepository followRepository;
+    private final CommentRepository commentRepository;
 
     // 게시글 상세
     @GetMapping("/post/{postId}")
@@ -48,10 +49,9 @@ public class IndexController {
             if (post.getUser().getId().equals(user.getId())) post.setValidUser(true);
         }
 
-        System.out.println(post.getCreatedAt());
+        List<Comment> commentList = commentRepository.findByPostIdOrderByCreatedAtDesc(postId);
 
-        //
-
+        model.addAttribute("comments", commentList);
         model.addAttribute("post", post);
         model.addAttribute("countFavorite", bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(postId));
 

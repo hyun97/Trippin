@@ -19,7 +19,7 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"post"})
+@ToString(exclude = {"post", "author"})
 @Entity
 public class Comment extends Auditing {
 
@@ -28,6 +28,9 @@ public class Comment extends Auditing {
     private Long id;
 
     private String content;
+
+    @ManyToOne
+    private User author;
 
     @ManyToOne
     private Post post;

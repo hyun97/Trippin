@@ -25,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"country", "user", "comment"})
+@ToString(exclude = {"country", "user", "bookmark", "comment"})
 @Entity
 public class Post extends Auditing {
 
