@@ -7,20 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = {"country", "post", "bookmark", "follower", "following"})
@@ -38,6 +32,12 @@ public class User extends Auditing {
     private String name;
 
     private String comment;
+
+    @Transient
+    private boolean validFollowing;
+
+    @Transient
+    private boolean validFollower;
 
     @Enumerated(EnumType.STRING)
     private Role role;

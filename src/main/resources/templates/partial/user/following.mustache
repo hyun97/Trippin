@@ -6,26 +6,23 @@
         <div class="follow-card col s12 m6 l4 xl2">
             <div class="our-team">
                 <div class="picture">
-                    <img class="img-fluid" src="{{picture}}">
+                    {{#validFollowing}}
+                        <img class="img-fluid active-follow" src="{{picture}}">
+                    {{/validFollowing}}
+                    {{^validFollowing}}
+                        <img class="img-fluid" src="{{picture}}">
+                    {{/validFollowing}}
                 </div>
                 <div class="team-content">
                     <h5 class="name">{{name}}</h5>
                 </div>
-                <!--            <ul class="social">-->
-                <!--                <li>-->
-                <!--                    <a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-facebook" aria-hidden="true"></a>-->
-                <!--                </li>-->
-                <!--                <li>-->
-                <!--                    <a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-twitter" aria-hidden="true"></a>-->
-                <!--                </li>-->
-                <!--                <li>-->
-                <!--                    <a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-google-plus"-->
-                <!--                       aria-hidden="true"></a>-->
-                <!--                </li>-->
-                <!--                <li>-->
-                <!--                    <a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-linkedin" aria-hidden="true"></a>-->
-                <!--                </li>-->
-                <!--            </ul>-->
+                {{#validFollowing}}
+                    <ul class="social">
+                        <li>
+                            <span class="white-text">맞팔중 😆</span>
+                        </li>
+                    </ul>
+                {{/validFollowing}}
             </div>
         </div>
     {{/followingUser}}

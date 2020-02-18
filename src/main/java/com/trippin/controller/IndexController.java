@@ -166,7 +166,7 @@ public class IndexController {
     // 팔로잉 게시글 출력
     @GetMapping("/user/{userId}/follow")
     public String readFollowingPost(@PathVariable Long userId, Model model, @LoginUser SessionUser loginUser) {
-        List<Follow> followList = followRepository.findByFollowerId(userId);
+        List<Follow> followList = followRepository.findFollowingIdByFollowerId(userId);
         List<Post> postList = new ArrayList<>();
         followList.forEach(follow -> postList.addAll(follow.getFollowing().getPost()));
 
@@ -238,13 +238,26 @@ public class IndexController {
             model.addAttribute("validUser", true);
         }
 
-        List<Follow> followList = followRepository.findByFollowerId(masterUser.getId());
-        List<User> followingList = new ArrayList<>();
+        List<Follow> followerList = followRepository.findFollowingIdByFollowerId(masterUser.getId());
 
-        followList.forEach(follow ->
-                followingList.add(userRepository.findById(follow.getFollowing().getId()).orElse(null)));
+        // 팔로잉 목록
+        List<User> following = new ArrayList<>();
 
-        model.addAttribute("followingUser", followingList);
+        followerList.forEach(follow -> {
+            following.add(userRepository.findById(follow.getFollowing().getId()).orElse(null));
+        });
+
+        // 팔로우 한 상대의 팔로우에 내가 있는지 (맞팔)
+        following.forEach(u -> {
+            List<Follow> List = followRepository.findFollowingIdByFollowerId(u.getId());
+            List.forEach(follow -> {
+                if (follow.getFollowing().getId().equals(id)) {
+                    u.setValidFollowing(true);
+                }
+            });
+        });
+
+        model.addAttribute("followingUser", following);
 
         return "partial/user/following";
     }
@@ -264,10 +277,22 @@ public class IndexController {
         }
 
         List<Follow> followList = followRepository.findByFollowingId(masterUser.getId());
+
+        // 팔로워 목록
         List<User> followerList = new ArrayList<>();
 
         followList.forEach(follow ->
                 followerList.add(userRepository.findById(follow.getFollower().getId()).orElse(null)));
+
+        // 팔로워 리스트 유저의 팔로워 (맞팔)
+        followerList.forEach(u -> {
+            List<Follow> List = followRepository.findFollowerIdByFollowingId(u.getId());
+            List.forEach(follow -> {
+                if (follow.getFollower().getId().equals(id)) {
+                    u.setValidFollower(true);
+                }
+            });
+        });
 
         model.addAttribute("followerUser", followerList);
 
