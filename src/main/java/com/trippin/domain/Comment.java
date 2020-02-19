@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Getter
 @Setter
@@ -28,6 +29,9 @@ public class Comment extends Auditing {
     private Long id;
 
     private String content;
+
+    @Transient
+    private boolean validComment;
 
     @ManyToOne
     private User author;

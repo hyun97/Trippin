@@ -29,6 +29,8 @@ public class IndexController {
         Post post = postRepository.findById(postId).orElse(null);
         User masterUser = userRepository.findById(post.getUser().getId()).orElse(null);
 
+        List<Comment> commentList = commentRepository.findByPostIdOrderByCreatedAtDesc(postId);
+
         if (user != null && masterUser.getId().equals(user.getId())) {
             model.addAttribute("validUser", true);
         }
@@ -47,13 +49,19 @@ public class IndexController {
             if (!bookmark.isEmpty()) post.setValidBookmark(true);
             if (!follow.isEmpty()) post.setValidFollow(true);
             if (post.getUser().getId().equals(user.getId())) post.setValidUser(true);
-        }
 
-        List<Comment> commentList = commentRepository.findByPostIdOrderByCreatedAtDesc(postId);
+            commentList.forEach(comment -> {
+                List<Comment> comments =
+                        commentRepository.findByIdAndPostIdAndAuthorId(comment.getId(), postId, user.getId());
+
+                if (!comments.isEmpty()) comment.setValidComment(true);
+            });
+        }
 
         model.addAttribute("comments", commentList);
         model.addAttribute("post", post);
         model.addAttribute("countFavorite", bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(postId));
+        model.addAttribute("countComments", commentRepository.countByPostId(postId));
 
         return "partial/post/post-detail";
     }
@@ -83,8 +91,10 @@ public class IndexController {
             });
         }
 
-        postList.forEach(
-                (post) -> post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId())));
+        postList.forEach(post -> {
+            post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
+            post.setCountComment(commentRepository.countByPostId(post.getId()));
+        });
 
         model.addAttribute("post", postList);
 
@@ -117,8 +127,10 @@ public class IndexController {
 
         User user = userRepository.findById(userId).orElse(null);
 
-        postList.forEach(
-                (post) -> post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId())));
+        postList.forEach(post -> {
+            post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
+            post.setCountComment(commentRepository.countByPostId(post.getId()));
+        });
 
         if (loginUser != null && user.getId().equals(loginUser.getId())) {
             model.addAttribute("validUser", true);
@@ -152,8 +164,10 @@ public class IndexController {
             });
         }
 
-        bookmarkList.forEach((p) ->
-                p.getPost().setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(p.getPost().getId())));
+        bookmarkList.forEach(p -> {
+            p.getPost().setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(p.getPost().getId()));
+            p.getPost().setCountComment(commentRepository.countByPostId(p.getPost().getId()));
+        });
 
         model.addAttribute("bookmark", bookmarkList);
 
@@ -184,8 +198,10 @@ public class IndexController {
             });
         }
 
-        postList.forEach(
-                (post) -> post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId())));
+        postList.forEach(post -> {
+            post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
+            post.setCountComment(commentRepository.countByPostId(post.getId()));
+        });
 
         Country country = countryRepository.findById(countryId).orElse(null);
 
@@ -225,8 +241,10 @@ public class IndexController {
             });
         }
 
-        postList.forEach(
-                (post) -> post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId())));
+        postList.forEach(post -> {
+            post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
+            post.setCountComment(commentRepository.countByPostId(post.getId()));
+        });
 
         model.addAttribute("post", postList);
 

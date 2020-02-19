@@ -2,8 +2,52 @@
 	margin-top: 60px;
 }
 
+.detail-wrapper .info {
+	margin-top: 20px;
+	font-weight: bolder;
+	cursor: default;
+}
+
+.detail-wrapper .info .region {
+	background-color: #3f51b5;
+	border-radius: 3px;
+	padding: 1.5px 5.5px;
+	color: white;
+}
+
+.detail-wrapper .info .date {
+	margin-left: 10px;
+	background-color: #3f51b5;
+	border-radius: 3px;
+	padding: 1.5px 5.5px;
+	color: white;
+}
+
+.detail-wrapper .delete {
+	font-size: 13px;
+	font-weight: bolder;
+	cursor: pointer;
+	background-color: tomato;
+	border-radius: 3px;
+	padding: 1px 5px;
+}
+
 .detail-wrapper .content {
 	color: black;
+	font-weight: bold;
+}
+
+.content-wrapper .date {
+	font-size: 13px;
+	font-weight: bolder;
+	background-color: #bdbdbd;
+	border-radius: 3px;
+	padding: 1.5px 5px;
+	color: white;
+	margin: 0 9px;
+}
+
+.detail-wrapper .author {
 	font-weight: bold;
 }
 
@@ -12,6 +56,7 @@
 	height: 300px;
 	overflow: scroll;
 	word-wrap: break-word;
+	cursor: default;
 }
 
 .detail-wrapper .comment-btn {
@@ -202,11 +247,6 @@ object-fit to re-frame images rather than just stretch and resize them  === */
 
 [class*="crd-"] .user-60 .pic[class*="avatar-"] {
 	float: left;
-}
-
-[class*="crd-"] .user-60 span {
-	display: block;
-	margin-top: 1.3rem;
 }
 
 [class*="crd-"] .flex-content .anchor.button {

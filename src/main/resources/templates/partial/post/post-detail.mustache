@@ -48,19 +48,26 @@
                             {{/isLogin}}
                             <img class="pic avatar-32" src="{{post.user.picture}}" alt="Avatar">
                             <strong>
-                                <a title="Full Name anchor" href="/user/{{post.user.id}}">{{post.user.name}}</a>
+                                <a class="black-text" href="/user/{{post.user.id}}">{{post.user.name}}</a>
                             </strong>
-                            <span>{{createdAt.date}} &middot; {{post.country.name}} &middot; {{post.region}}</span>
                         </p>
+                        <div class="info">
+                            <span class="region">{{post.country.name}} &middot {{post.region}}</span>
+                            <span class="date">{{createdAt.date}}</span>
+                        </div>
                     </header>
                     <div class="content-wrapper">
                         <p class="content">{{post.content}}</p>
                         {{#comments}}
-                            <div>
+                            <div class="comment-wrapper">
                                 <img class="pic avatar-32" src="{{author.picture}}" alt="Avatar">
-                                <strong><a href="/user/{{author.id}}">{{author.name}}</a></strong>
-                                &nbsp &middot; &nbsp
-                                <span>{{createdAt.date}}</span>
+                                <a class="author" href="/user/{{author.id}}">{{author.name}}</a>
+                                <span class="date">{{createdAt.date}}</span>
+                                {{#isLogin}}
+                                    {{#validComment}}
+                                        <span id="{{id}}" class="delete white-text">삭제</span>
+                                    {{/validComment}}
+                                {{/isLogin}}
                                 <p>{{content}}</p>
                             </div>
                         {{/comments}}
@@ -86,18 +93,18 @@
                                 <span class="count">{{countFavorite}}</span>개
                             {{/isLogin}}
                             <i class="material-icons comment-icon">chat_bubble_outline</i>
-                            <span class="comment-count">000</span>개
+                            <span class="comment-count">{{countComments}}</span>개
                         </p>
                         <p class="para">
                             {{#isLogin}}
-                                <input class="comment-content" type="text" placeholder="댓글 달기...">
+                                <input id="{{id}}" class="comment-content" type="text" placeholder="댓글 달기...">
                                 <i class="material-icons right comment-btn indigo-text">
-                                    <span id="{{id}}">send</span></i>
+                                    <span>send</span></i>
                             {{/isLogin}}
                             {{^isLogin}}
-                                <input class="comment-content" type="text" placeholder="댓글 달기..." disabled>
-                                <i class="material-icons right comment-btn indigo-text">
-                                    <span id="{{id}}">send</span></i>
+                                <input id="{{id}}" class="comment-content" type="text" placeholder="댓글 달기..." disabled>
+                                <i class="material-icons right comment-btn grey-text">
+                                    <span>send</span></i>
                             {{/isLogin}}
                         </p>
                     </footer>

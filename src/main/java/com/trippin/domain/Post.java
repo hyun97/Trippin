@@ -43,6 +43,9 @@ public class Post extends Auditing {
     private Integer favorite;
 
     @Transient
+    private Integer countComment;
+
+    @Transient
     private boolean validBookmark;
 
     @Transient
