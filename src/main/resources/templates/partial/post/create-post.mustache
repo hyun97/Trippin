@@ -4,7 +4,8 @@
     <div class="row">
         <form class="col s12">
             <div class="image-upload-wrap">
-                <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*"/>
+                <input autocomplete="off" class="file-upload-input" type='file' onchange="readURL(this);"
+                       accept="image/*"/>
                 <div class="drag-text">
                     <h3>드래그하거나 클릭하여 업로드</h3>
                 </div>
@@ -23,19 +24,20 @@
             </button>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="country" class="{{country.id}}" type="text" value="{{country.name}}" readonly>
+                    <input disabled id="country" class="{{country.id}}" type="text" value="{{country.name}}"
+                           readonly>
                     <label for="country">나라</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="region" class="{{loginUser.id}}" type="text" required>
+                    <input autocomplete="off" id="region" class="{{loginUser.id}}" type="text" required>
                     <label for="region">지역을 입력하세요.</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="content" type="text">
+                    <input autocomplete="off" id="content" type="text">
                     <label for="content">내용을 입력하세요.</label>
                 </div>
             </div>

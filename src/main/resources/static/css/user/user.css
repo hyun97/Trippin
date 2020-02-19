@@ -3,6 +3,17 @@
 	width: 44.23em;
 }
 
+.content-profile-page .follow {
+	background: #1565c0;
+	font-weight: bolder;
+	border-radius: 3px;
+	margin-top: 10px;
+}
+
+.content-profile-page .follow:hover {
+	background: black;
+}
+
 .content-profile-page .edit-profile-button {
 	margin-bottom: 15px;
 }

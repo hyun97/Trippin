@@ -1,7 +1,7 @@
 {{>layout/header}}
 
 <!-- User Id -->
-<span class="user-id hide">{{user.id}}</span>
+<span class="user-id hide">{{loginUser.id}}</span>
 <div class="content-profile-page">
     <div class="profile-user-page card">
         <div class="img-user-profile">
@@ -14,11 +14,12 @@
             {{/user.comment}}
             {{#isLogin}}
                 {{^validUser}}
-                    <a href="#">
-                        <button class="btn waves-effect waves-light country-button material-btn" type="submit">
-                            팔로우
-                        </button>
-                    </a>
+                    {{^user.validFollow}}
+                        <a id="{{user.id}}" class="btn follow" href="#">팔로우</a>
+                    {{/user.validFollow}}
+                    {{#user.validFollow}}
+                        <a id="{{user.id}}" class="btn follow" href="#">언팔로우</a>
+                    {{/user.validFollow}}
                 {{/validUser}}
                 {{#validUser}}
                     <div class="edit-profile-button">
@@ -45,7 +46,12 @@
         <ul class="data-user">
             <li><a href="/user/{{user.id}}/post"><strong>{{countPost}}</strong><span>게시물</span></a></li>
             <li><a href="/user/{{user.id}}/bookmark"><strong>{{countBookmark}}</strong><span>저장</span></a></li>
-            <li><a href="/user/{{user.id}}/follower"><strong>{{countFollower}}</strong><span>팔로워</span></a></li>
+            <li>
+                <a href="/user/{{user.id}}/follower">
+                    <strong class="count-follower">{{countFollower}}</strong>
+                    <span>팔로워</span>
+                </a>
+            </li>
             <li><a href="/user/{{user.id}}/following"><strong>{{countFollowing}}</strong><span>팔로잉</span></a></li>
         </ul>
     </div>

@@ -34,6 +34,9 @@ public class User extends Auditing {
     private String comment;
 
     @Transient
+    private boolean validFollow;
+
+    @Transient
     private boolean validFollowing;
 
     @Transient

@@ -259,6 +259,10 @@ public class IndexController {
         if (user != null) {
             model.addAttribute("loginUser", user);
             model.addAttribute("isLogin", true);
+            List<Follow> follow =
+                    followRepository.findByFollowerIdAndFollowingId(user.getId(), masterUser.getId());
+
+            if (!follow.isEmpty()) masterUser.setValidFollow(true);
         }
 
         if (user != null && masterUser.getId().equals(user.getId())) {

@@ -15,6 +15,15 @@
 	color: white;
 }
 
+.detail-wrapper .author-wrapper {
+	padding-top: 4px;
+	margin-left: 3px;
+}
+
+.comment-wrapper {
+	display: flex;
+}
+
 .detail-wrapper .info .date {
 	margin-left: 10px;
 	background-color: #3f51b5;
@@ -201,6 +210,18 @@ figure,
 	display: block;
 }
 
+@media (min-width: 768px) and (max-width: 1024px) {
+	.detail-wrapper .pic.post {
+		min-height: 541px;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+	.detail-wrapper .pic.post {
+		min-height: 0;
+	}
+}
+
 /*==  Horizontal Cards / Images inside container:
 object-fit to re-frame images rather than just stretch and resize them  === */
 
@@ -337,10 +358,6 @@ object-fit to re-frame images rather than just stretch and resize them  === */
 
 	.detail-wrapper .btn-floating.halfway-fab {
 		top: 60px;
-	}
-
-	.detail-wrapper .pic.post {
-		min-height: 290px;
 	}
 
 	.detail-wrapper .btn-floating.halfway-fab {

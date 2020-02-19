@@ -1,0 +1,21 @@
+.material-btn {
+	background: #3f51b5;
+	border-bottom: 1px solid #1a237e;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.material-btn:hover {
+	background: black;
+}
+
+/* label focus color */
+input:focus + label {
+	color: #3f51b5 !important;
+}
+
+/* label underline focus color */
+input:focus {
+	border-bottom: 1px solid #1a237e !important;
+	box-shadow: 0 1px 0 0 #3f51b5 !important
+}

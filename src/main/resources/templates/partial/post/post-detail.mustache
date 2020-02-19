@@ -61,14 +61,16 @@
                         {{#comments}}
                             <div class="comment-wrapper">
                                 <img class="pic avatar-32" src="{{author.picture}}" alt="Avatar">
-                                <a class="author" href="/user/{{author.id}}">{{author.name}}</a>
-                                <span class="date">{{createdAt.date}}</span>
-                                {{#isLogin}}
-                                    {{#validComment}}
-                                        <span id="{{id}}" class="delete white-text">삭제</span>
-                                    {{/validComment}}
-                                {{/isLogin}}
-                                <p>{{content}}</p>
+                                <div class="author-wrapper">
+                                    <a class="author" href="/user/{{author.id}}">{{author.name}}</a>
+                                    <span class="date">{{createdAt.date}}</span>
+                                    {{#isLogin}}
+                                        {{#validComment}}
+                                            <span id="{{id}}" class="delete white-text">삭제</span>
+                                        {{/validComment}}
+                                    {{/isLogin}}
+                                    <p>{{content}}</p>
+                                </div>
                             </div>
                         {{/comments}}
                     </div>
@@ -97,12 +99,14 @@
                         </p>
                         <p class="para">
                             {{#isLogin}}
-                                <input id="{{id}}" class="comment-content" type="text" placeholder="댓글 달기...">
+                                <input autocomplete="off" id="{{id}}" class="comment-content" type="text"
+                                       placeholder="댓글 달기...">
                                 <i class="material-icons right comment-btn indigo-text">
                                     <span>send</span></i>
                             {{/isLogin}}
                             {{^isLogin}}
-                                <input id="{{id}}" class="comment-content" type="text" placeholder="댓글 달기..." disabled>
+                                <input autocomplete="off" id="{{id}}" class="comment-content" type="text"
+                                       placeholder="댓글 달기..." disabled>
                                 <i class="material-icons right comment-btn grey-text">
                                     <span>send</span></i>
                             {{/isLogin}}

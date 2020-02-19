@@ -7,7 +7,8 @@
             <div class="user-image">
                 <img src="{{user.picture}}" alt="{{user.picture}}"/>
             </div>
-            <input class="file-upload-input" hidden type='file' required onchange="readURL(this);" accept="image/*"/>
+            <input autocomplete="off" class="file-upload-input" hidden type='file' required onchange="readURL(this);"
+                   accept="image/*"/>
             <div class="user-file-upload-btn">
                 <button class="indigo" type="button" onclick="$('.file-upload-input').trigger('click')">
                     Update Image
@@ -15,18 +16,18 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="update-name" class="{{user.id}}" type="text" value="{{user.name}}">
+                    <input autocomplete="off" id="update-name" class="{{user.id}}" type="text" value="{{user.name}}">
                     <label for="update-name">이름을 입력하세요.</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     {{#user.comment}}
-                        <input id="update-comment" type="text" value="{{user.comment}}">
+                        <input autocomplete="off" id="update-comment" type="text" value="{{user.comment}}">
                         <label for="update-comment">상태메시지를 입력하세요.</label>
                     {{/user.comment}}
                     {{^user.comment}}
-                        <input id="update-comment" type="text">
+                        <input autocomplete="off" id="update-comment" type="text">
                         <label for="update-comment">상태메시지를 입력하세요.</label>
                     {{/user.comment}}
                 </div>

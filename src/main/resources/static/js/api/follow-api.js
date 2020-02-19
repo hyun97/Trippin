@@ -9,6 +9,9 @@ function createFollow(event) {
                 followBtn.innerHTML = "record_voice_over";
                 followBtn.classList.add("blue-text", "text-darken-3");
             }
+            if (document.querySelector(".count-follower")) {
+                document.querySelector(".count-follower").innerHTML++;
+            }
         }
     });
 
@@ -17,6 +20,7 @@ function createFollow(event) {
     let model = {
         userId: loginUser
     };
+
 
     $.ajax({
         type: "POST",
@@ -39,6 +43,9 @@ function deleteFollow(event) {
             } else {
                 followBtn.innerHTML = "person_add";
                 followBtn.classList.remove("blue-text", "text-darken-3");
+            }
+            if (document.querySelector(".count-follower")) {
+                document.querySelector(".count-follower").innerHTML--;
             }
         }
     });

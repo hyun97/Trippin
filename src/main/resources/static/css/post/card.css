@@ -79,3 +79,23 @@
 	width: 100%;
 	overflow: hidden;
 }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+	.card img {
+		height: 290px;
+	}
+
+	.card .btn-floating.halfway-fab {
+		bottom: 168px;
+	}
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+	.card img {
+		height: 270px;
+	}
+
+	.card .btn-floating.halfway-fab {
+		bottom: 168px;
+	}
+}
