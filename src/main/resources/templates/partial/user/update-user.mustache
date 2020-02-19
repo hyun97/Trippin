@@ -16,18 +16,20 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input autocomplete="off" id="update-name" class="{{user.id}}" type="text" value="{{user.name}}">
+                    <input data-length="10" maxlength="10" autocomplete="off" id="update-name" class="{{user.id}}"
+                           type="text" value="{{user.name}}">
                     <label for="update-name">이름을 입력하세요.</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     {{#user.comment}}
-                        <input autocomplete="off" id="update-comment" type="text" value="{{user.comment}}">
+                        <input data-length="30" maxlength="30" autocomplete="off" id="update-comment" type="text"
+                               value="{{user.comment}}">
                         <label for="update-comment">상태메시지를 입력하세요.</label>
                     {{/user.comment}}
                     {{^user.comment}}
-                        <input autocomplete="off" id="update-comment" type="text">
+                        <input data-length="30" maxlength="30" autocomplete="off" id="update-comment" type="text">
                         <label for="update-comment">상태메시지를 입력하세요.</label>
                     {{/user.comment}}
                 </div>

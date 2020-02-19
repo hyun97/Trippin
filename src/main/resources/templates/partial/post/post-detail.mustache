@@ -99,13 +99,15 @@
                         </p>
                         <p class="para">
                             {{#isLogin}}
-                                <input autocomplete="off" id="{{id}}" class="comment-content" type="text"
+                                <input data-length="60" maxlength="60" autocomplete="off" id="{{id}}"
+                                       class="comment-content" type="text"
                                        placeholder="댓글 달기...">
                                 <i class="material-icons right comment-btn indigo-text">
                                     <span>send</span></i>
                             {{/isLogin}}
                             {{^isLogin}}
-                                <input autocomplete="off" id="{{id}}" class="comment-content" type="text"
+                                <input data-length="60" maxlength="60" autocomplete="off" id="{{id}}"
+                                       class="comment-content" type="text"
                                        placeholder="댓글 달기..." disabled>
                                 <i class="material-icons right comment-btn grey-text">
                                     <span>send</span></i>
