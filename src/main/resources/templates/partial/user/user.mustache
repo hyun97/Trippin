@@ -1,7 +1,9 @@
 {{>layout/header}}
 
 <!-- User Id -->
-<span class="user-id hide">{{loginUser.id}}</span>
+{{#loginUser}}
+    <span class="user-id hide">{{loginUser.id}}</span>
+{{/loginUser}}
 <div class="content-profile-page">
     <div class="profile-user-page card">
         <div class="img-user-profile">

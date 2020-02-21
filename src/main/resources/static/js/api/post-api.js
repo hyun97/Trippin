@@ -30,7 +30,7 @@ function createPost(event) {
     } else {
         let data = {
             image: imageName.files[0].name,
-            region: region.value,
+            region: region.value.toUpperCase(),
             content: content.value,
             countryId: countryId,
             userId: userId
@@ -88,7 +88,7 @@ function updatePost(event) {
 
         let data = {
             image: updatedImage,
-            region: region.value,
+            region: region.value.toUpperCase(),
             content: content.value
         };
 
@@ -102,15 +102,14 @@ function updatePost(event) {
                 title: "수정 완료 😀",
                 icon: "success",
             }).then(() => {
-                // TODO: 해당 게시글 디테일로
-                location.href = `/`;
+                location.href = `/post/${postId}`;
             });
         }).fail(function (error) {
             swal({
                 title: "수정 실패 😥",
                 icon: "error",
             }).then(() => {
-                location.href = `/`;
+                location.href = `/post/${postId}`;
             });
         });
     }

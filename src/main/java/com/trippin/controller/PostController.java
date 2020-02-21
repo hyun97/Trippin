@@ -28,9 +28,9 @@ public class PostController {
     }
 
     // Read
-    @GetMapping
-    public List<PostDto> getPost() {
-        return postService.getPost();
+    @GetMapping("/page/{pageId}")
+    public List<PostDto> getPagePost(@PathVariable int pageId) {
+        return postService.getPagePost(pageId);
     }
 
     // Update

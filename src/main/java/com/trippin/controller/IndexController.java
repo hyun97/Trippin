@@ -3,7 +3,11 @@ package com.trippin.controller;
 import com.trippin.config.auth.LoginUser;
 import com.trippin.config.auth.SessionUser;
 import com.trippin.domain.*;
+import com.trippin.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +26,7 @@ public class IndexController {
     private final BookmarkRepository bookmarkRepository;
     private final FollowRepository followRepository;
     private final CommentRepository commentRepository;
+    private final PostService postService;
 
     // 게시글 상세
     @GetMapping("/post/{postId}")
@@ -68,8 +73,10 @@ public class IndexController {
 
     // 메인
     @GetMapping("/")
-    public String index(Model model, @LoginUser SessionUser user) {
-        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+    public String index(@PageableDefault Pageable pageable, Model model, @LoginUser SessionUser user) {
+//        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+
+        Page<Post> postList = postService.getPost(pageable);
 
         if (user != null) {
             model.addAttribute("loginUser", userRepository.getOne(user.getId()));
@@ -99,6 +106,46 @@ public class IndexController {
         model.addAttribute("post", postList);
 
         return "index";
+    }
+
+    // 검색된 게시물
+    @GetMapping("/search/{search}")
+    public String searchPost(@PathVariable String search, Model model, @LoginUser SessionUser user) {
+        List<Post> postList = postRepository.findByRegionContainingOrCountry_NameContaining(search, search);
+
+        if (user != null) {
+            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
+
+            model.addAttribute("isLogin", true);
+
+            postList.forEach(post -> {
+                List<Bookmark> bookmark =
+                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), post.getId());
+                List<Bookmark> favorite =
+                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(user.getId(), post.getId());
+                List<Follow> follow =
+                        followRepository.findByFollowerIdAndFollowingId(user.getId(), post.getUser().getId());
+
+                if (!bookmark.isEmpty()) post.setValidBookmark(true);
+                if (!favorite.isEmpty()) post.setValidFavorite(true);
+                if (!follow.isEmpty()) post.setValidFollow(true);
+                if (post.getUser().getId().equals(user.getId())) post.setValidUser(true);
+            });
+        }
+
+        postList.forEach(post -> {
+            post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
+            post.setCountComment(commentRepository.countByPostId(post.getId()));
+        });
+
+        if (postList.isEmpty()) {
+            model.addAttribute("validSearch", true);
+        }
+
+        model.addAttribute("post", postList);
+        model.addAttribute("search", search);
+
+        return "search-index";
     }
 
     // 유저 게시글 출력

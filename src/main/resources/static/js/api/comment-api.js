@@ -27,7 +27,7 @@ function createComment() {
 }
 
 function deleteComment(event) {
-    let comment = event.target.parentNode;
+    let comment = event.target.parentNode.parentNode;
     comment.remove(comment);
     countComment.innerHTML--;
 

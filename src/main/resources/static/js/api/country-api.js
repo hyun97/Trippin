@@ -25,7 +25,7 @@ function createCountry(event) {
     } else {
         let data = {
             image: imageName.files[0].name,
-            name: countryName.value,
+            name: countryName.value.toUpperCase(),
             content: countryDescription.value,
             userId: userId.innerHTML
         };
@@ -94,7 +94,7 @@ function updateCountry(event) {
 
     let data = {
         image: updatedImage,
-        name: countryName.value,
+        name: countryName.value.toUpperCase(),
         content: countryContent.value
     };
 

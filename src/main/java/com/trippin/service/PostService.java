@@ -6,6 +6,9 @@ import com.trippin.domain.Post;
 import com.trippin.domain.PostRepository;
 import com.trippin.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,11 +37,22 @@ public class PostService {
         postRepository.save(post);
     }
 
-    // Read
-    public List<PostDto> getPost() {
-        List<Post> post = postRepository.findAll();
+    // Read all
+    public Page<Post> getPost(Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
 
-        return post.stream().map(PostDto::new).collect(Collectors.toList());
+        pageable = PageRequest.of(page, 9);
+
+        return postRepository.findAllByOrderByCreatedAtDesc(pageable);
+    }
+
+    // Relevant read
+    public List<PostDto> getPagePost(int page) {
+        Pageable pageable = PageRequest.of(page - 1, 9);
+
+        Page<Post> postList = postRepository.findAllByOrderByCreatedAtDesc(pageable);
+
+        return postList.stream().map(PostDto::new).collect(Collectors.toList());
     }
 
     // Update

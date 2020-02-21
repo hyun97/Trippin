@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/bookmark/**",
                         "/post/**",
                         "/comment/**",
+                        "/search/**",
                         "/api/**"
                 ).permitAll()
 //                .antMatchers(

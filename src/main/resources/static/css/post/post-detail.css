@@ -69,6 +69,7 @@
 .detail-wrapper .author-wrapper p {
 	width: 320px;
 	word-wrap: break-word;
+	font-weight: bold;
 }
 
 .detail-wrapper .comment-btn {
