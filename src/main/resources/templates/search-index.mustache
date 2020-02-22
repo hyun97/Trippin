@@ -9,65 +9,73 @@
         {{#loginUser}}
             <span class="user-id hide">{{id}}</span>
         {{/loginUser}}
-        {{#post}}
-            <div class="col s12 m6 l6 xl4">
-                <div class="card z-depth-4">
-                    <a href="/post/{{id}}">
-                        <div class="card-image">
-                            <img src="/img/{{image}}">
-                            <span class="card-title">{{country.name}} · {{region}}</span>
-                        </div>
-                    </a>
-                    {{#isLogin}}
-                        {{^validBookmark}}
-                            <a id="{{id}}"
-                               class="hoverable bookmark btn-floating halfway-fab waves-effect waves-light red">
+
+        <div id="autoScroll-wrapper">
+            {{#post}}
+                <div class="col s12 m6 l6 xl4">
+                    <div class="card z-depth-4">
+                        <a href="/post/{{id}}">
+                            <div class="card-image">
+                                <img src="/img/{{image}}">
+                                <span class="card-title">{{country.name}} · {{region}}</span>
+                            </div>
+                        </a>
+                        {{#isLogin}}
+                            {{^validBookmark}}
+                                <a id="{{id}}"
+                                   class="hoverable bookmark btn-floating halfway-fab waves-effect waves-light red">
+                                    <i class="material-icons">bookmark_border</i>
+                                </a>
+                            {{/validBookmark}}
+                            {{#validBookmark}}
+                                <a id="{{id}}"
+                                   class="hoverable bookmark btn-floating halfway-fab waves-effect waves-light red">
+                                    <i class="material-icons">bookmark</i>
+                                </a>
+                            {{/validBookmark}}
+                        {{/isLogin}}
+                        {{^isLogin}}
+                            <a class="hoverable btn-floating halfway-fab waves-effect waves-light red">
                                 <i class="material-icons">bookmark_border</i>
                             </a>
-                        {{/validBookmark}}
-                        {{#validBookmark}}
-                            <a id="{{id}}"
-                               class="hoverable bookmark btn-floating halfway-fab waves-effect waves-light red">
-                                <i class="material-icons">bookmark</i>
-                            </a>
-                        {{/validBookmark}}
-                    {{/isLogin}}
-                    {{^isLogin}}
-                        <a class="hoverable btn-floating halfway-fab waves-effect waves-light red">
-                            <i class="material-icons">bookmark_border</i>
-                        </a>
-                    {{/isLogin}}
-                    <div class="card-content">
-                        <a href="/user/{{user.id}}" class="author black-text">{{country.user.name}}</a>
-                        <p>{{content}}</p>
-                        <div class="card-social">
-                            {{#isLogin}}
-                                {{^validFavorite}}
-                                    <i id="{{id}}" class="small material-icons favorite">favorite_border</i>
-                                {{/validFavorite}}
-                                {{#validFavorite}}
-                                    <i id="{{id}}" class="small material-icons favorite red-text">favorite</i>
-                                {{/validFavorite}}
-                                {{^validUser}}
-                                    {{^validFollow}}
-                                        <i id="{{user.id}}" class="small material-icons follow">person_add</i>
-                                    {{/validFollow}}
-                                    {{#validFollow}}
-                                        <i id="{{user.id}}" class="small material-icons follow blue-text text-darken-3">record_voice_over</i>
-                                    {{/validFollow}}
-                                {{/validUser}}
-                            {{/isLogin}}
-                            {{^isLogin}}
-                                <i class="small material-icons unfavorite">favorite_border</i>
-                                <i class="small material-icons">person_add</i>
-                            {{/isLogin}}
-                            <div class="favorite-count">좋아요 <span id="{{id}}">{{favorite}}</span>개</div>
-                            <a href="/post/{{id}}" class="comment-count">댓글 {{countComment}}개</a>
+                        {{/isLogin}}
+                        <div class="card-content">
+                            <a href="/user/{{user.id}}" class="author black-text">{{country.user.name}}</a>
+                            <p>{{content}}</p>
+                            <div class="card-social">
+                                {{#isLogin}}
+                                    {{^validFavorite}}
+                                        <i id="{{id}}" class="small material-icons favorite">favorite_border</i>
+                                    {{/validFavorite}}
+                                    {{#validFavorite}}
+                                        <i id="{{id}}" class="small material-icons favorite red-text">favorite</i>
+                                    {{/validFavorite}}
+                                    {{^validUser}}
+                                        {{^validFollow}}
+                                            <i id="{{user.id}}" class="small material-icons follow">person_add</i>
+                                        {{/validFollow}}
+                                        {{#validFollow}}
+                                            <i id="{{user.id}}"
+                                               class="small material-icons follow blue-text text-darken-3">record_voice_over</i>
+                                        {{/validFollow}}
+                                    {{/validUser}}
+                                {{/isLogin}}
+                                {{^isLogin}}
+                                    <i class="small material-icons unfavorite">favorite_border</i>
+                                    <i class="small material-icons">person_add</i>
+                                {{/isLogin}}
+                                <div class="favorite-count">좋아요 <span id="{{id}}">{{favorite}}</span>개</div>
+                                <a href="/post/{{id}}" class="comment-count">댓글 {{countComment}}개</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {{/post}}
+            {{/post}}
+        </div>
+    </div>
+    <div id="{{totalPage}}" class="page-wrapper">
+        <a class="btn material-btn previous">이전</a>
+        <a class="btn material-btn next">다음</a>
     </div>
 </div>
 

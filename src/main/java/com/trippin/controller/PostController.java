@@ -1,5 +1,8 @@
 package com.trippin.controller;
 
+import com.trippin.config.auth.LoginUser;
+import com.trippin.config.auth.SessionUser;
+import com.trippin.controller.dto.PagePostDto;
 import com.trippin.controller.dto.PostDto;
 import com.trippin.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +30,10 @@ public class PostController {
         postService.createPost(postDto);
     }
 
-    // Read
+    // Read All
     @GetMapping("/page/{pageId}")
-    public List<PostDto> getPagePost(@PathVariable int pageId) {
-        return postService.getPagePost(pageId);
+    public List<PagePostDto> getPagePost(@PathVariable int pageId, @LoginUser SessionUser user) {
+        return postService.getPagePost(pageId, user);
     }
 
     // Update

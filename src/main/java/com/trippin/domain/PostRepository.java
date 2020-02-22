@@ -8,16 +8,22 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    List<Post> findAllByCountryIdOrderByCreatedAtDesc(Long countryId);
+    Page<Post> findAllByCountryIdOrderByCreatedAtDesc(Long countryId, Pageable pageable);
 
-    List<Post> findAllByUserIdOrderByCreatedAtDesc(Long userId);
+    Page<Post> findAllByUserIdOrderByCreatedAtDesc(Long userId, Pageable pageable);
+
+    List<Post> findAllByUserId(Long userId);
 
 //    List<Post> findAllByOrderByCreatedAtDesc();
 
     Page<Post> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
+//    List<Post> findByOrderByCreatedAtDesc(Pageable pageable);
+
+    List<Post> findByOrderByCreatedAtDesc(Pageable pageable);
+
     List<Post> findByUserIdOrderByCreatedAtDesc(List<Long> userId);
 
-    List<Post> findByRegionContainingOrCountry_NameContaining(String region, String country);
+    Page<Post> findByRegionContainingOrCountry_NameContaining(String region, String country, Pageable pageable);
 
 }

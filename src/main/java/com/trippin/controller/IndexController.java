@@ -74,8 +74,6 @@ public class IndexController {
     // 메인
     @GetMapping("/")
     public String index(@PageableDefault Pageable pageable, Model model, @LoginUser SessionUser user) {
-//        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
-
         Page<Post> postList = postService.getPost(pageable);
 
         if (user != null) {
@@ -110,8 +108,9 @@ public class IndexController {
 
     // 검색된 게시물
     @GetMapping("/search/{search}")
-    public String searchPost(@PathVariable String search, Model model, @LoginUser SessionUser user) {
-        List<Post> postList = postRepository.findByRegionContainingOrCountry_NameContaining(search, search);
+    public String searchPost(@PageableDefault Pageable pageable, @PathVariable String search, Model model,
+                             @LoginUser SessionUser user) {
+        Page<Post> postList = postService.getSearchPost(search, search, pageable);
 
         if (user != null) {
             model.addAttribute("loginUser", userRepository.getOne(user.getId()));
@@ -144,18 +143,19 @@ public class IndexController {
 
         model.addAttribute("post", postList);
         model.addAttribute("search", search);
+        model.addAttribute("totalPage", postList.getTotalPages());
 
         return "search-index";
     }
 
     // 유저 게시글 출력
     @GetMapping("/user/{userId}/post")
-    public String readUserPost(@PathVariable Long userId, Model model, @LoginUser SessionUser loginUser) {
-        List<Post> postList = postRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
+    public String readUserPost(@PageableDefault Pageable pageable, @PathVariable Long userId, Model model,
+                               @LoginUser SessionUser loginUser) {
+        Page<Post> postList = postService.getUserPost(userId, pageable);
 
         if (loginUser != null) {
             model.addAttribute("loginUser", loginUser);
-
             model.addAttribute("isLogin", true);
 
             postList.forEach(post -> {
@@ -184,14 +184,16 @@ public class IndexController {
         }
         model.addAttribute("post", postList);
         model.addAttribute("user", user);
+        model.addAttribute("totalPage", postList.getTotalPages());
 
         return "/user-index";
     }
 
     // 유저 북마크 게시글 출력
     @GetMapping("/user/{userId}/bookmark")
-    public String readUserBookmark(@PathVariable Long userId, Model model, @LoginUser SessionUser loginUser) {
-        List<Bookmark> bookmarkList = bookmarkRepository.findPostByUserIdAndSaveIsNotNull(userId);
+    public String readUserBookmark(@PageableDefault Pageable pageable, @PathVariable Long userId, Model model,
+                                   @LoginUser SessionUser loginUser) {
+        Page<Bookmark> bookmarkList = postService.getBookmarkPost(userId, pageable);
 
         if (loginUser != null) {
             model.addAttribute("loginUser", loginUser);
@@ -217,14 +219,17 @@ public class IndexController {
         });
 
         model.addAttribute("bookmark", bookmarkList);
+        model.addAttribute("totalPage", bookmarkList.getTotalPages());
+
 
         return "/bookmark-index";
     }
 
     // 나라 게시글 출력
     @GetMapping("/country/{countryId}")
-    public String readCountryPost(@PathVariable Long countryId, Model model, @LoginUser SessionUser user) {
-        List<Post> postList = postRepository.findAllByCountryIdOrderByCreatedAtDesc(countryId);
+    public String readCountryPost(@PageableDefault Pageable pageable, @PathVariable Long countryId, Model model,
+                                  @LoginUser SessionUser user) {
+        Page<Post> postList = postService.getCountryPost(countryId, pageable);
 
         if (user != null) {
             model.addAttribute("loginUser", user);
@@ -258,42 +263,48 @@ public class IndexController {
 
         model.addAttribute("post", postList);
         model.addAttribute("country", country);
+        model.addAttribute("totalPage", postList.getTotalPages());
 
         return "/country-index";
     }
 
     // 팔로잉 게시글 출력
     @GetMapping("/user/{userId}/follow")
-    public String readFollowingPost(@PathVariable Long userId, Model model, @LoginUser SessionUser loginUser) {
+    public String readFollowingPost(@PageableDefault Pageable pageable, @PathVariable Long userId, Model model,
+                                    @LoginUser SessionUser loginUser) {
         List<Follow> followList = followRepository.findFollowingIdByFollowerId(userId);
-        List<Post> postList = new ArrayList<>();
-        followList.forEach(follow -> postList.addAll(follow.getFollowing().getPost()));
 
-        if (loginUser != null) {
-            model.addAttribute("loginUser", loginUser);
+        followList.forEach(follow -> {
+            Page<Post> postList = postService.getUserPost(follow.getFollowing().getId(), pageable);
 
-            model.addAttribute("isLogin", true);
+            if (loginUser != null) {
+                model.addAttribute("loginUser", loginUser);
+
+                model.addAttribute("isLogin", true);
+
+                postList.forEach(post -> {
+                    List<Bookmark> bookmark =
+                            bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(loginUser.getId(),
+                                    post.getId());
+                    List<Bookmark> favorite =
+                            bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(loginUser.getId(), post.getId());
+                    List<Follow> isFollow =
+                            followRepository.findByFollowerIdAndFollowingId(loginUser.getId(), post.getUser().getId());
+                    if (!bookmark.isEmpty()) post.setValidBookmark(true);
+                    if (!favorite.isEmpty()) post.setValidFavorite(true);
+                    if (!isFollow.isEmpty()) post.setValidFollow(true);
+                    if (post.getUser().getId().equals(loginUser.getId())) post.setValidUser(true);
+                });
+            }
 
             postList.forEach(post -> {
-                List<Bookmark> bookmark =
-                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(loginUser.getId(), post.getId());
-                List<Bookmark> favorite =
-                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(loginUser.getId(), post.getId());
-                List<Follow> follow =
-                        followRepository.findByFollowerIdAndFollowingId(loginUser.getId(), post.getUser().getId());
-                if (!bookmark.isEmpty()) post.setValidBookmark(true);
-                if (!favorite.isEmpty()) post.setValidFavorite(true);
-                if (!follow.isEmpty()) post.setValidFollow(true);
-                if (post.getUser().getId().equals(loginUser.getId())) post.setValidUser(true);
+                post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
+                post.setCountComment(commentRepository.countByPostId(post.getId()));
             });
-        }
 
-        postList.forEach(post -> {
-            post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
-            post.setCountComment(commentRepository.countByPostId(post.getId()));
+            model.addAttribute("post", postList);
+            model.addAttribute("totalPage", postList.getTotalPages());
         });
-
-        model.addAttribute("post", postList);
 
         return "follow-index";
     }

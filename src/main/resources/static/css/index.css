@@ -6,3 +6,13 @@ body {
 .index-title {
 	cursor: default;
 }
+
+.page-wrapper {
+	display: flex;
+	justify-content: center;
+	margin: 60px 0;
+}
+
+.page-wrapper a {
+	margin: 0 5px;
+}
