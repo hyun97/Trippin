@@ -106,3 +106,9 @@
 	border: 0;
 	transition: all .2s ease;
 }
+
+@media (min-width: 320px) and (max-width: 1024px) {
+	.file-upload {
+		width: 100%;
+	}
+}

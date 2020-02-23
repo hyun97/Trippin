@@ -4,7 +4,13 @@
 
 .follow-wrapper .name {
 	font-weight: 600;
-	color: black;
+	color: #292f33;
+}
+
+.follow-wrapper h2 {
+	color: #292f33;
+	margin-bottom: 35px;
+	text-align: center;
 }
 
 .follow-card {
@@ -113,4 +119,10 @@
 .our-team .social li a:hover {
 	color: #1369ce;
 	background-color: #f7f5ec;
+}
+
+@media (min-width: 320px) and (max-width: 1024px) {
+	.our-team .social {
+		bottom: 0;
+	}
 }

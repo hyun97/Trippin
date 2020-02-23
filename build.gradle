@@ -32,6 +32,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-oauth2-client')
     compile('org.mariadb.jdbc:mariadb-java-client')
+    compile('com.navercorp.lucy:lucy-xss-servlet:2.0.0')
 //    compile('org.springframework.session:spring-session-jdbc')
     compile('org.projectlombok:lombok')
     compile('com.h2database:h2')

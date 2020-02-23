@@ -3,8 +3,9 @@ body {
 	letter-spacing: 0.5px;
 }
 
-.index-title {
+.index-title, .follow-wrapper h2 {
 	cursor: default;
+	font-weight: bold;
 }
 
 .page-wrapper {
@@ -15,4 +16,11 @@ body {
 
 .page-wrapper a {
 	margin: 0 5px;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+	.index-title, .follow-wrapper h2 {
+		font-size: 30px;
+		text-align: center;
+	}
 }

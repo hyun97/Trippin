@@ -52,10 +52,11 @@
 }
 
 .profile-user-page .user-profile-data h1 {
-	font-family: "Lato", sans-serif;
-	margin-top: 0;
 	color: #292f33;
 	margin-bottom: 15px;
+	font-weight: bold;
+	margin-top: 10px;
+	font-size: 50px;
 }
 
 .profile-user-page .description-profile {
@@ -131,21 +132,7 @@
 		height: 16em;
 	}
 
-	.profile-user-page button {
-		font-size: 13px;
-		font-weight: bold;
-		cursor: pointer;
-		width: 7em;
-		background: #3498db;
-		border: 1px solid #2487c9;
-		color: #fff;
-		outline: none;
-		border-radius: .6em;
-		padding: .80em;
-	}
-
 	.profile-user-page .user-profile-data h1 {
-		font-family: "Lato", sans-serif;
-		color: #292f33;
+		font-size: 30px;
 	}
 }

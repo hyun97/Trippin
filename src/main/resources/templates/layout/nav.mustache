@@ -34,10 +34,13 @@
                 <div id="contact" class="form-structor modal">
                     <div class="signup modal-content">
                         <h2 class="form-title" id="signup">Sign up</h2>
-                        <button class="submit-btn" onclick="location.href='/oauth2/authorization/google'">
+                        <button class="submit-btn white-text blue"
+                                onclick="location.href='/oauth2/authorization/google'">
                             GOOGLE
                         </button>
-                        <button class="submit-btn">NAVER</button>
+                        <button data-position="bottom" data-tooltip="준비중"
+                                class="tooltipped naver submit-btn green-text white">NAVER
+                        </button>
                     </div>
                 </div>
             </ul>
@@ -58,21 +61,24 @@
                     <img src="{{loginUser.picture}}">
                 </div>
                 <span><img class="circle" src="{{loginUser.picture}}"></span>
-                <span><span class="white-text name">{{loginUser.name}}</span>
-                <span><span class="white-text email">{{loginUser.email}}</span>
+                <span><span class="white-text name">{{loginUser.name}}</span></span>
+                <span><span class="white-text email">{{loginUser.email}}</span></span>
             </div>
         </li>
         <li><a class="waves-effect" href="/"><i class="material-icons">home</i>홈</a></li>
         <li><a class="waves-effect" href="/user/{{loginUser.id}}"><i class="material-icons">person</i>마이페이지</a></li>
-        <li><a class="waves-effect" href="#"><i class="material-icons">favorite</i>팔로잉</a></li>
+        <li><a class="waves-effect" href="/user/{{loginUser.id}}/follow"><i class="material-icons">favorite</i>팔로잉</a>
+        </li>
+        <li><a class="waves-effect" href="/logout"><i class="material-icons">power_settings_new</i>로그아웃</a></li>
     {{/isLogin}}
     {{^isLogin}}
-        <li><a class="waves-effect" href=""><i class="material-icons">forward</i>로그인</a></li>
-        <li><a class="waves-effect" href=""><i class="material-icons">home</i>홈</a></li>
+        <li><a class="subheader black-text" style="font-weight: bolder">로그인</a></li>
+        <li><a class="google waves-effect" href="/oauth2/authorization/google">GOOGLE</a></li>
+        <li><a class="naver waves-effect" href="#">NAVER (준비중)</a></li>
     {{/isLogin}}
     <li>
         <div class="divider"></div>
     </li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#">Third Link With Waves</a></li>
+    <li><a class="subheader black-text" style="font-weight: bolder">문의</a></li>
+    <li><a class="waves-effect">nkh1602@naver.com</a></li>
 </ul>

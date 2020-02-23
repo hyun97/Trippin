@@ -195,9 +195,13 @@
 		width: 100%;
 		height: 280px;
 	}
+
+	.country-wrapper .edit-wrapper {
+		opacity: 1;
+	}
 }
 
-@media (min-width: 320px) and (max-width: 360px) {
+@media (min-width: 320px) and (max-width: 480px) {
 	.country-wrapper {
 		min-width: 250px;
 		max-width: 250px;
@@ -207,5 +211,9 @@
 	.country-wrapper img {
 		width: 100%;
 		height: 250px;
+	}
+
+	.country-wrapper .edit-wrapper {
+		opacity: 1;
 	}
 }

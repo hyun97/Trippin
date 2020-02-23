@@ -8,7 +8,7 @@ let pageSize = document.querySelector(".page-wrapper");
 
 function handleNextBtn() {
     if (page < pageSize.id) {
-        if (page == 0) {
+        if (page == 1) {
             location.href = `?page=${2}`;
         } else {
             page++;
@@ -18,9 +18,9 @@ function handleNextBtn() {
 }
 
 function handlePreviousBtn() {
-    if (page <= pageSize.id && page != 0) {
+    if (page <= pageSize.id && page != 1) {
         if (page == 2) {
-            location.href = `?page=${0}`;
+            location.href = `?page=${1}`;
         } else {
             page--;
             location.href = `?page=${page}`;
@@ -34,12 +34,13 @@ function eventListening() {
         previous.addEventListener("click", handlePreviousBtn);
 
         if (isNaN(page)) {
-            page = 0;
+            page = 1;
         }
 
-        if (page == 0) {
+        if (page == 1) {
             previous.classList.add("grey");
-        } else if (page >= pageSize.id) {
+        }
+        if (page >= pageSize.id || pageSize.id == 1) {
             next.classList.add("grey");
         }
     }

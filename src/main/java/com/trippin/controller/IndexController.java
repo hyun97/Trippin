@@ -433,7 +433,11 @@ public class IndexController {
 
         model.addAttribute("user", masterUser);
 
-        return "/partial/user/update-user";
+        if (masterUser.getId().equals(user.getId())) {
+            return "/partial/user/update-user";
+        } else {
+            return "return";
+        }
     }
 
 
@@ -451,15 +455,21 @@ public class IndexController {
     // 나라 수정
     @GetMapping("/country/{id}/update")
     public String updateCountry(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
-        // TODO: ADD EXCEPTION
         if (user != null) {
             model.addAttribute("loginUser", user);
             model.addAttribute("isLogin", true);
         }
 
-        model.addAttribute("country", countryRepository.findById(id).orElse(null));
+        Country country = countryRepository.findById(id).orElse(null);
 
-        return "partial/country/update-country";
+        model.addAttribute("country", country);
+
+        if (country.getUser().getId().equals(user.getId())) {
+            return "partial/country/update-country";
+        } else {
+            return "return";
+        }
+
     }
 
     // 게시글 등록
@@ -480,15 +490,20 @@ public class IndexController {
     // 게시글 수정
     @GetMapping("/post/{postId}/update")
     public String updatePost(@PathVariable Long postId, Model model, @LoginUser SessionUser user) {
-        // TODO: ADD EXCEPTION
         if (user != null) {
             model.addAttribute("loginUser", user);
             model.addAttribute("isLogin", true);
         }
 
-        model.addAttribute("post", postRepository.findById(postId).orElse(null));
+        Post post = postRepository.findById(postId).orElse(null);
 
-        return "partial/post/update-post";
+        model.addAttribute("post", post);
+
+        if (post.getUser().getId().equals(user.getId())) {
+            return "partial/post/update-post";
+        } else {
+            return "return";
+        }
     }
 
 }

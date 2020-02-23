@@ -41,6 +41,7 @@
 }
 
 .card:hover .edit-wrapper {
+	transition: all 0.3s;
 	opacity: 1;
 }
 
@@ -88,6 +89,11 @@
 	.card .btn-floating.halfway-fab {
 		bottom: 168px;
 	}
+
+	.card .edit-wrapper {
+		color: white;
+		opacity: 1;
+	}
 }
 
 @media (min-width: 320px) and (max-width: 767px) {
@@ -97,5 +103,10 @@
 
 	.card .btn-floating.halfway-fab {
 		bottom: 168px;
+	}
+
+	.card .edit-wrapper {
+		color: white;
+		opacity: 1;
 	}
 }

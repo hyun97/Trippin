@@ -20,3 +20,8 @@ $(document).ready(function () {
 $(document).ready(function () {
     M.updateTextFields();
 });
+
+// Tooltip
+$(document).ready(function () {
+    $('.tooltipped').tooltip();
+});
