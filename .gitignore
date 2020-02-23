@@ -1,6 +1,5 @@
 .gradle
 .idea
 src/main/resources/static/img
-src/main/resources/static/css
 application-oauth.properties
 application.properties
