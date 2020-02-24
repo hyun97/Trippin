@@ -55,7 +55,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                     .name(attributes.getName())
                     .email(attributes.getEmail())
                     .picture(attributes.getPicture())
-                    .feel("상태메시지 없음")
+                    .feel("상태메시지")
                     .role(Role.USER)
                     .build();
 
