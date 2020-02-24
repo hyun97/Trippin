@@ -64,10 +64,11 @@ public class User extends Auditing {
     private List<Follow> follower;
 
     @Builder
-    public User(String name, String email, String picture, Role role) {
+    public User(String name, String email, String picture, String feel, Role role) {
         this.name = name;
         this.email = email;
         this.picture = picture;
+        this.feel = feel;
         this.role = role;
     }
 
