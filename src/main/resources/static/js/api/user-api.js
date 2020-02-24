@@ -29,8 +29,6 @@ function updateUser(event) {
             picture: updatedImage
         };
 
-        console.log(data);
-
         $.ajax({
             type: "PUT",
             url: `/api/user/${userId}`,
@@ -44,7 +42,6 @@ function updateUser(event) {
                 location.href = `/user/${userId}`;
             });
         }).fail(function (error) {
-            console.log(error);
             swal({
                 title: "수정 실패 😥",
                 icon: "error",
