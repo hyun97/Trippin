@@ -186,10 +186,10 @@ public class IndexController {
         model.addAttribute("user", user);
         model.addAttribute("totalPage", postList.getTotalPages());
 
-        return "/user-index";
+        return "user-index";
     }
 
-    // 유저 북마크 게시글 출력
+    // 유저 북마크 게시글 출력 !!!!!!!!!!!!!!!!!!!!!
     @GetMapping("/user/{userId}/bookmark")
     public String readUserBookmark(@PageableDefault Pageable pageable, @PathVariable Long userId, Model model,
                                    @LoginUser SessionUser loginUser) {
@@ -222,7 +222,7 @@ public class IndexController {
         model.addAttribute("totalPage", bookmarkList.getTotalPages());
 
 
-        return "/bookmark-index";
+        return "bookmark-index";
     }
 
     // 나라 게시글 출력
@@ -265,7 +265,7 @@ public class IndexController {
         model.addAttribute("country", country);
         model.addAttribute("totalPage", postList.getTotalPages());
 
-        return "/country-index";
+        return "country-index";
     }
 
     // 팔로잉 게시글 출력
@@ -434,7 +434,7 @@ public class IndexController {
         model.addAttribute("user", masterUser);
 
         if (masterUser.getId().equals(user.getId())) {
-            return "/partial/user/update-user";
+            return "partial/user/update-user";
         } else {
             return "return";
         }
