@@ -274,14 +274,15 @@ public class IndexController {
                                     @LoginUser SessionUser loginUser) {
         List<Follow> followList = followRepository.findFollowingIdByFollowerId(userId);
 
+        if (loginUser != null) {
+            model.addAttribute("loginUser", loginUser);
+            model.addAttribute("isLogin", true);
+        }
+
         followList.forEach(follow -> {
             Page<Post> postList = postService.getUserPost(follow.getFollowing().getId(), pageable);
 
             if (loginUser != null) {
-                model.addAttribute("loginUser", loginUser);
-
-                model.addAttribute("isLogin", true);
-
                 postList.forEach(post -> {
                     List<Bookmark> bookmark =
                             bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(loginUser.getId(),
@@ -305,6 +306,8 @@ public class IndexController {
             model.addAttribute("post", postList);
             model.addAttribute("totalPage", postList.getTotalPages());
         });
+
+        model.addAttribute("totalPage", 0);
 
         return "follow-index";
     }
