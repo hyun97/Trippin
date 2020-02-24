@@ -189,7 +189,7 @@ public class IndexController {
         return "user-index";
     }
 
-    // 유저 북마크 게시글 출력 !!!!!!!!!!!!!!!!!!!!!
+    // 유저 북마크 게시글 출력
     @GetMapping("/user/{userId}/bookmark")
     public String readUserBookmark(@PageableDefault Pageable pageable, @PathVariable Long userId, Model model,
                                    @LoginUser SessionUser loginUser) {
