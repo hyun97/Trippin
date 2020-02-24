@@ -23,15 +23,9 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    {{#user.feel}}
-                        <input data-length="30" maxlength="30" autocomplete="off" id="update-comment" type="text"
-                               value="{{user.feel}}">
-                        <label for="update-comment">상태메시지를 입력하세요.</label>
-                    {{/user.feel}}
-                    {{^user.feel}}
-                        <input data-length="30" maxlength="30" autocomplete="off" id="update-comment" type="text">
-                        <label for="update-comment">상태메시지를 입력하세요.</label>
-                    {{/user.feel}}
+                    <input data-length="30" maxlength="30" autocomplete="off" id="update-comment" type="text"
+                           value="{{user.feel}}">
+                    <label for="update-comment">상태메시지를 입력하세요.</label>
                 </div>
             </div>
             <div class="user-update-btn-wrapper">
