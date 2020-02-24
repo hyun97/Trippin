@@ -11,8 +11,9 @@
         </div>
         <div class="user-profile-data">
             <h1>{{user.name}}</h1>
+            {{user}}
             {{#user.comment}}
-                <div class="description-profile">{{user.comment}}</div>
+                <div class="description-profile">{{!user.comment}}</div>
             {{/user.comment}}
             {{#isLogin}}
                 {{^validUser}}
