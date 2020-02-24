@@ -12,11 +12,11 @@ public class UserDto {
 
     private String name;
 
-    private String comment;
+    private String feel;
 
     public UserDto(User user) {
         this.picture = user.getPicture();
         this.name = user.getName();
-        this.comment = user.getComment();
+        this.feel = user.getFeel();
     }
 }

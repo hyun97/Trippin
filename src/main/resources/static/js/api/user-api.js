@@ -25,9 +25,11 @@ function updateUser(event) {
 
         let data = {
             name: name,
-            comment: comment,
+            feel: comment,
             picture: updatedImage
         };
+
+        console.log(data);
 
         $.ajax({
             type: "PUT",
@@ -42,12 +44,11 @@ function updateUser(event) {
                 location.href = `/user/${userId}`;
             });
         }).fail(function (error) {
+            console.log(error);
             swal({
                 title: "수정 실패 😥",
                 icon: "error",
-            }).then(() => {
-                location.href = `/user/${userId}`;
-            });
+            })
         });
     }
 }

@@ -31,7 +31,7 @@ public class User extends Auditing {
 
     private String name;
 
-    private String comment;
+    private String feel;
 
     @Transient
     private boolean validFollow;
@@ -74,7 +74,7 @@ public class User extends Auditing {
     public void update(UserDto userDto) {
         this.picture = userDto.getPicture();
         this.name = userDto.getName();
-        this.comment = userDto.getComment();
+        this.feel = userDto.getFeel();
     }
 
     public String getRoleKey() {

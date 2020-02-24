@@ -23,15 +23,15 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    {{#user.comment}}
+                    {{#user.feel}}
                         <input data-length="30" maxlength="30" autocomplete="off" id="update-comment" type="text"
-                               value="{{user.comment}}">
+                               value="{{user.feel}}">
                         <label for="update-comment">상태메시지를 입력하세요.</label>
-                    {{/user.comment}}
-                    {{^user.comment}}
+                    {{/user.feel}}
+                    {{^user.feel}}
                         <input data-length="30" maxlength="30" autocomplete="off" id="update-comment" type="text">
                         <label for="update-comment">상태메시지를 입력하세요.</label>
-                    {{/user.comment}}
+                    {{/user.feel}}
                 </div>
             </div>
             <div class="user-update-btn-wrapper">
