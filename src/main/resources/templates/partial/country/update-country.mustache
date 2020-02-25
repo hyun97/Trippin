@@ -8,10 +8,10 @@
 <div class="file-upload">
     <div class="row">
         <form class="col s12" action="/api/country/{{country.id}}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_method" value="put"/>
             {{#loginUser}}
                 <input class="user-id hide" name="userId" value="{{loginUser.id}}">
             {{/loginUser}}
-            <input type="hidden" name="_method" value="put"/>
             <img class="file-upload-image" src="{{country.image}}" alt="{{country.image}}"/>
             <input name="image" class="file-upload-input" hidden type='file' onchange="readURL(this);"
                    accept="image/*"/>

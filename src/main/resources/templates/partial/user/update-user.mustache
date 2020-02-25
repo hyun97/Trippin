@@ -2,12 +2,13 @@
 
 <div class="file-upload">
     <div class="row">
-        <form class="col s12">
-            <!-- TODO: 경로 수정 -->
+        <form class="col s12" action="/api/user/{{user.id}}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_method" value="put"/>
             <div class="user-image">
                 <img src="{{user.picture}}" alt="{{user.picture}}"/>
             </div>
-            <input autocomplete="off" class="file-upload-input" hidden type='file' required onchange="readURL(this);"
+            <input name="picture" autocomplete="off" class="file-upload-input" hidden type='file'
+                   onchange="readURL(this);"
                    accept="image/*"/>
             <div class="user-file-upload-btn">
                 <button class="indigo" type="button" onclick="$('.file-upload-input').trigger('click')">
@@ -16,20 +17,22 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input data-length="10" maxlength="10" autocomplete="off" id="update-name" class="{{user.id}}"
+                    <input name="name" data-length="10" maxlength="10" autocomplete="off" id="update-name"
+                           class="{{user.id}}"
                            type="text" value="{{user.name}}">
                     <label for="update-name">이름을 입력하세요.</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input data-length="30" maxlength="30" autocomplete="off" id="update-comment" type="text"
+                    <input name="feel" data-length="30" maxlength="30" autocomplete="off" id="update-comment"
+                           type="text"
                            value="{{user.feel}}">
                     <label for="update-comment">상태메시지를 입력하세요.</label>
                 </div>
             </div>
             <div class="user-update-btn-wrapper">
-                <button class="btn waves-effect waves-light update-user-button material-btn" type="submit">수정
+                <button class="btn waves-effect waves-light material-btn" type="submit">수정
                     <i class="material-icons right">send</i>
                 </button>
                 <button class="btn waves-effect waves-light delete-user-button" type="submit">회원 탈퇴

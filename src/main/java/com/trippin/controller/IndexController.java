@@ -78,7 +78,6 @@ public class IndexController {
 
         if (user != null) {
             model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-
             model.addAttribute("isLogin", true);
 
             postList.forEach(post -> {
@@ -155,7 +154,7 @@ public class IndexController {
         Page<Post> postList = postService.getUserPost(userId, pageable);
 
         if (loginUser != null) {
-            model.addAttribute("loginUser", loginUser);
+            model.addAttribute("loginUser", userRepository.getOne(loginUser.getId()));
             model.addAttribute("isLogin", true);
 
             postList.forEach(post -> {
@@ -196,7 +195,7 @@ public class IndexController {
         Page<Bookmark> bookmarkList = postService.getBookmarkPost(userId, pageable);
 
         if (loginUser != null) {
-            model.addAttribute("loginUser", loginUser);
+            model.addAttribute("loginUser", userRepository.getOne(loginUser.getId()));
             model.addAttribute("isLogin", true);
 
             bookmarkList.forEach(bookmark -> {
@@ -232,7 +231,7 @@ public class IndexController {
         Page<Post> postList = postService.getCountryPost(countryId, pageable);
 
         if (user != null) {
-            model.addAttribute("loginUser", user);
+            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
 
             model.addAttribute("isLogin", true);
 
@@ -275,7 +274,7 @@ public class IndexController {
         List<Follow> followList = followRepository.findFollowingIdByFollowerId(userId);
 
         if (loginUser != null) {
-            model.addAttribute("loginUser", loginUser);
+            model.addAttribute("loginUser", userRepository.getOne(loginUser.getId()));
             model.addAttribute("isLogin", true);
         }
 
@@ -318,7 +317,7 @@ public class IndexController {
         User masterUser = userRepository.findById(id).orElse(null);
 
         if (user != null) {
-            model.addAttribute("loginUser", user);
+            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
             model.addAttribute("isLogin", true);
             List<Follow> follow =
                     followRepository.findByFollowerIdAndFollowingId(user.getId(), masterUser.getId());
@@ -351,7 +350,7 @@ public class IndexController {
         User masterUser = userRepository.findById(id).orElse(null);
 
         if (user != null) {
-            model.addAttribute("loginUser", user);
+            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
             model.addAttribute("isLogin", true);
         }
 
@@ -389,7 +388,7 @@ public class IndexController {
         User masterUser = userRepository.findById(id).orElse(null);
 
         if (user != null) {
-            model.addAttribute("loginUser", user);
+            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
             model.addAttribute("isLogin", true);
         }
 
@@ -426,7 +425,7 @@ public class IndexController {
         User masterUser = userRepository.findById(userId).orElse(null);
 
         if (user != null) {
-            model.addAttribute("loginUser", user);
+            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
             model.addAttribute("isLogin", true);
         }
 
@@ -448,7 +447,7 @@ public class IndexController {
     @GetMapping("/country/create")
     public String createCountry(Model model, @LoginUser SessionUser user) {
         if (user != null) {
-            model.addAttribute("loginUser", user);
+            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
             model.addAttribute("isLogin", true);
         }
 
@@ -459,7 +458,7 @@ public class IndexController {
     @GetMapping("/country/{id}/update")
     public String updateCountry(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
         if (user != null) {
-            model.addAttribute("loginUser", user);
+            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
             model.addAttribute("isLogin", true);
         }
 
@@ -479,7 +478,7 @@ public class IndexController {
     @GetMapping("/post/create/{countryId}")
     public String createPost(@PathVariable Long countryId, Model model, @LoginUser SessionUser user) {
         if (user != null) {
-            model.addAttribute("loginUser", user);
+            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
             model.addAttribute("isLogin", true);
         }
 
@@ -494,7 +493,7 @@ public class IndexController {
     @GetMapping("/post/{postId}/update")
     public String updatePost(@PathVariable Long postId, Model model, @LoginUser SessionUser user) {
         if (user != null) {
-            model.addAttribute("loginUser", user);
+            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
             model.addAttribute("isLogin", true);
         }
 

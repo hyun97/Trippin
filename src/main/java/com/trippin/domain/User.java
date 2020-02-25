@@ -1,6 +1,5 @@
 package com.trippin.domain;
 
-import com.trippin.controller.dto.UserDto;
 import com.trippin.domain.util.Auditing;
 import com.trippin.domain.util.Role;
 import lombok.AllArgsConstructor;
@@ -72,10 +71,10 @@ public class User extends Auditing {
         this.role = role;
     }
 
-    public void update(UserDto userDto) {
-        this.picture = userDto.getPicture();
-        this.name = userDto.getName();
-        this.feel = userDto.getFeel();
+    public void update(String picture, String name, String feel) {
+        this.picture = picture;
+        this.name = name;
+        this.feel = feel;
     }
 
     public String getRoleKey() {
