@@ -101,6 +101,7 @@ public class IndexController {
         });
 
         model.addAttribute("post", postList);
+        model.addAttribute("totalPage", postList.getTotalPages());
 
         return "index";
     }

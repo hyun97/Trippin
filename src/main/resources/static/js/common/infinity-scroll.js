@@ -1,6 +1,7 @@
 let post = document.querySelector("#autoScroll");
 let nextPage = document.querySelector(".nextPage");
-let currentPage = 1;
+let totalPage = document.querySelector(".next").id;
+let currentPage = 4;
 
 function createFollowAjax(event, followBtn) {
     followBtn.forEach(function (followBtn) {
@@ -65,9 +66,9 @@ function handleFollowBtnClickAjax(event, followBtn) {
     }
 }
 
-
 function handlePageBtn() {
     currentPage++;
+
     $.ajax({
         type: "GET",
         url: `/api/post/page/${currentPage}`,
@@ -83,7 +84,7 @@ function handlePageBtn() {
 }
 
 function renderList(e) {
-    $("#autoScroll-wrapper").append($("<div id=\"autoScroll\" class=\"col s12 m6 l6 xl4\"><div class=\"card z-depth-4\"><a href=\"/post/" + e.postId + "\" target=\"_blank\"><div class=\"card-image\"><img src=\"/img/" + e.image + "\"><span class=\"card-title\">" + e.countryName + " · " + e.region + "</span></div></a>" + (e.login ? (e.bookmark ? "<a id=\"" + e.postId + "\" class=\"hoverable bookmark btn-floating halfway-fab waves-effect waves-light red\"><i class=\"material-icons\">bookmark</i></a>" : "<a id=\"" + e.postId + "\" class=\"hoverable bookmark btn-floating halfway-fab waves-effect waves-light red\"><i class=\"material-icons\">bookmark_border</i></a>") : "<a class=\"hoverable btn-floating halfway-fab waves-effect waves-light red\"><i class=\"material-icons\">bookmark_border</i></a>") + "<div class=\"card-content\"><a href=\"/user/" + e.userId + "\" class=\"author black-text\">" + e.authorName + "</a><p>" + e.content + "</p><div class=\"card-social\">" + (e.login ? (e.favorite ? "<i id=\"" + e.postId + "\" class=\"small material-icons favorite red-text\">favorite</i>" : "<i id=\"" + e.postId + "\" class=\"small material-icons favorite\">favorite_border</i>") + (e.author ? "" : (e.follow ? "<i id=\"" + e.userId + "\" class=\"small material-icons follow blue-text text-darken-3\">record_voice_over</i>" : "<i id=\"" + e.userId + "\" class=\"small material-icons follow\">person_add</i>")) : "<i class=\"small material-icons unfavorite\">favorite_border</i><i class=\"small material-icons\">person_add</i>") + "<div class=\"favorite-count\">좋아요 <span id=\"" + e.postId + "\">" + e.countFavorite + "</span>개</div><a href=\"/post/" + e.postId + "\" class=\"comment-count\">댓글 " + e.countComment + "개</a></div></div></div></div>").hide().fadeIn(1500));
+    $("#autoScroll-wrapper").append($("<div id=\"autoScroll\" class=\"col s12 m6 l6 xl4\"><div class=\"card z-depth-4\"><a href=\"/post/" + e.postId + "\" target=\"_blank\"><div class=\"card-image\"><img src=\"" + e.image + "\"><span class=\"card-title\">" + e.countryName + " · " + e.region + "</span></div></a>" + (e.login ? (e.bookmark ? "<a id=\"" + e.postId + "\" class=\"hoverable bookmark btn-floating halfway-fab waves-effect waves-light red\"><i class=\"material-icons\">bookmark</i></a>" : "<a id=\"" + e.postId + "\" class=\"hoverable bookmark btn-floating halfway-fab waves-effect waves-light red\"><i class=\"material-icons\">bookmark_border</i></a>") : "<a class=\"hoverable btn-floating halfway-fab waves-effect waves-light red\"><i class=\"material-icons\">bookmark_border</i></a>") + "<div class=\"card-content\"><a href=\"/user/" + e.userId + "\" class=\"author black-text\">" + e.authorName + "</a><p>" + e.content + "</p><div class=\"card-social\">" + (e.login ? (e.favorite ? "<i id=\"" + e.postId + "\" class=\"small material-icons favorite red-text\">favorite</i>" : "<i id=\"" + e.postId + "\" class=\"small material-icons favorite\">favorite_border</i>") + (e.author ? "" : (e.follow ? "<i id=\"" + e.userId + "\" class=\"small material-icons follow blue-text text-darken-3\">record_voice_over</i>" : "<i id=\"" + e.userId + "\" class=\"small material-icons follow\">person_add</i>")) : "<i class=\"small material-icons unfavorite\">favorite_border</i><i class=\"small material-icons\">person_add</i>") + "<div class=\"favorite-count\">좋아요 <span id=\"" + e.postId + "\">" + e.countFavorite + "</span>개</div><a href=\"/post/" + e.postId + "\" class=\"comment-count\">댓글 " + e.countComment + "개</a></div></div></div></div>").hide().fadeIn(1500));
 
     $(".bookmark").unbind("click").on("click", function (event) {
         handleBookmarkClick(event);

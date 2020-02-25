@@ -61,7 +61,7 @@ public class PostService {
     public Page<Post> getPost(Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 
-        pageable = PageRequest.of(page, 9);
+        pageable = PageRequest.of(page, 8);
 
         return postRepository.findAllByOrderByCreatedAtDesc(pageable);
     }
