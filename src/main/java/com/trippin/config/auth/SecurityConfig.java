@@ -1,6 +1,5 @@
 package com.trippin.config.auth;
 
-import com.trippin.domain.util.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,12 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/country/**",
                         "/bookmark/**",
                         "/post/**",
-                        "/search/**"
-                ).permitAll()
-                .antMatchers(
+                        "/search/**",
                         "/api/**"
-                ).hasRole(Role.USER.name())
-                .anyRequest().authenticated()
+                ).permitAll()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")

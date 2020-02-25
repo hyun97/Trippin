@@ -3,8 +3,10 @@ package com.trippin.controller.dto;
 import com.trippin.domain.Country;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class CountryDto {
 

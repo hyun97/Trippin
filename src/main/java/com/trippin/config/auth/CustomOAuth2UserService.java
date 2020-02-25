@@ -62,7 +62,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             userRepository.save(newUser);
 
             Country country = Country.builder()
-                    .image("Korea.jpg")
+                    .image("https://trippin-springboot.s3.ap-northeast-2.amazonaws.com/Korea.jpg")
                     .name("KOREA")
                     .content("")
                     .user(userRepository.findByEmail(attributes.getEmail()).orElse(null))

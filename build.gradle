@@ -36,5 +36,7 @@ dependencies {
 //    compile('org.springframework.session:spring-session-jdbc')
     compile('org.projectlombok:lombok')
     compile('com.h2database:h2')
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-aws', version: '2.2.1.RELEASE', ext: 'pom'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.728'
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

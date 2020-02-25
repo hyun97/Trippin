@@ -4,4 +4,5 @@ build
 src/main/resources/static/img
 application-oauth.properties
 application.properties
+application.yml
 out

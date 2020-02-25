@@ -7,7 +7,9 @@ import com.trippin.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,14 +20,15 @@ public class CountryService {
 
     private final CountryRepository countryRepository;
     private final UserRepository userRepository;
+    private final S3Service s3Service;
 
     // create
-    public void createCountry(CountryDto countryDto) {
+    public void createCountry(Long userId, String name, String content, String image) {
         Country country = Country.builder()
-                .image(countryDto.getImage())
-                .name(countryDto.getName())
-                .content(countryDto.getContent())
-                .user(userRepository.getOne(countryDto.getUserId()))
+                .image(image)
+                .name(name)
+                .content(content)
+                .user(userRepository.getOne(userId))
                 .build();
 
         countryRepository.save(country);
@@ -39,10 +42,24 @@ public class CountryService {
     }
 
     // update
-    public void updateCountry(Long id, CountryDto countryDto) {
-        // TODO: ADD EXCEPTION
-        Country country = countryRepository.findById(id).orElse(null);
-        country.update(countryDto);
+    public void updateCountry(
+            Long countryId,
+            Long userId,
+            String name,
+            String content,
+            MultipartFile image) throws IOException {
+        Country country = countryRepository.findById(countryId).orElse(null);
+
+        String imgPath;
+
+        if (image.getOriginalFilename().equals("")) {
+            imgPath = country.getImage();
+        } else {
+            imgPath = s3Service.upload(image);
+        }
+
+        country.update(name, content, imgPath);
+
         countryRepository.save(country);
     }
 

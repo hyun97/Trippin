@@ -7,26 +7,32 @@
 
 <div class="file-upload">
     <div class="row">
-        <form class="col s12">
-            <img class="file-upload-image" src="/img/{{country.image}}" alt="{{country.image}}"/>
-            <input class="file-upload-input" hidden type='file' onchange="readURL(this);" accept="image/*"/>
+        <form class="col s12" action="/api/country/{{country.id}}" method="post" enctype="multipart/form-data">
+            {{#loginUser}}
+                <input class="user-id hide" name="userId" value="{{loginUser.id}}">
+            {{/loginUser}}
+            <input type="hidden" name="_method" value="put"/>
+            <img class="file-upload-image" src="{{country.image}}" alt="{{country.image}}"/>
+            <input name="image" class="file-upload-input" hidden type='file' onchange="readURL(this);"
+                   accept="image/*"/>
             <button class="file-upload-btn indigo" type="button" onclick="$('.file-upload-input').trigger('click')">
                 Update Image
             </button>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="input_text" type="text" value="{{country.name}}" class="{{country.id}}" data-length="11"
+                    <input name="name" id="input_text" type="text" value="{{country.name}}" class="{{country.id}}"
+                           data-length="11"
                            maxlength="11">
                     <label for="input_text">나라를 입력하세요. (필수)</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="update-country-description" type="text" value="{{country.content}}">
+                    <input name="content" id="update-country-description" type="text" value="{{country.content}}">
                     <label for="update-country-description">나라의 한줄평을 입력하세요.</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light update-country-button material-btn" type="submit">수정
+            <button class="btn waves-effect waves-light material-btn" type="submit">수정
                 <i class="material-icons right">send</i>
             </button>
         </form>
