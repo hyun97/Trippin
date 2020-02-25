@@ -26,7 +26,7 @@ public class CountryService {
     public void createCountry(Long userId, String name, String content, String image) {
         Country country = Country.builder()
                 .image(image)
-                .name(name)
+                .name(name.toUpperCase())
                 .content(content)
                 .user(userRepository.getOne(userId))
                 .build();

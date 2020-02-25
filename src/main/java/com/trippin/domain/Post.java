@@ -70,7 +70,7 @@ public class Post extends Auditing {
 
     public void update(String image, String region, String content) {
         this.image = image;
-        this.region = region;
+        this.region = region.toUpperCase();
         this.content = content;
     }
 

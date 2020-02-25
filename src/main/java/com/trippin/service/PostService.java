@@ -48,7 +48,7 @@ public class PostService {
 
         Post post = Post.builder()
                 .image(imgPath)
-                .region(region)
+                .region(region.toUpperCase())
                 .content(content)
                 .country(countryRepository.getOne(countryId))
                 .user(userRepository.getOne(userId))

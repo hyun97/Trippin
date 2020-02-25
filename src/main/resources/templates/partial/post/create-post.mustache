@@ -6,7 +6,8 @@
             <input name="userId" hidden type="text" value="{{loginUser.id}}">
             <input name="countryId" hidden type="text" value="{{country.id}}">
             <div class="image-upload-wrap">
-                <input name="image" autocomplete="off" class="file-upload-input" type='file' onchange="readURL(this);"
+                <input required name="image" autocomplete="off" class="file-upload-input" type='file'
+                       onchange="readURL(this);"
                        accept="image/*"/>
                 <div class="drag-text">
                     <h3>드래그하거나 클릭하여 업로드</h3>
@@ -39,7 +40,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input name="content" autocomplete="off" id="content" type="text">
+                    <input required name="content" autocomplete="off" id="content" type="text">
                     <label for="content">내용을 입력하세요.</label>
                 </div>
             </div>

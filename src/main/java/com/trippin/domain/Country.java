@@ -42,7 +42,7 @@ public class Country extends Auditing {
     private List<Post> post;
 
     public void update(String name, String content, String image) {
-        this.name = name;
+        this.name = name.toUpperCase();
         this.content = content;
         this.image = image;
     }

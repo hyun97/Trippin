@@ -20,7 +20,8 @@
             </button>
             <div class="row">
                 <div class="input-field col s12">
-                    <input name="name" id="input_text" type="text" value="{{country.name}}" class="{{country.id}}"
+                    <input required name="name" id="input_text" type="text" value="{{country.name}}"
+                           class="{{country.id}}"
                            data-length="11"
                            maxlength="11">
                     <label for="input_text">나라를 입력하세요. (필수)</label>
@@ -28,7 +29,8 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input name="content" id="update-country-description" type="text" value="{{country.content}}">
+                    <input name="content" id="update-country-description" type="text"
+                           value="{{country.content}}">
                     <label for="update-country-description">나라의 한줄평을 입력하세요.</label>
                 </div>
             </div>

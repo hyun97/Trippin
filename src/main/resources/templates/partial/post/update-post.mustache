@@ -26,11 +26,13 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input name="content" autocomplete="off" id="update-content" type="text" value="{{post.content}}">
+                    <input required name="content" autocomplete="off" id="update-content" type="text"
+                           value="{{post.content}}">
                     <label for="update-content">내용을 입력하세요.</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light material-btn" type="submit">수정
+            <button class="btn waves-effect waves-light material-btn" type="submit">
+                수정
                 <i class="material-icons right">send</i>
             </button>
         </form>
