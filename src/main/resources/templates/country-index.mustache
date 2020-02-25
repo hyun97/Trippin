@@ -9,12 +9,12 @@
                     <div class="card z-depth-4">
                         <a href="/post/{{id}}">
                             <div class="card-image">
-                                <img src="/img/{{image}}">
+                                <img src="{{image}}">
                                 <span class="card-title">{{region}}</span>
                             </div>
                         </a>
                         {{#isLogin}}
-                            <span class="user-id" style="display: none">{{loginUser.id}}</span>
+                            <span class="user-id hide">{{loginUser.id}}</span>
                             {{^validBookmark}}
                                 <a id="{{id}}"
                                    class="hoverable bookmark btn-floating halfway-fab waves-effect waves-light red">

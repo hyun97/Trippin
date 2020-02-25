@@ -2,63 +2,6 @@ let createPostBtn = document.querySelector(".create-post .post-button");
 let submitPostBtn = document.querySelector(".update-post-button");
 let deletePostBtn = document.querySelectorAll(".card-wrapper .edit-wrapper .delete");
 
-// Create
-function createPost(event) {
-    event.preventDefault();
-
-    let countryId = document.querySelector(".create-post #country").className;
-    let userId = document.querySelector(".create-post #region").className;
-    let region = document.querySelector(".create-post #region");
-    let content = document.querySelector(".create-post #content");
-    let imageName = document.querySelector(".file-upload .file-upload-input");
-
-    if (imageName.files[0] === undefined) {
-        swal({
-            title: "사진을 업로드 해주세요 😥",
-            icon: "error",
-        })
-    } else if (region.value === "") {
-        swal({
-            title: "지역을 입력하세요 😥",
-            icon: "error",
-        })
-    } else if (content.value === "") {
-        swal({
-            title: "내용을 입력하세요 😥",
-            icon: "error",
-        })
-    } else {
-        let data = {
-            image: imageName.files[0].name,
-            region: region.value.toUpperCase(),
-            content: content.value,
-            countryId: countryId,
-            userId: userId
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "/api/post",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(data)
-        }).done(function () {
-            swal({
-                title: "등록 완료 😀",
-                icon: "success",
-            }).then(() => {
-                location.href = `/`;
-            });
-        }).fail(function (error) {
-            swal({
-                title: "등록 실패 😥",
-                icon: "error",
-            }).then(() => {
-                location.href = `/`;
-            });
-        });
-    }
-}
-
 // Update
 function updatePost(event) {
     event.preventDefault();

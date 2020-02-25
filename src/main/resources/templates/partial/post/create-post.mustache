@@ -2,9 +2,11 @@
 
 <div class="file-upload create-post">
     <div class="row">
-        <form class="col s12">
+        <form class="col s12" action="/api/post" method="post" enctype="multipart/form-data">
+            <input name="userId" hidden type="text" value="{{loginUser.id}}">
+            <input name="countryId" hidden type="text" value="{{country.id}}">
             <div class="image-upload-wrap">
-                <input autocomplete="off" class="file-upload-input" type='file' onchange="readURL(this);"
+                <input name="image" autocomplete="off" class="file-upload-input" type='file' onchange="readURL(this);"
                        accept="image/*"/>
                 <div class="drag-text">
                     <h3>드래그하거나 클릭하여 업로드</h3>
@@ -31,17 +33,17 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input autocomplete="off" id="region" class="{{loginUser.id}}" type="text" required>
+                    <input name="region" autocomplete="off" id="region" class="{{loginUser.id}}" type="text" required>
                     <label for="region">지역을 입력하세요.</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input autocomplete="off" id="content" type="text">
+                    <input name="content" autocomplete="off" id="content" type="text">
                     <label for="content">내용을 입력하세요.</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light post-button material-btn" type="submit">
+            <button class="btn waves-effect waves-light material-btn" type="submit">
                 등록
                 <i class="material-icons right">send</i>
             </button>

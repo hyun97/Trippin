@@ -3,7 +3,6 @@ package com.trippin.service;
 import com.trippin.config.auth.LoginUser;
 import com.trippin.config.auth.SessionUser;
 import com.trippin.controller.dto.PagePostDto;
-import com.trippin.controller.dto.PostDto;
 import com.trippin.domain.Bookmark;
 import com.trippin.domain.BookmarkRepository;
 import com.trippin.domain.CommentRepository;
@@ -19,7 +18,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,15 +35,23 @@ public class PostService {
     private final BookmarkRepository bookmarkRepository;
     private final FollowRepository followRepository;
     private final CommentRepository commentRepository;
+    private final S3Service s3Service;
 
     // Create
-    public void createPost(PostDto postDto) {
+    public void createPost(Long userId,
+                           Long countryId,
+                           MultipartFile image,
+                           String region,
+                           String content) throws IOException {
+
+        String imgPath = s3Service.upload(image);
+
         Post post = Post.builder()
-                .image(postDto.getImage())
-                .region(postDto.getRegion())
-                .content(postDto.getContent())
-                .country(countryRepository.getOne(postDto.getCountryId()))
-                .user(userRepository.getOne(postDto.getUserId()))
+                .image(imgPath)
+                .region(region)
+                .content(content)
+                .country(countryRepository.getOne(countryId))
+                .user(userRepository.getOne(userId))
                 .build();
 
         postRepository.save(post);
@@ -136,10 +145,19 @@ public class PostService {
     }
 
     // Update
-    public void updatePost(Long id, PostDto postDto) {
-        // TODO: ADD EXCEPTION
+    public void updatePost(Long id, MultipartFile image, String region, String content) throws IOException {
         Post post = postRepository.findById(id).orElse(null);
-        post.update(postDto);
+
+        String imgPath;
+
+        if (image.getOriginalFilename().equals("")) {
+            imgPath = post.getImage();
+        } else {
+            imgPath = s3Service.upload(image);
+        }
+
+        post.update(imgPath, region, content);
+
         postRepository.save(post);
     }
 

@@ -1,6 +1,5 @@
 package com.trippin.domain;
 
-import com.trippin.controller.dto.PostDto;
 import com.trippin.domain.util.Auditing;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -69,10 +68,10 @@ public class Post extends Auditing {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comment;
 
-    public void update(PostDto postDto) {
-        this.image = postDto.getImage();
-        this.region = postDto.getRegion();
-        this.content = postDto.getContent();
+    public void update(String image, String region, String content) {
+        this.image = image;
+        this.region = region;
+        this.content = content;
     }
 
 }
