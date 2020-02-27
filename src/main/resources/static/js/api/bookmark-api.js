@@ -119,11 +119,9 @@ function decreaseFavorite(event) {
 
 function handleBookmarkClick(event) {
     if (event.target.innerHTML === "bookmark_border") {
-        console.log(1);
-        // createBookmark(event);
+        createBookmark(event);
     } else if (event.target.innerHTML === "bookmark") {
-        console.log(0);
-        // deleteBookmark(event);
+        deleteBookmark(event);
     }
 }
 
