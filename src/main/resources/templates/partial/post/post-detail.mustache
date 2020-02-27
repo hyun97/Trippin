@@ -52,8 +52,12 @@
                             </strong>
                         </p>
                         <div class="info">
-                            <span class="region">{{post.country.name}} &middot {{post.region}}</span>
-                            <span class="date">{{createdAt.date}}</span>
+                            <div>
+                                <span class="region">{{post.country.name}} &middot {{post.region}}</span>
+                            </div>
+                            <div class="date-wrapper">
+                                <span class="date">{{createdAt.date}}</span>
+                            </div>
                         </div>
                     </header>
                     <div class="content-wrapper">

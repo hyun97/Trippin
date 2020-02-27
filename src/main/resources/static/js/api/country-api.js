@@ -1,5 +1,3 @@
-let createCountryBtn = document.querySelector(".file-upload .country-button");
-let submitUpdateBtn = document.querySelector(".file-upload .update-country-button");
 let deleteCountryBtn = document.querySelectorAll(".country-wrapper .edit-wrapper .delete");
 
 let userId = document.querySelector(".user-id");

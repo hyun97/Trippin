@@ -102,7 +102,7 @@ function renderList(e) {
 function eventListening() {
     if (nextPage) {
         window.onscroll = function () {
-            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 300) {
                 handlePageBtn();
             }
         };
