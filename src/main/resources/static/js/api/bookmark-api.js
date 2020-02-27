@@ -118,11 +118,12 @@ function decreaseFavorite(event) {
 }
 
 function handleBookmarkClick(event) {
-    event.stopPropagation();
     if (event.target.innerHTML === "bookmark_border") {
-        createBookmark(event);
+        console.log(1);
+        // createBookmark(event);
     } else if (event.target.innerHTML === "bookmark") {
-        deleteBookmark(event);
+        console.log(0);
+        // deleteBookmark(event);
     }
 }
 
