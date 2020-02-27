@@ -1,6 +1,5 @@
 let post = document.querySelector("#autoScroll");
 let nextPage = document.querySelector(".nextPage");
-let totalPage = document.querySelector(".next").id;
 let currentPage = 4;
 
 function createFollowAjax(event, followBtn) {

@@ -5,6 +5,7 @@ import com.trippin.config.auth.SessionUser;
 import com.trippin.domain.*;
 import com.trippin.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -143,7 +144,7 @@ public class IndexController {
 
         model.addAttribute("post", postList);
         model.addAttribute("search", search);
-        model.addAttribute("totalPage", postList.getTotalPages());
+        model.addAttribute("totalPage", postList.getTotalPages() - 1);
 
         return "search-index";
     }
@@ -184,7 +185,7 @@ public class IndexController {
         }
         model.addAttribute("post", postList);
         model.addAttribute("user", user);
-        model.addAttribute("totalPage", postList.getTotalPages());
+        model.addAttribute("totalPage", postList.getTotalPages() - 1);
 
         return "user-index";
     }
@@ -219,7 +220,7 @@ public class IndexController {
         });
 
         model.addAttribute("bookmark", bookmarkList);
-        model.addAttribute("totalPage", bookmarkList.getTotalPages());
+        model.addAttribute("totalPage", bookmarkList.getTotalPages() - 1);
 
 
         return "bookmark-index";
@@ -263,24 +264,27 @@ public class IndexController {
 
         model.addAttribute("post", postList);
         model.addAttribute("country", country);
-        model.addAttribute("totalPage", postList.getTotalPages());
+        model.addAttribute("totalPage", postList.getTotalPages() - 1);
 
         return "country-index";
     }
 
     // 팔로잉 게시글 출력
     @GetMapping("/user/{userId}/follow")
-    public String readFollowingPost(@PageableDefault Pageable pageable, @PathVariable Long userId, Model model,
+    public String readFollowingPost(@PageableDefault(size = 9) Pageable pageable,
+                                    @PathVariable Long userId,
+                                    Model model,
                                     @LoginUser SessionUser loginUser) {
-        List<Follow> followList = followRepository.findFollowingIdByFollowerId(userId);
-
         if (loginUser != null) {
             model.addAttribute("loginUser", userRepository.getOne(loginUser.getId()));
             model.addAttribute("isLogin", true);
         }
 
+        List<Follow> followList = followRepository.findFollowingIdByFollowerId(userId);
+        List<Post> postList = new ArrayList<>();
+
         followList.forEach(follow -> {
-            Page<Post> postList = postService.getUserPost(follow.getFollowing().getId(), pageable);
+            postList.addAll(postService.getFollowUserPost(follow.getFollowing().getId()));
 
             if (loginUser != null) {
                 postList.forEach(post -> {
@@ -302,12 +306,14 @@ public class IndexController {
                 post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
                 post.setCountComment(commentRepository.countByPostId(post.getId()));
             });
-
-            model.addAttribute("post", postList);
-            model.addAttribute("totalPage", postList.getTotalPages());
         });
 
-        model.addAttribute("totalPage", 0);
+        PagedListHolder<Post> page = new PagedListHolder<>(postList);
+        page.setPageSize(pageable.getPageSize());
+        page.setPage(pageable.getPageNumber());
+
+        model.addAttribute("totalPage", page.getPageCount() - 1);
+        model.addAttribute("post", page.getPageList());
 
         return "follow-index";
     }

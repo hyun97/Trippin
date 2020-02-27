@@ -12,17 +12,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findAllByUserIdOrderByCreatedAtDesc(Long userId, Pageable pageable);
 
-    List<Post> findAllByUserId(Long userId);
-
-//    List<Post> findAllByOrderByCreatedAtDesc();
+    List<Post> findAllByUserIdOrderByCreatedAtDesc(Long userId);
 
     Page<Post> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
-//    List<Post> findByOrderByCreatedAtDesc(Pageable pageable);
-
     List<Post> findByOrderByCreatedAtDesc(Pageable pageable);
-
-    List<Post> findByUserIdOrderByCreatedAtDesc(List<Long> userId);
 
     Page<Post> findByRegionContainingOrCountry_NameContaining(String region, String country, Pageable pageable);
 

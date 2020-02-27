@@ -68,7 +68,7 @@ public class PostService {
 
     // Read Search Post
     public Page<Post> getSearchPost(String region, String country, Pageable pageable) {
-        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber());
 
         pageable = PageRequest.of(page, 9);
 
@@ -78,16 +78,21 @@ public class PostService {
 
     // Read User Post
     public Page<Post> getUserPost(Long userId, Pageable pageable) {
-        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber());
 
         pageable = PageRequest.of(page, 9);
 
         return postRepository.findAllByUserIdOrderByCreatedAtDesc(userId, pageable);
     }
 
+    // Read User Post to Follow
+    public List<Post> getFollowUserPost(Long userId) {
+        return postRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
+    }
+
     // Read Bookmark Post
     public Page<Bookmark> getBookmarkPost(Long userId, Pageable pageable) {
-        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber());
 
         pageable = PageRequest.of(page, 9);
 
@@ -96,7 +101,7 @@ public class PostService {
 
     // Read Country Post
     public Page<Post> getCountryPost(Long countryId, Pageable pageable) {
-        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber());
 
         pageable = PageRequest.of(page, 9);
 
