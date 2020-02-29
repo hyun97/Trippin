@@ -2,6 +2,7 @@ package com.trippin.controller;
 
 import com.trippin.config.auth.LoginUser;
 import com.trippin.config.auth.SessionUser;
+import com.trippin.controller.aop.GetLoginInfo;
 import com.trippin.domain.*;
 import com.trippin.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -30,21 +31,14 @@ public class IndexController {
     private final PostService postService;
 
     // 게시글 상세
+    @GetLoginInfo
     @GetMapping("/post/{postId}")
     public String cardDetail(@PathVariable Long postId, Model model, @LoginUser SessionUser user) {
         Post post = postRepository.findById(postId).orElse(null);
-        User masterUser = userRepository.findById(post.getUser().getId()).orElse(null);
 
         List<Comment> commentList = commentRepository.findByPostIdOrderByCreatedAtDesc(postId);
 
-        if (user != null && masterUser.getId().equals(user.getId())) {
-            model.addAttribute("validUser", true);
-        }
-
         if (user != null) {
-            model.addAttribute("loginUser", user);
-            model.addAttribute("isLogin", true);
-
             List<Bookmark> favorite =
                     bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(user.getId(), postId);
             List<Bookmark> bookmark =
@@ -73,14 +67,12 @@ public class IndexController {
     }
 
     // 메인
+    @GetLoginInfo
     @GetMapping("/")
     public String index(@PageableDefault Pageable pageable, Model model, @LoginUser SessionUser user) {
         Page<Post> postList = postService.getPost(pageable);
 
         if (user != null) {
-            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-            model.addAttribute("isLogin", true);
-
             postList.forEach(post -> {
                 List<Bookmark> bookmark =
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), post.getId());
@@ -108,16 +100,13 @@ public class IndexController {
     }
 
     // 검색된 게시물
+    @GetLoginInfo
     @GetMapping("/search/{search}")
     public String searchPost(@PageableDefault Pageable pageable, @PathVariable String search, Model model,
                              @LoginUser SessionUser user) {
         Page<Post> postList = postService.getSearchPost(search, search, pageable);
 
         if (user != null) {
-            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-
-            model.addAttribute("isLogin", true);
-
             postList.forEach(post -> {
                 List<Bookmark> bookmark =
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), post.getId());
@@ -150,15 +139,13 @@ public class IndexController {
     }
 
     // 유저 게시글 출력
+    @GetLoginInfo
     @GetMapping("/user/{userId}/post")
     public String readUserPost(@PageableDefault Pageable pageable, @PathVariable Long userId, Model model,
                                @LoginUser SessionUser loginUser) {
         Page<Post> postList = postService.getUserPost(userId, pageable);
 
         if (loginUser != null) {
-            model.addAttribute("loginUser", userRepository.getOne(loginUser.getId()));
-            model.addAttribute("isLogin", true);
-
             postList.forEach(post -> {
                 List<Bookmark> bookmark =
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(loginUser.getId(), post.getId());
@@ -166,6 +153,7 @@ public class IndexController {
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(loginUser.getId(), post.getId());
                 List<Follow> follow =
                         followRepository.findByFollowerIdAndFollowingId(loginUser.getId(), post.getUser().getId());
+
                 if (!bookmark.isEmpty()) post.setValidBookmark(true);
                 if (!favorite.isEmpty()) post.setValidFavorite(true);
                 if (!follow.isEmpty()) post.setValidFollow(true);
@@ -191,15 +179,13 @@ public class IndexController {
     }
 
     // 유저 북마크 게시글 출력
+    @GetLoginInfo
     @GetMapping("/user/{userId}/bookmark")
     public String readUserBookmark(@PageableDefault Pageable pageable, @PathVariable Long userId, Model model,
                                    @LoginUser SessionUser loginUser) {
         Page<Bookmark> bookmarkList = postService.getBookmarkPost(userId, pageable);
 
         if (loginUser != null) {
-            model.addAttribute("loginUser", userRepository.getOne(loginUser.getId()));
-            model.addAttribute("isLogin", true);
-
             bookmarkList.forEach(bookmark -> {
                 List<Bookmark> favorite =
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(loginUser.getId(),
@@ -207,6 +193,7 @@ public class IndexController {
                 List<Follow> follow =
                         followRepository.findByFollowerIdAndFollowingId(loginUser.getId(),
                                 bookmark.getPost().getUser().getId());
+
                 if (!favorite.isEmpty()) bookmark.getPost().setValidFavorite(true);
                 if (!follow.isEmpty()) bookmark.getPost().setValidFollow(true);
                 if (bookmark.getPost().getUser().getId().equals(loginUser.getId()))
@@ -222,21 +209,17 @@ public class IndexController {
         model.addAttribute("bookmark", bookmarkList);
         model.addAttribute("totalPage", bookmarkList.getTotalPages() - 1);
 
-
         return "bookmark-index";
     }
 
     // 나라 게시글 출력
+    @GetLoginInfo
     @GetMapping("/country/{countryId}")
     public String readCountryPost(@PageableDefault Pageable pageable, @PathVariable Long countryId, Model model,
                                   @LoginUser SessionUser user) {
         Page<Post> postList = postService.getCountryPost(countryId, pageable);
 
         if (user != null) {
-            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-
-            model.addAttribute("isLogin", true);
-
             postList.forEach(post -> {
                 List<Bookmark> bookmark =
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), post.getId());
@@ -244,6 +227,7 @@ public class IndexController {
                         bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(user.getId(), post.getId());
                 List<Follow> follow =
                         followRepository.findByFollowerIdAndFollowingId(user.getId(), post.getUser().getId());
+
                 if (!bookmark.isEmpty()) post.setValidBookmark(true);
                 if (!favorite.isEmpty()) post.setValidFavorite(true);
                 if (!follow.isEmpty()) post.setValidFollow(true);
@@ -270,16 +254,12 @@ public class IndexController {
     }
 
     // 팔로잉 게시글 출력
+    @GetLoginInfo
     @GetMapping("/user/{userId}/follow")
     public String readFollowingPost(@PageableDefault(size = 9) Pageable pageable,
                                     @PathVariable Long userId,
                                     Model model,
                                     @LoginUser SessionUser loginUser) {
-        if (loginUser != null) {
-            model.addAttribute("loginUser", userRepository.getOne(loginUser.getId()));
-            model.addAttribute("isLogin", true);
-        }
-
         List<Follow> followList = followRepository.findFollowingIdByFollowerId(userId);
         List<Post> postList = new ArrayList<>();
 
@@ -319,21 +299,16 @@ public class IndexController {
     }
 
     // 유저 프로필
+    @GetLoginInfo
     @GetMapping("/user/{id}")
     public String user(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
         User masterUser = userRepository.findById(id).orElse(null);
 
         if (user != null) {
-            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-            model.addAttribute("isLogin", true);
             List<Follow> follow =
                     followRepository.findByFollowerIdAndFollowingId(user.getId(), masterUser.getId());
 
             if (!follow.isEmpty()) masterUser.setValidFollow(true);
-        }
-
-        if (user != null && masterUser.getId().equals(user.getId())) {
-            model.addAttribute("validUser", true);
         }
 
         if (masterUser.getCountry().size() == 1) {
@@ -352,20 +327,10 @@ public class IndexController {
     }
 
     // 팔로잉
+    @GetLoginInfo
     @GetMapping("/user/{id}/following")
     public String following(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
-        User masterUser = userRepository.findById(id).orElse(null);
-
-        if (user != null) {
-            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-            model.addAttribute("isLogin", true);
-        }
-
-        if (user != null && masterUser.getId().equals(user.getId())) {
-            model.addAttribute("validUser", true);
-        }
-
-        List<Follow> followerList = followRepository.findFollowingIdByFollowerId(masterUser.getId());
+        List<Follow> followerList = followRepository.findFollowingIdByFollowerId(id);
 
         // 팔로잉 목록
         List<User> following = new ArrayList<>();
@@ -390,20 +355,10 @@ public class IndexController {
     }
 
     // 팔로워
+    @GetLoginInfo
     @GetMapping("/user/{id}/follower")
     public String follower(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
-        User masterUser = userRepository.findById(id).orElse(null);
-
-        if (user != null) {
-            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-            model.addAttribute("isLogin", true);
-        }
-
-        if (user != null && masterUser.getId().equals(user.getId())) {
-            model.addAttribute("validUser", true);
-        }
-
-        List<Follow> followList = followRepository.findByFollowingId(masterUser.getId());
+        List<Follow> followList = followRepository.findByFollowingId(id);
 
         // 팔로워 목록
         List<User> followerList = new ArrayList<>();
@@ -427,18 +382,10 @@ public class IndexController {
     }
 
     // 유저 수정
+    @GetLoginInfo
     @GetMapping("/user/{userId}/update")
     public String updateUser(@PathVariable Long userId, Model model, @LoginUser SessionUser user) {
         User masterUser = userRepository.findById(userId).orElse(null);
-
-        if (user != null) {
-            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-            model.addAttribute("isLogin", true);
-        }
-
-        if (user != null && masterUser.getId().equals(user.getId())) {
-            model.addAttribute("validUser", true);
-        }
 
         model.addAttribute("user", masterUser);
 
@@ -451,24 +398,16 @@ public class IndexController {
 
 
     // 나라 등록
+    @GetLoginInfo
     @GetMapping("/country/create")
     public String createCountry(Model model, @LoginUser SessionUser user) {
-        if (user != null) {
-            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-            model.addAttribute("isLogin", true);
-        }
-
         return "partial/country/create-country";
     }
 
     // 나라 수정
+    @GetLoginInfo
     @GetMapping("/country/{id}/update")
     public String updateCountry(@PathVariable Long id, Model model, @LoginUser SessionUser user) {
-        if (user != null) {
-            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-            model.addAttribute("isLogin", true);
-        }
-
         Country country = countryRepository.findById(id).orElse(null);
 
         model.addAttribute("country", country);
@@ -482,13 +421,9 @@ public class IndexController {
     }
 
     // 게시글 등록
+    @GetLoginInfo
     @GetMapping("/post/create/{countryId}")
     public String createPost(@PathVariable Long countryId, Model model, @LoginUser SessionUser user) {
-        if (user != null) {
-            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-            model.addAttribute("isLogin", true);
-        }
-
         Country country = countryRepository.findById(countryId).orElse(null);
 
         model.addAttribute("country", country);
@@ -497,13 +432,9 @@ public class IndexController {
     }
 
     // 게시글 수정
+    @GetLoginInfo
     @GetMapping("/post/{postId}/update")
     public String updatePost(@PathVariable Long postId, Model model, @LoginUser SessionUser user) {
-        if (user != null) {
-            model.addAttribute("loginUser", userRepository.getOne(user.getId()));
-            model.addAttribute("isLogin", true);
-        }
-
         Post post = postRepository.findById(postId).orElse(null);
 
         model.addAttribute("post", post);
