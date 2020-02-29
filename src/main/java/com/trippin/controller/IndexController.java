@@ -3,6 +3,7 @@ package com.trippin.controller;
 import com.trippin.config.auth.LoginUser;
 import com.trippin.config.auth.SessionUser;
 import com.trippin.controller.aop.GetLoginInfo;
+import com.trippin.controller.aop.ValidPost;
 import com.trippin.domain.*;
 import com.trippin.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -68,25 +69,10 @@ public class IndexController {
 
     // 메인
     @GetLoginInfo
+    @ValidPost
     @GetMapping("/")
     public String index(@PageableDefault Pageable pageable, Model model, @LoginUser SessionUser user) {
         Page<Post> postList = postService.getPost(pageable);
-
-        if (user != null) {
-            postList.forEach(post -> {
-                List<Bookmark> bookmark =
-                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), post.getId());
-                List<Bookmark> favorite =
-                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(user.getId(), post.getId());
-                List<Follow> follow =
-                        followRepository.findByFollowerIdAndFollowingId(user.getId(), post.getUser().getId());
-
-                if (!bookmark.isEmpty()) post.setValidBookmark(true);
-                if (!favorite.isEmpty()) post.setValidFavorite(true);
-                if (!follow.isEmpty()) post.setValidFollow(true);
-                if (post.getUser().getId().equals(user.getId())) post.setValidUser(true);
-            });
-        }
 
         postList.forEach(post -> {
             post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
@@ -101,26 +87,11 @@ public class IndexController {
 
     // 검색된 게시물
     @GetLoginInfo
+    @ValidPost
     @GetMapping("/search/{search}")
     public String searchPost(@PageableDefault Pageable pageable, @PathVariable String search, Model model,
                              @LoginUser SessionUser user) {
         Page<Post> postList = postService.getSearchPost(search, search, pageable);
-
-        if (user != null) {
-            postList.forEach(post -> {
-                List<Bookmark> bookmark =
-                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), post.getId());
-                List<Bookmark> favorite =
-                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(user.getId(), post.getId());
-                List<Follow> follow =
-                        followRepository.findByFollowerIdAndFollowingId(user.getId(), post.getUser().getId());
-
-                if (!bookmark.isEmpty()) post.setValidBookmark(true);
-                if (!favorite.isEmpty()) post.setValidFavorite(true);
-                if (!follow.isEmpty()) post.setValidFollow(true);
-                if (post.getUser().getId().equals(user.getId())) post.setValidUser(true);
-            });
-        }
 
         postList.forEach(post -> {
             post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
@@ -140,39 +111,19 @@ public class IndexController {
 
     // 유저 게시글 출력
     @GetLoginInfo
+    @ValidPost
     @GetMapping("/user/{userId}/post")
     public String readUserPost(@PageableDefault Pageable pageable, @PathVariable Long userId, Model model,
-                               @LoginUser SessionUser loginUser) {
+                               @LoginUser SessionUser user) {
         Page<Post> postList = postService.getUserPost(userId, pageable);
-
-        if (loginUser != null) {
-            postList.forEach(post -> {
-                List<Bookmark> bookmark =
-                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(loginUser.getId(), post.getId());
-                List<Bookmark> favorite =
-                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(loginUser.getId(), post.getId());
-                List<Follow> follow =
-                        followRepository.findByFollowerIdAndFollowingId(loginUser.getId(), post.getUser().getId());
-
-                if (!bookmark.isEmpty()) post.setValidBookmark(true);
-                if (!favorite.isEmpty()) post.setValidFavorite(true);
-                if (!follow.isEmpty()) post.setValidFollow(true);
-                if (post.getUser().getId().equals(loginUser.getId())) post.setValidUser(true);
-            });
-        }
-
-        User user = userRepository.findById(userId).orElse(null);
 
         postList.forEach(post -> {
             post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
             post.setCountComment(commentRepository.countByPostId(post.getId()));
         });
 
-        if (loginUser != null && user.getId().equals(loginUser.getId())) {
-            model.addAttribute("validUser", true);
-        }
         model.addAttribute("post", postList);
-        model.addAttribute("user", user);
+        model.addAttribute("user", userRepository.findById(userId).orElse(null));
         model.addAttribute("totalPage", postList.getTotalPages() - 1);
 
         return "user-index";
@@ -214,26 +165,11 @@ public class IndexController {
 
     // 나라 게시글 출력
     @GetLoginInfo
+    @ValidPost
     @GetMapping("/country/{countryId}")
     public String readCountryPost(@PageableDefault Pageable pageable, @PathVariable Long countryId, Model model,
                                   @LoginUser SessionUser user) {
         Page<Post> postList = postService.getCountryPost(countryId, pageable);
-
-        if (user != null) {
-            postList.forEach(post -> {
-                List<Bookmark> bookmark =
-                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNotNull(user.getId(), post.getId());
-                List<Bookmark> favorite =
-                        bookmarkRepository.findPostByUserIdAndPostIdAndSaveIsNull(user.getId(), post.getId());
-                List<Follow> follow =
-                        followRepository.findByFollowerIdAndFollowingId(user.getId(), post.getUser().getId());
-
-                if (!bookmark.isEmpty()) post.setValidBookmark(true);
-                if (!favorite.isEmpty()) post.setValidFavorite(true);
-                if (!follow.isEmpty()) post.setValidFollow(true);
-                if (post.getUser().getId().equals(user.getId())) post.setValidUser(true);
-            });
-        }
 
         postList.forEach(post -> {
             post.setFavorite(bookmarkRepository.countBookmarkByPostIdAndSaveIsNull(post.getId()));
@@ -241,10 +177,6 @@ public class IndexController {
         });
 
         Country country = countryRepository.findById(countryId).orElse(null);
-
-        if (user != null && country.getUser().getId().equals(user.getId())) {
-            model.addAttribute("validUser", true);
-        }
 
         model.addAttribute("post", postList);
         model.addAttribute("country", country);
